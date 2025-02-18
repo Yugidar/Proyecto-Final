@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hermcode</title>
+        <!-- Importación de iconos de Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="styles\styles.css">
+        <script type="text/javascript" src="js\main.js"></script>
+        <script src=""></script>
+    </head>
+    <body>
+        <!-- MENU -->
+        <!-- El header es una etiqueta para los encabezados que ayuda a un buen SEO en el navegador -->
+        <header class="container py-3 w-100 menu">
+            <div class="menu-logo" onclick="redirect(`${window.location.origin}`)">
+                <img class="me-1 menu-logo__img" src="assets/logo.png" alt="Logo de hermcode">
+                <p class="text-uppercase quantico-font fw-bold fs-2">hermcode</p>
+            </div>
+
+            <!-- Etiqueta de navegacion entre las diferentes secciones de la página -->
+            <nav class="menu-navbar">
+                <a class="text-yellow fw-bold menu-navbar__a" href="#cursos">CURSOS</a>
+                <a class="text-yellow fw-bold menu-navbar__a" href="#contacto">CONTÁCTANOS</a>
+                <button id="btnLoginPage" class="btn btn-primary menu-navbar__btn" onclick="redirectToLogin()">
+                    Iniciar sesión
+                </button>
+                <button id="btnLogin" class="btn btn-secondary menu-navbar__btn" onclick="onBtnLoginClick()">
+                    Ver Cursos
+                </button>
+            </nav>
+        </header>
+
+        <section class="main-section">
+            <div id="register" class="container main-section-container">
+                <form id="registerForm" action="">
+                    <label for="username">Nombre:</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                    <input type="submit" value="Registrarse">
+                </form>
+            </div>
+        </section>
+        <script src="js/register.js"></script>
+    </body>
+    </html>
