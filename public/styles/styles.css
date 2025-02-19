@@ -1,0 +1,694 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Quantico:wght@400;700&display=swap');
+
+/* Declaracion de variables globales en CSS */
+:root {
+    --strong-blue: #0E121A;
+    --blue: #080629;
+    --yellow: #FEC83C;
+    --yellow-hover: #a07d1e;
+    --white: #fff;
+    --red: #F73B3B;
+    --gray: #E5E5E5;
+    --quantico-font: 'Quantico';
+    --poppins-font: 'Poppins';
+    --md-bp: 481px;
+    --lg-bp: 980px;
+    --sm-fs: 1.6rem;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--quantico-font);
+    width: fit-content;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 62.5%;
+    width: 100%;
+}
+
+body {
+    background-color: var(--strong-blue);
+    color: var(--white);
+    width: 100%;
+}
+
+img {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    font-size: var(--sm-fs);
+}
+
+p {
+    font-family: var(--poppins-font);
+    font-size: var(--sm-fs);
+}
+
+h1 { 
+    font-size: 3.4rem;
+    font-weight: normal; 
+}
+    
+h2 { 
+    font-size: 3.2rem;
+    font-weight: normal; 
+}
+
+h3 { 
+    font-size: 3rem; 
+    font-weight: normal;
+}
+
+h4 { 
+    font-size: 2.8rem; 
+    font-weight: normal;
+}
+
+h5 { 
+    font-size: 2.6rem; 
+    font-weight: normal;
+}
+
+h6 { 
+    font-size: 2.4rem; 
+    font-weight: normal;
+}
+
+footer {
+    background-color: var(--blue);
+}
+
+/* FUENTES */
+.quantico-font {
+    font-family:  var(--quantico-font);
+}
+
+.poppins-font {
+    font-family: var(--poppins-font);
+}
+
+/* HEIGHT */
+
+/* Toma toda la altura del padre disponible */
+.h-100 {
+    height: 100%;
+}
+
+/* DISPLAY */
+
+/* Acomoda los iconos horizontalmente */
+.d-flex {
+    display: flex;
+}
+.flex-column {
+    flex-direction: column;
+}
+
+.d-grid {
+    display: grid;
+}
+
+.d-block {
+    display: block;
+}
+
+.d-none {
+    display: none;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+/* Acomoda los elementos hijos hacia el exterior disponible */
+.justify-content-between {
+    justify-content: space-between;
+}
+.justify-content-center {
+    justify-content: center;
+}
+
+/* Padding en las 4 coordenadas */
+.p-4 {
+    padding: 4rem;
+}
+.p-3 {
+    padding: 3rem;
+}
+.p-2 {
+    padding: 2rem;
+}
+.p-1 {
+    padding: 1rem;
+}
+
+/* Padding en las coordenadas verticales */
+.py-3 {
+    padding: 3rem 0;
+}
+.py-5 {
+    padding: 5rem 0;
+}
+
+.px-5 {
+    padding: 0 5rem;
+}
+
+.w-100 {
+    width: 100%;
+}
+.w-auto {
+    width: auto;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+/* BUTTONS */
+
+.btn {
+    border: none;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: var(--white);
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--yellow);
+    border: 2px solid var(--yellow);
+    color: var(--strong-blue);
+}
+
+.btn-primary:hover {
+    background-color: var(--yellow-hover);
+    border: 2px solid var(--yellow-hover);
+}
+
+.btn-secondary {
+    background-color: var(--strong-blue);
+    border: 2px solid var(--white);
+    color: var(--white);
+}
+
+.btn-secondary:hover {
+    background-color: var(--white);
+    color: var(--strong-blue);
+}
+
+.btn-secondary {
+    background-color: var(--blue);
+    border: 2px solid var(--white);
+}
+
+.btn-danger {
+    background-color: var(--red);
+    border: 2px solid var(--red);
+}
+
+/* TEXT */
+
+.text-white {
+    color: var(--white);
+}
+
+.text-yellow {
+    color: var(--yellow);
+}
+
+.text-red {
+    color: var(--red);
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.wrap-break-word {
+    word-wrap: break-word;
+}
+
+.fs-1 {
+    font-size: 1rem;
+}
+.fs-2 {
+    font-size: 2rem;
+}
+.fs-3 {
+    font-size: 3rem;
+}
+.fs-4 {
+    font-size: 4rem;
+}
+.fs-5 {
+    font-size: 5rem;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+/* LINE HEIGHT */
+
+.lh-1 {
+    line-height: 1;
+}
+
+/* Margenes */
+
+/* Margen a la deracha */
+.me-1 {
+    margin-right: 1rem;
+}
+.me-2 {
+    margin-right: 2rem;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
+.mb-3 {
+    margin-bottom: 3rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+/* INPUTS */
+
+.form-label {
+    font-size: var(--sm-fs);
+    width: 100%;
+}
+
+.form-control {
+    border: 3px solid var(--white);
+    outline: none;
+    background-color: var(--white);
+    padding: 1rem;
+    color: var(--strong-blue);
+    font-size: var(--sm-fs);
+}
+
+.form-control:focus {
+    border-color: var(--yellow);
+}
+
+/* MENU */
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu-logo {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.menu-logo__img {
+    height: 3rem;
+    max-width: 3.6rem;
+}
+
+.menu-navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.menu-navbar__a {
+    margin-bottom: 1rem;
+}
+
+.menu-navbar__btn {
+    width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+    .menu {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .menu-logo {
+        margin: 0;
+    }
+
+    .menu-navbar {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: auto;
+    }
+
+    .menu-navbar__a {
+        margin-bottom: 0;
+        margin-right: 2rem;
+    }
+}
+
+/* =============== CUSTOM CLASSES ===============  */
+
+.bg-blue {
+    background-color: var(--blue);
+}
+
+.bg-strong-blue {
+    background-color: var(--strong-blue);
+}
+
+/* CONTAINER */
+
+.container {
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+@media only screen and (min-width: 768px) {
+    .container {
+        max-width: 75%;
+        margin: 0 auto;
+    }
+}
+
+/* MAIN SECTION */
+
+.main-section {
+    /* Toma el 100% de altura del tamaño de la ventana */
+    height: 100vh;
+    min-height: 400px;
+    width: 100%;
+    background: var(--blue);
+    background-image: url("assets/mobile-head-bg.jpg");
+    background-size: cover;
+    overflow: hidden;
+}
+
+.main-section-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-section-message {
+    margin-bottom: 2rem;
+}
+
+.main-section-message__h1 {
+    margin-bottom: 2rem;
+}
+
+@media only screen and (min-width: 768px) {
+
+    .main-section {
+        background-image: url("assets/head-bg.jpg");
+    }
+    .main-section-container {
+        flex-direction: row;
+    }
+
+    .main-section-message {
+        margin-bottom: 0;
+        margin-right: 3rem;
+    }
+}
+
+/* CARDS */
+
+.card-description {
+    /* min-height: 150px; */
+    font-size: 1.2rem;
+}
+
+.cards {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+@media only screen and (min-width: 768px) {
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* CONTACTO */
+
+.contacto-anuncio {
+    margin-bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contacto-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media only screen and (min-width: 768px) {
+    .contacto {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5rem;
+        align-items: center;
+    }
+
+    .contacto-anuncio {
+        margin-bottom: 0;
+    }
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.copyright {
+    margin-bottom: 3rem;
+}
+
+@media only screen and (min-width: 768px) {
+    .footer-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .copyright {
+        margin-bottom: 0;
+    }
+}
+
+.cursos-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cursos-header-title {
+    margin-bottom: 2rem;
+}
+
+.cursos-header-agregar-curso {
+    width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+    .cursos-header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .cursos-header-title {
+        margin-bottom: 0;
+    }
+
+    .cursos-header-agregar-curso {
+        width: auto;
+    }
+}
+
+#listaCursos {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.lista-cursos-card {
+    padding: 2rem;
+    width: 100%;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    font-family: var(--quantico-font);
+}
+
+.lista-cursos-card__label {
+    color: var(--yellow);
+    text-transform: uppercase;
+    font-family: var(--quantico-font);
+}
+
+.lista-cursos-card__label, .lista-cursos-card__id {
+    font-size: 1.2rem;
+}
+
+
+/* CLASES PARA LOS MODALES */
+
+.jw-modal {
+    /* Loa modales nacen ocultos por defualt */
+    display: none;
+
+    /* El contenedor del modal se posiciona en fixed en toda la pantalla */
+    position: fixed;
+    inset: 0;
+
+    /* El z-index debe ser más algo que cualquier otro elemento de la página */
+    z-index: 10000;
+    
+    background-color: rgba(0, 0, 0, .70);
+    padding: 40px;
+
+    /* Permite habilitar el scroll para modales que están al top del DOM */
+    overflow: auto;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.jw-modal.open {
+    display: flex;
+}
+
+.jw-modal-body {
+    padding: 20px;
+    background: var(--strong-blue);
+}
+
+body.jw-modal-open {
+    /* body overflow está oculto para ocultar la barra de scroll principal cuando el modal está abierto */
+    overflow: hidden;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+td, th {
+    /* border: 1px solid #dddddd; */
+    text-align: left;
+    margin-bottom: 20px;
+    /* padding: 8px; */
+}
+
+body.Login-page{
+    margin: 0;
+    display: grid;
+   
+    height: 100%;
+    font-size: larger;
+    width: 100%;
+
+}
+
+.form-container{
+    width: 500px;
+    background-color: #ffffff;
+    border-radius: 5px;
+
+
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+input,button{
+    font-weight: bold;
+    font-size: larger;
+    border-radius: 4px;
+    border: unset;
+    padding: 15px 30px;
+
+}
+
+label{
+    display: center;
+
+}
+
+
+#main-login{
+    display: grid;
+    width: 100%;
+    place-items: center;
+    
+}
+
+/* Estilos para la lista de productos */
+.product-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.product-item {
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.product-item h3 {
+    margin: 0 0 10px;
+    color: #007BFF;
+}
+
+.product-item p {
+    margin: 0;
+    color: #555;
+}
+
+.product-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+#roducts-h2{
+    text-align: center;
+    color: #333;
+}
