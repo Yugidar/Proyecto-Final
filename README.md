@@ -5,9 +5,12 @@ Rol-Nombre-Descripcion de que se realizó brevemente-Descripción mas detallada 
 ## NOMENCLATURA PARA BRANCHES
 Rol-Lo Que se esta realizando
 
+## NOMECLATURA PARA ISSUES
+QA-Tipo de error-Decripcion breve (Comentario libre para detallar por si es necesario)
+
 ### Integrantes del equipo
-Frida Garza
-Paola Urdiales
-Alan Carrion
-Pedro de Leon
-Carolina Hermosillo
+Frida Garza <br />
+Paola Urdiales <br />
+Alan Carrion <br />
+Pedro de Leon <br />
+Carolina Hermosillo <br />
