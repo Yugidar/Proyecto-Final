@@ -7,10 +7,13 @@ module.exports = (req, res, next) => {
       return res.status(401).json({ error: 'Acceso denegado, token no proporcionado' });
     }
 
-    const token = authHeader.split(' ')[1]; // Extrae el token correctamente
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const token = authHeader.split(' ')[1];
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({ error: 'Clave JWT no configurada' });
+    }
 
-    req.user = verified; // Agregar datos del usuario al request
+    const verified = jwt.verify(token, process.env.JWT_SECRET || 'default_secret');
+    req.user = verified;
     next();
   } catch (err) {
     if (err.name === 'TokenExpiredError') {

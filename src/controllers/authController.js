@@ -45,9 +45,13 @@ exports.login = async (req, res) => {
       return res.status(400).json({ error: 'Contraseña incorrecta' });
     }
 
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({ error: 'Clave JWT no configurada' });
+    }
+
     const token = jwt.sign(
-      { id_user: user[0].id_user, role: user[0].role }, 
-      process.env.JWT_SECRET, 
+      { id_user: user[0].id_user, role: user[0].role },
+      process.env.JWT_SECRET || 'default_secret',
       { expiresIn: '1h' }
     );
 
