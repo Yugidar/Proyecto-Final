@@ -1,4 +1,13 @@
 {
+  "name": "proyecto-final",
+  "version": "1.0.0",
+  "description": "Proyecto final de la clase Desarrollo Full Stack",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "jest --coverage"
+  },
   "dependencies": {
     "axios": "^1.7.9",
     "bcryptjs": "^3.0.2",
@@ -8,16 +17,19 @@
     "express-validator": "^7.2.1",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^3.12.0"
+    "mysql2": "^3.12.0",
+    "nodemon": "^3.0.2",
+    "morgan": "^1.10.0",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0"
   },
-  "name": "proyecto-final",
-  "version": "1.0.0",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
+  "devDependencies": {
+    "jest": "^29.6.2",
+    "supertest": "^6.3.3"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "jest": {
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
@@ -29,6 +41,5 @@
   "bugs": {
     "url": "https://github.com/Yugidar/Proyecto-Final/issues"
   },
-  "homepage": "https://github.com/Yugidar/Proyecto-Final#readme",
-  "description": ""
+  "homepage": "https://github.com/Yugidar/Proyecto-Final#readme"
 }
