@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hermcode</title>
+    <link rel="website icon" type="png" href="./assets/logo 1.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="styles/styles.css">
     <script type="text/javascript" src="js/main.js"></script>
@@ -17,8 +18,12 @@
         <nav class="menu-navbar">
             <a class="text-yellow fw-bold menu-navbar__a" href="#cursos">CURSOS</a>
             <a class="text-yellow fw-bold menu-navbar__a" href="#contacto">CONTÁCTANOS</a>
-            <button id="btnLoginPage" class="btn btn-primary menu-navbar__btn">Iniciar sesión</button>
-            <button id="btnLogin" class="btn btn-secondary menu-navbar__btn">Ver Cursos</button>
+            <button id="btnLogin" class="btn btn-secondary menu-navbar__btn" onclick="redirectToPrincipal()">
+                Inicio
+             </button>
+             <button id="btnLoginPage" class="btn btn-secondary menu-navbar__btn" onclick="redirectToLogin()">
+                 Iniciar sesión
+             </button>
         </nav>
     </header>
 
@@ -37,10 +42,31 @@
                     <option value="admin">Administrador</option>
                 </select>
 
-                <input type="submit" value="Registrarse">
+                <input type="submit" value="Registrarse" id="inputLogin" class="btn-primary">
             </form>
         </div>
     </section>
+
+    <footer class="w-100">
+        <div class="container w-100 py-5 footer-container">
+            <p class="copyright">&copy 2025 Hermcode. Todos los derechos reservados</p>
+    
+            <div>
+                <a href="https://www.facebook.com/Tecmileniomx/" class="d-block mb-1 text-white" target="_blank">
+                    <i class="fa-brands fa-facebook"></i> <!-- Icono de Font Awesome -->
+                    <span>Facebook</span>
+                </a>
+                <a href="https://www.youtube.com/user/vivetecmilenio" class="d-block mb-1 text-white" target="_blank">
+                    <i class="fa-brands fa-youtube"></i> <!-- Icono de Font Awesome -->
+                    <span>Youtube</span>
+                </a>
+                <a href="https://www.linkedin.com/" class="d-block mb-1 text-white" target="_blank">
+                    <i class="fa-brands fa-linkedin"></i> <!-- Icono de Font Awesome -->
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+        </div>
+    </footer>
 
     <script src="js/register.js"></script>
 </body>

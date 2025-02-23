@@ -4,10 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Hermcode</title>
+        <link rel="website icon" type="png" href="./assets/logo 1.png">
         <!-- Importación de iconos de Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="styles\styles.css">
-        <script type="text/javascript" src="js\main.js"></script>
+        <link rel="stylesheet" href="styles/styles.css">
+        <script type="text/javascript" src="js/login.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
         <script src=""></script>
     </head>
     <body>
@@ -21,13 +23,12 @@
 
             <!-- Etiqueta de navegacion entre las diferentes secciones de la página -->
             <nav class="menu-navbar">
-                <a class="text-yellow fw-bold menu-navbar__a" href="#cursos">CURSOS</a>
                 <a class="text-yellow fw-bold menu-navbar__a" href="#contacto">CONTÁCTANOS</a>
-                <button id="btnLoginPage" class="btn btn-primary menu-navbar__btn" onclick="redirectToLogin()">
-                    Iniciar sesión
+                <button id="btnLogin" class="btn btn-secondary menu-navbar__btn" onclick="redirectToPrincipal()">
+                   Inicio
                 </button>
-                <button id="btnLogin" class="btn btn-secondary menu-navbar__btn" onclick="onBtnLoginClick()">
-                    Ver Cursos
+                <button id="btnLoginPage" class="btn btn-secondary menu-navbar__btn" onclick="redirectToLogin()">
+                    Iniciar sesión
                 </button>
             </nav>
         </header>
@@ -39,12 +40,33 @@
                     <input type="text" id="username" name="username" required>
                     <label for="password">Contraseña:</label>
                     <input type="password" id="password" name="password" required>
-                    <input type="submit" value="Iniciar sesión">
-                    <p>No tienes cuenta? <a href="#" id="registerLink">Regístrate aquí</a></p>
+                    <input type="submit" value="Iniciar sesión" id="inputLogin" class="btn-primary">
+                    <p>¿No tienes cuenta? <a href="register.html" id="regisLink">Ingresa aquí</a></p>
                 </form>
                 
             </div>
         </section>
+
+        <footer class="w-100">
+            <div class="container w-100 py-5 footer-container">
+                <p class="copyright">&copy 2025 Hermcode. Todos los derechos reservados</p>
+        
+                <div>
+                    <a href="https://www.facebook.com/Tecmileniomx/" class="d-block mb-1 text-white" target="_blank">
+                        <i class="fa-brands fa-facebook"></i> <!-- Icono de Font Awesome -->
+                        <span>Facebook</span>
+                    </a>
+                    <a href="https://www.youtube.com/user/vivetecmilenio" class="d-block mb-1 text-white" target="_blank">
+                        <i class="fa-brands fa-youtube"></i> <!-- Icono de Font Awesome -->
+                        <span>Youtube</span>
+                    </a>
+                    <a href="https://www.linkedin.com/" class="d-block mb-1 text-white" target="_blank">
+                        <i class="fa-brands fa-linkedin"></i> <!-- Icono de Font Awesome -->
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
         <script src="js/login.js"></script>
     </body>
 </html>

@@ -289,14 +289,17 @@ function onBtnLoginClick() {
     if(sessionData) {
         redirect(`${window.location.origin}/pages/cursos.html`)
         return
-        
     }
-
     openModal('loginModal');
 }
 
 function redirectToLogin() {
     window.location.href = "login.html"; 
+}
+
+
+function redirectToPrincipal() {
+    window.location.href = "index.html"; 
 }
 
 
