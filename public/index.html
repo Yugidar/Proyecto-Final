@@ -4,10 +4,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Hermcode</title>
+        <link rel="website icon" type="png" href="./assets/logo.png">
         <!-- Importación de iconos de Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="styles\styles.css">
-        <script type="text/javascript" src="js\main.js"></script>
+        <link rel="stylesheet" href="styles/styles.css">
+        <script type="text/javascript" src="js/main.js"></script>
         <script src=""></script>
     </head>
     <body>
@@ -23,11 +24,11 @@
             <nav class="menu-navbar">
                 <a class="text-yellow fw-bold menu-navbar__a" href="#cursos">CURSOS</a>
                 <a class="text-yellow fw-bold menu-navbar__a" href="#contacto">CONTÁCTANOS</a>
-                <button id="btnLoginPage" class="btn btn-primary menu-navbar__btn" onclick="redirectToLogin()">
-                    Iniciar sesión
-                </button>
                 <button id="btnLogin" class="btn btn-secondary menu-navbar__btn" onclick="onBtnLoginClick()">
                     Ver Cursos
+                </button>
+                <button id="btnLoginPage" class="btn btn-secondary menu-navbar__btn" onclick="redirectToLogin()">
+                    Iniciar Sesión
                 </button>
             </nav>
         </header>
@@ -46,7 +47,7 @@
         
                 <figure class="w-100">
                     <!-- la propiedad alt ayuda en la accesibilidad para las herramientas de voz descriptivas para personas con discapacidad visul -->
-                    <img src="assets/undraw_coding_joxb.svg" alt="Imágen de persona en computadora">
+                    <img src="assets/undraw_coding_joxb.png" alt="Imágen de persona en computadora">
                 </figure>
             </div>
         </section>
@@ -59,7 +60,7 @@
             <div class="cards">
                 <!-- Card individual -->
                 <div class="card">
-                    <img class="mb-2" src="assets/html+css.jpg" alt="Imágen del curso HTML y CSS">
+                    <img class="mb-2" src="assets/html+css.png" alt="Imágen del curso HTML y CSS">
 
                     <div class="d-flex flex-column align-items-center " style="justify-content: space-between;">
                         <div class="mb-2">
@@ -94,7 +95,7 @@
         <section id="contacto" class="container py-5 contacto">
             <div class="contacto-anuncio">
                 <h3 class="fs-2 mb-3">SE PARTE DE NUESTRO EQUIPO!</h3>
-                <img src="assets/team.svg" alt="Imágen de equipo">
+                <img src="assets/team.png" alt="Imágen de equipo">
             </div>
             
             <div class="contacto-form">
@@ -151,25 +152,9 @@
             <div class="jw-modal-body">
 
                 <div class="d-flex justify-content-between align-items-center mb-3 w-100">
-                    <h4 class="text-uppercase">Inicia Sesión</h3>
+                    <h4>Debes iniciar sesión para acceder</h4>
                     <i class="fa-solid fa-xmark fs-3" onclick="closeModal()"></i>
                 </div>
-
-                <form id="loginForm" onsubmit="onLoginSubmit(event)">
-                    <div class="mb-1 w-100">
-                        <label class="form-label" for="login-username">Usuario:</label>
-                        <input class="form-control fs-1 w-100" type="text" name="login-username" id="login-username" placeholder="Ingresa tu nombre">
-                    </div>
-                    <div class="mb-1 w-100">
-                        <label class="form-label" for="login-email">Correo electrónico:</label>
-                        <input class="form-control fs-1 w-100" type="email" name="login-email" id="login-email" placeholder="example@example.com">
-                    </div>
-                    <div class="mb-2 w-100">
-                        <label class="form-label" for="login-password">Contraseña:</label>
-                        <input class="form-control fs-1 w-100" type="password" name="login-password" id="login-password" placeholder="">
-                    </div>
-
-                    <input type="submit" class="btn btn-primary w-100 mt-2" value="Iniciar sesión">
                 </form>
             </div>
         </div>
