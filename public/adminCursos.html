@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hermcode</title>
+    <link rel="website icon" type="png" href="./assets/logo 1.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+    <header class="container py-3 w-100 menu">
+        <div class="menu-logo">
+            <img class="me-1 menu-logo__img" src="assets/logo.png" alt="Logo de hermcode">
+            <p class="text-uppercase quantico-font fw-bold fs-2">hermcode</p>
+        </div>
+        <nav class="menu-navbar">
+            <a class="text-yellow fw-bold menu-navbar__a" href="#contacto">CONTÁCTANOS</a>
+            <!--Falta agregar una forma de cerrar sesión, por el momento solo maneja que rediriga a pagina principal, sin eliminación de Token--> 
+            <button class="btn btn-secondary menu-navbar__btn" onclick="redirectToPrincipal()">
+                Cerrar Sesión
+             </button>
+            <!--Falta agregar que se muestren los datos del usuario--> 
+            <button id="btnUser" class="btn btn-secondary menu-navbar__btn">
+                Mi cuenta
+            </button>
+        </nav>
+    </header>
+
+    <section class="main-section-botonCrear">
+        <div class="container main-section-container">
+            <button id="btnCrear" class="btn btn-terciary">
+                + Crear Curso
+            </button>
+        </div>
+    </section>
+
+    <section class="main-section-admin">
+        <div class="container main-section-admin">
+            <div class="main-container-cursos">
+                <div class="cursos-grid" id="cursos-container"></div>
+                <div class="botones">
+                    <button class="btnCambio" id="prev" disabled>Anterior</button>
+                    <button class="btnCambio" id="next">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal para crear-->
+    <div class="jw-modal" id="modalCrear">
+        <div class="jw-modal-body">
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <h2>Crear curso</h2>
+                <i class="fa-solid fa-xmark fs-3" onclick="closeModal()"></i>
+            </div>
+            <form id="">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ingresa nombre de curso" required >
+
+                <label for="nombre">Categoría:</label>
+                <input type="text" id="categoria" name="categoria" placeholder="Ingresa categoría del curso" required >
+
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" placeholder="Ingresa descripción de curso" required></textarea>
+
+                <label for="imagen">Imagen (link):</label>
+                <input type="url" id="imagen" name="imagen" placeholder="Ingresa un link de imagen"required>
+
+                <button type="submit" id="btnCrear" class="btn btnCrear">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para editar-->
+    <div class="jw-modal" id="modalEdit">
+        <div class="jw-modal-body">
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <h2>Editar curso</h2>
+                <i class="fa-solid fa-xmark fs-3" onclick="closeModal()"></i>
+            </div>
+            <form id="">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ingresa nombre de curso" required >
+
+                <label for="nombre">Categoría:</label>
+                <input type="text" id="categoria" name="categoria" placeholder="Ingrese categoría del curso" required >
+
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" placeholder="Ingresa descripción de curso" required></textarea>
+
+                <label for="imagen">Imagen (link):</label>
+                <input type="url" id="imagen" name="imagen" placeholder="Ingresa un link de imagen"required>
+
+                <button type="submit" id="btnCrear" class="btn btnCrear">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para ver perfil-->
+    <div class="jw-modal" id="modalUser">
+        <div class="jw-modal-body">
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <h2>Perfil</h2>
+                <i class="fa-solid fa-xmark fs-3" onclick="closeModal()"></i>
+            </div>
+            <div id="userProfile">
+                <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+                <p><strong>Tipo de usuario:</strong> <span id="descripcion"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!--Muestra de como se debe llevar a cabo la muestra de los datos-->     
+    <script>
+        let cursos = [
+            { id: 1, nombre: "Prueba 1", descripcion: "Aprende a estructurar páginas web con HTML y darles estilo con CSS.", imagen:"./assets/logo 1.png"},
+            { id: 1, nombre: "Prueba 2", descripcion: "Aprende a estructurar páginas web con HTML y darles estilo con CSS.", imagen:"./assets/logo 1.png"},
+            { id: 1, nombre: "Prueba 3", descripcion: "Aprende a estructurar páginas web con HTML y darles estilo con CSS.", imagen:"./assets/logo 1.png"},
+            { id: 1, nombre: "Prueba 4", descripcion: "Aprende a estructurar páginas web con HTML y darles estilo con CSS.", imagen:"./assets/logo 1.png"},
+            { id: 1, nombre: "Prueba 5", descripcion: "Aprende a estructurar páginas web con HTML y darles estilo con CSS.", imagen:"./assets/logo 1.png"},
+            { id: 1, nombre: "Prueba 6", descripcion: "Aprende a estructurar páginas web con HTML y darles estilo con CSS.", imagen:"./assets/logo 1.png"}
+        ];
+
+        let currentPage = 1;
+        const itemsPerPage = 4;
+        
+        function renderCursos(page) {
+            const container = document.getElementById("cursos-container");
+            container.innerHTML = "";
+
+            let start = (page - 1) * itemsPerPage;
+            let end = start + itemsPerPage;
+            let paginatedCursos = cursos.slice(start, end);
+
+            paginatedCursos.forEach(curso => {
+                const cursoDiv = document.createElement("div");
+                cursoDiv.classList.add("curso");
+                cursoDiv.innerHTML = `
+                <div class="cursoConten">
+                    <div class="contenido">
+                        <img src="${curso.imagen}" alt="${curso.nombre}">
+                        <div class="textos">
+                            <h3>${curso.nombre}</h3>
+                            <p id="textoCurso">${curso.categoria}</p>
+                            <p id="textoCurso">${curso.descripcion}</p>
+                        </div>
+                    </div>
+                    <div class="botones">
+                        <button id="btnEdit" onclick="editarCurso(${curso.id})">Editar</button>
+                        <button id="btnElim" onclick="eliminarCurso(${curso.id})">Eliminar</button>
+                    </div>
+                </div>
+                `;
+                container.appendChild(cursoDiv);
+            });
+
+            // Habilitar o deshabilitar botones de paginación
+            document.getElementById("prev").disabled = currentPage === 1;
+            document.getElementById("next").disabled = end >= cursos.length;
+        }
+
+        document.getElementById("next").addEventListener("click", () => {
+            currentPage++;
+            renderCursos(currentPage);
+        });
+
+        document.getElementById("prev").addEventListener("click", () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderCursos(currentPage);
+            }
+        });
+
+        function eliminarCurso(id) {
+            alert("Eliminar curso ID: " + id);
+        }
+
+        renderCursos(currentPage);
+    </script>   
+
+    
+    <footer class="w-100">
+        <div class="container w-100 py-5 footer-container">
+            <p class="copyright">&copy 2025 Hermcode. Todos los derechos reservados</p>
+    
+            <div>
+                <a href="https://www.facebook.com/Tecmileniomx/" class="d-block mb-1 text-white" target="_blank">
+                    <i class="fa-brands fa-facebook"></i> <!-- Icono de Font Awesome -->
+                    <span>Facebook</span>
+                </a>
+                <a href="https://www.youtube.com/user/vivetecmilenio" class="d-block mb-1 text-white" target="_blank">
+                    <i class="fa-brands fa-youtube"></i> <!-- Icono de Font Awesome -->
+                    <span>Youtube</span>
+                </a>
+                <a href="https://www.linkedin.com/" class="d-block mb-1 text-white" target="_blank">
+                    <i class="fa-brands fa-linkedin"></i> <!-- Icono de Font Awesome -->
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/register.js"></script>
+    <script src="js/adminCursos.js"></script>
+</body>
+</html>

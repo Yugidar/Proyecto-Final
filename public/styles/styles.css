@@ -5,6 +5,7 @@
     --strong-blue: #454B79;
     --blue: #1D203E;
     --yellow: #D75091;
+    --light-blue:#2E335A;
     --yellow-hover: #c5337a;
     --white: #fff;
     --red: #F73B3B;
@@ -94,18 +95,17 @@ footer {
 }
 
 /* HEIGHT */
-
 /* Toma toda la altura del padre disponible */
 .h-100 {
     height: 100%;
 }
 
 /* DISPLAY */
-
 /* Acomoda los iconos horizontalmente */
 .d-flex {
     display: flex;
 }
+
 .flex-column {
     flex-direction: column;
 }
@@ -130,6 +130,7 @@ footer {
 .justify-content-between {
     justify-content: space-between;
 }
+
 .justify-content-center {
     justify-content: center;
 }
@@ -152,6 +153,7 @@ footer {
 .py-3 {
     padding: 3rem 0;
 }
+
 .py-5 {
     padding: 5rem 0;
 }
@@ -163,6 +165,7 @@ footer {
 .w-100 {
     width: 100%;
 }
+
 .w-auto {
     width: auto;
 }
@@ -172,7 +175,6 @@ footer {
 }
 
 /* BUTTONS */
-
 .btn {
     border: none;
     padding: 1rem 2rem;
@@ -192,6 +194,21 @@ footer {
 .btn-primary:hover {
     background-color: var(--yellow-hover);
     border: 2px solid var(--yellow-hover);
+}
+
+.btn-terciary {
+    background-color: var(--yellow);
+    border-radius: 5px;
+    text-transform: none;
+    font-size: 14px;
+    padding: 5px;
+    margin-right: 750px;
+}
+
+.btn-terciary:hover{
+    background: var(--yellow-hover);
+    border: 1px solid var(--yellow);
+    transform: scale(1.05); 
 }
 
 .btn-secondary {
@@ -217,23 +234,18 @@ footer {
 }
 
 /* TEXT */
-
 .text-white {
     color: var(--white);
 }
-
 .text-yellow {
     color: var(--yellow);
 }
-
 .text-red {
     color: var(--red);
 }
-
 .text-uppercase {
     text-transform: uppercase;
 }
-
 .text-center {
     text-align: center;
 }
@@ -264,13 +276,11 @@ footer {
 }
 
 /* LINE HEIGHT */
-
 .lh-1 {
     line-height: 1;
 }
 
 /* Margenes */
-
 /* Margen a la deracha */
 .me-1 {
     margin-right: 1rem;
@@ -282,11 +292,9 @@ footer {
 .mb-1 {
     margin-bottom: 1rem;
 }
-
 .mb-2 {
     margin-bottom: 2rem;
 }
-
 .mb-3 {
     margin-bottom: 0rem;
 }
@@ -296,7 +304,6 @@ footer {
 }
 
 /* INPUTS */
-
 .form-label {
     font-size: var(--sm-fs);
     width: 100%;
@@ -316,7 +323,6 @@ footer {
 }
 
 /* MENU */
-
 .menu {
     display: flex;
     flex-direction: column;
@@ -373,7 +379,6 @@ footer {
 }
 
 /* =============== CUSTOM CLASSES ===============  */
-
 .bg-blue {
     background-color: var(--blue);
 }
@@ -383,7 +388,6 @@ footer {
 }
 
 /* CONTAINER */
-
 .container {
     max-width: 90%;
     margin: 0 auto;
@@ -397,7 +401,6 @@ footer {
 }
 
 /* MAIN SECTION */
-
 .main-section {
     /* Toma el 100% de altura del tamaño de la ventana */
     height: 70vh;
@@ -407,6 +410,34 @@ footer {
     background-image: url("assets/mobile-head-bg.jpg");
     background-size: cover;
     overflow: hidden;
+}
+
+.main-container{
+    height: 70vh;
+    width: 100%;
+    background: var(--blue);
+    background-size: cover;
+    overflow: hidden;
+}
+
+.main-section-botonCrear {
+    height: 15vh;
+    width: 100%;
+    background: var(--light-blue);
+}
+
+.main-container-cursos{
+    width: auto;
+    background: var(--light-blue);
+    background-size: cover;
+    overflow: hidden;
+}
+
+.main-section-admin {
+    min-height: 35vw;
+    width: auto;
+    background: var(--light-blue);
+    background-image: url("assets/mobile-head-bg.jpg");
 }
 
 .main-section-container {
@@ -438,10 +469,37 @@ footer {
         margin-bottom: 0;
         margin-right: 3rem;
     }
+
+    .main-container{
+        height: 70vh;
+        width: 100%;
+        background: var(--blue);
+        background-size: cover;
+        overflow: hidden;
+    }
+    
+    .main-section-botonCrear {
+        height: 15vh;
+        width: 100%;
+        background: var(--light-blue);
+    }
+    
+    .main-container-cursos{
+        width: auto;
+        background: var(--light-blue);
+        background-size: cover;
+        overflow: hidden;
+    }
+    
+    .main-section-admin {
+        min-height: 35vw;
+        width: auto;
+        background: var(--light-blue);
+        background-image: url("assets/mobile-head-bg.jpg");
+    }
 }
 
 /* CARDS */
-
 .card-description {
     /* min-height: 150px; */
     font-size: 1.2rem;
@@ -460,7 +518,6 @@ footer {
 }
 
 /* CONTACTO */
-
 .contacto-anuncio {
     margin-bottom: 4rem;
     display: flex;
@@ -581,7 +638,6 @@ footer {
 
 
 /* CLASES PARA LOS MODALES */
-
 .jw-modal {
     /* Loa modales nacen ocultos por defualt */
     display: none;
@@ -608,8 +664,13 @@ footer {
 }
 
 .jw-modal-body {
-    padding: 20px;
-    background: var(--strong-blue);
+    padding: 25px;
+    height: auto;
+    width: auto;
+    background: var(--light-blue);
+    border-radius: 10px;
+    border: 0.2px solid var(--white)
+
 }
 
 body.jw-modal-open {
@@ -644,15 +705,12 @@ body.Login-page{
     width: 500px;
     background-color: #ffffff;
     border-radius: 5px;
-
-
 }
 
 form{
     display: flex;
     flex-direction: column;
     gap: 10px;
-
 }
 
 button{
@@ -665,13 +723,15 @@ button{
 
 label{
     display: center;
-    font-size: 15px;
+    font-size: 20px;
+    margin-top: 15px;
 }
 
 input{
     font-weight: bold;
     font-size: larger;
     border-radius: 10px;
+    font-size: 16px;
     border: unset;
     width: 420px;
     padding: 8px;
@@ -768,4 +828,136 @@ select{
         width: auto;
         padding: 5px;
     }
+}
+
+.cursos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.curso {
+    background: var(--strong-blue);
+    border-radius: 10px;
+    padding: 15px;
+    text-align: left;
+    display: flex;
+    flex-direction: column; 
+    width: 100%;
+    height: 100%;
+}
+
+.contenido {
+    display: flex; 
+    align-items: center;
+    gap: 20px;
+}
+
+.curso img {
+    width: 30%;
+    border-radius: 5px;
+}
+
+.textos {
+    flex: 1;
+}
+
+.textos h3 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.textos p {
+    font-size: 15px;
+    margin-top: 5px;
+    color: var(--white);
+}
+
+.botones {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.botones button {
+    padding: 8px 15px;
+    background: var(--yellow);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.botones button:hover {
+    background: var(--light-blue); 
+    transform: scale(1.05);
+}
+
+.botones button:active {
+    transform: scale(0.98);
+}
+
+#btnEdit {
+    background: var(--light-blue);
+    border: 1px solid var(--yellow-hover);
+    padding-left: 90px;
+    padding-right: 100px;
+}
+
+#btnEdit:hover {
+    background: var(--yellow);
+    border: 1px solid var(--light-blue);
+}
+
+#btnElim {
+    background: var(--yellow);
+    border: 1px solid var(--light-blue);
+    padding-left: 90px;
+    padding-right: 100px;
+}
+
+#btnElim:hover {
+    background: var(--light-blue);
+    border: 1px solid var(--yellow);
+}
+
+.btnCambio button{
+    background: var(--yellow);
+    border: 1px solid var(--light-blue);
+    padding-left: 60px;
+    padding-right: 60px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btnCambio:hover{
+    background: var(--light-blue);
+    border: 1px solid var(--yellow);
+    transform: scale(1.05); 
+}
+
+/* Efecto cuando se hace clic */
+.btnCambio:active {
+    transform: scale(0.98); 
+}
+
+.btnCrear{
+    background: var(--yellow);
+    color: var(--white);
+    border: 1px solid var(--yellow-hover);
+    transform: scale(1.05); 
+    margin: auto;
+}
+
+.btnCrear:hover{
+    background: var(--yellow-hover);
+    border: 1px solid var(--yellow);
+    transform: scale(1.05); 
 }
