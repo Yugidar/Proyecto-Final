@@ -15,7 +15,12 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
     if (response.ok) {
         alert('Inicio de sesión exitoso');
         localStorage.setItem('token', data.token);
-        window.location.href = 'productos.html';
+
+        if (data.role === 'admin') {
+            window.location.href = 'adminCursos.html';
+        } else {
+            window.location.href = 'productos.html';
+        }
     } else {
         alert(data.error);
     }

@@ -1,56 +1,67 @@
-var modalCrear = document.getElementById("modalCrear");
-var modalEdit = document.getElementById("modalEdit");
-var modalUser = document.getElementById("modalUser");
+document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Acceso denegado. Debes iniciar sesión.');
+        window.location.href = 'login.html';
+        return;
+    }
 
-var btnCrear = document.getElementById("btnCrear");
-var btnEdit = document.getElementById("btnEdit");
-var btnUser = document.getElementById("btnUser");
+    const response = await fetch('/courses', {
+        method: 'GET',
+        headers: {
+            'authorization': `Bearer ${token}`
+        }
+    });
 
-var btnCloseCrear = modalCrear.querySelector(".fa-xmark");
-var btnCloseEdit = modalEdit.querySelector(".fa-xmark");
-var btnCloseUser = modalUser.querySelector(".fa-xmark");
+    if (response.ok) {
+        const courses = await response.json();
+        renderCursos(courses);
+    } else {
+        alert('Error al cargar los cursos.');
+    }
+});
 
-//Función para abrir
-function openModal(modal) {
-    modal.classList.add("open");
-    document.body.classList.add("jw-modal-open");
+function renderCursos(courses) {
+    const container = document.getElementById("cursos-container");
+    container.innerHTML = "";
+
+    courses.forEach(curso => {
+        const cursoDiv = document.createElement("div");
+        cursoDiv.classList.add("curso");
+        cursoDiv.innerHTML = `
+            <div class="contenido">
+                <h3>${curso.title}</h3>
+                <p><strong>Categoría:</strong> ${curso.category}</p>
+                <p><strong>Descripción:</strong> ${curso.description}</p>
+                <p><strong>Autor:</strong> ${curso.username}</p>
+                <button class="btn btn-danger" onclick="eliminarCurso(${curso.id_course})">Eliminar</button>
+            </div>
+        `;
+        container.appendChild(cursoDiv);
+    });
 }
 
-//Función para cerrar
-function closeModal(modal) {
-    modal.classList.remove("open");
-    document.body.classList.remove("jw-modal-open");
+async function eliminarCurso(id) {
+    const token = localStorage.getItem('token');
+    const confirmDelete = confirm('¿Estás seguro de eliminar este curso?');
+    if (!confirmDelete) return;
+
+    const response = await fetch(`/courses/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'authorization': `Bearer ${token}`
+        }
+    });
+
+    if (response.ok) {
+        alert('Curso eliminado');
+        location.reload();
+    } else {
+        alert('Error al eliminar el curso.');
+    }
 }
 
-//Click para abrir los modales
-btnCrear.onclick = function () {
-    openModal(modalCrear);
-};
-
-btnEdit.onclick = function () {
-    openModal(modalEdit);
-};
-
-btnUser.onclick = function () {
-    openModal(modalUser);
-};
-
-
-//Clic para cerrar los modales
-btnCloseCrear.onclick = function () {
-    closeModal(modalCrear);
-};
-
-btnCloseEdit.onclick = function () {
-    closeModal(modalEdit);
-};
-
-btnCloseUser.onclick = function () {
-    closeModal(modalUser);
-};
-
-//Cerrar el modal cuando se hace clic en la "X"
-document.getElementById("closeModalEdit").onclick = function () {
-    document.getElementById("modalEdit").classList.remove("open");
-    document.body.classList.remove("jw-modal-open");
-};
+function logout() {
+    localStorage.removeItem('token');
+    window.location.href = 'login.html';
+}
