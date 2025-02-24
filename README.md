@@ -6,7 +6,7 @@ Rol-Nombre-Descripcion de que se realizó brevemente-Descripción mas detallada 
 Rol-Lo Que se esta realizando
 
 ## NOMECLATURA PARA ISSUES
-QA-Tipo de error-Decripcion breve (Comentario libre para detallar por si es necesario)
+QA-Tipo de error-Descripcion breve (Comentario libre para detallar por si es necesario)
 
 ## ENLACE AL FIGMA
 https://www.figma.com/design/ShzlS5VpCLGj7c4Zpm2WGK/Dise%C3%B1o-Proyecto-Final?node-id=28-2
