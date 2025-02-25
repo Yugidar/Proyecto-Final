@@ -11,7 +11,7 @@
     --red: #F73B3B;
     --gray: #E5E5E5;
     --quantico-font: 'Quantico';
-    --poppins-font: 'Poppins';
+    --poppins-font: 'Poppins', sans-serif;
     --md-bp: 481px;
     --lg-bp: 980px;
     --sm-fs: 1.6rem;
@@ -350,6 +350,10 @@ footer {
     margin-bottom: 1rem;
 }
 
+.menu-navbar_a {
+    margin-bottom: 1rem;
+}
+
 .menu-navbar__btn {
     width: 100%;
 }
@@ -375,6 +379,11 @@ footer {
     .menu-navbar__a {
         margin-bottom: 0;
         margin-right: 2rem;
+    }
+    .menu-navbar_a {
+        margin-bottom: 0;
+        margin-right: 20px;
+        width: 652px;
     }
 }
 
@@ -407,7 +416,6 @@ footer {
     min-height: 400px;
     width: 100%;
     background: var(--blue);
-    background-image: url("assets/mobile-head-bg.jpg");
     background-size: cover;
     overflow: hidden;
 }
@@ -426,6 +434,11 @@ footer {
     background: var(--light-blue);
 }
 
+.main-section-h1 {
+    height: 15vh;
+    width: 100%;
+}
+
 .main-container-cursos{
     width: auto;
     background: var(--light-blue);
@@ -433,14 +446,36 @@ footer {
     overflow: hidden;
 }
 
+.section-cursosIns{
+    padding-top: 35px;
+    padding-left: 145px;
+    margin-bottom: 35px;
+    font-size: 35px;
+    font-weight: 100;
+    font-family: var(--poppins-font);
+}
+
 .main-section-admin {
     min-height: 35vw;
     width: auto;
     background: var(--light-blue);
-    background-image: url("assets/mobile-head-bg.jpg");
+}
+
+.main-section-normal {
+    min-height: 35vw;
+    width: auto;
+    background: var(--light-blue);
 }
 
 .main-section-container {
+    height: 115%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-section-container-normal {
     height: 115%;
     display: flex;
     flex-direction: column;
@@ -455,12 +490,8 @@ footer {
 .main-section-message__h1 {
     margin-bottom: 2rem;
 }
-
 @media only screen and (min-width: 768px) {
 
-    .main-section {
-        background-image: url("assets/head-bg.jpg");
-    }
     .main-section-container {
         flex-direction: row;
     }
@@ -495,7 +526,6 @@ footer {
         min-height: 35vw;
         width: auto;
         background: var(--light-blue);
-        background-image: url("assets/mobile-head-bg.jpg");
     }
 }
 
@@ -836,6 +866,13 @@ select{
     gap: 20px;
 }
 
+.cursos-flex {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    width: 100%;
+}
+
 .curso {
     background: var(--strong-blue);
     border-radius: 10px;
@@ -845,6 +882,29 @@ select{
     flex-direction: column; 
     width: 100%;
     height: 100%;
+}
+
+.cursoNormal {
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+}
+
+.cursoNormal img {
+    width: 250px;
+    height: 165px;
+    border-radius: 5px;
+}
+
+.contenidoCurNor {
+    display: flex; 
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.cursoConten{
+    width: 100%;
 }
 
 .contenido {
@@ -875,11 +935,42 @@ select{
     color: var(--white);
 }
 
+.textNor {
+    flex: 1;
+}
+
+.textNor h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #C3B0F2;
+    font-weight: bold;
+    font-family: var(--poppins-font);
+}
+
+.textNor p {
+    font-size: 15px;
+    margin-top: 5px;
+}
+
 .botones {
     margin-top: 25px;
     margin-bottom: 25px;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.botonDele {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.botonAgre {
+    margin-left: auto;
     display: flex;
     gap: 10px;
     justify-content: flex-start;
@@ -928,6 +1019,34 @@ select{
     border: 1px solid var(--yellow);
 }
 
+#btnDele {
+    background: var(--yellow);
+    border: 1px solid var(--light-blue);
+    font-family: var(--quantico-font);
+    text-transform: uppercase;
+    border-radius: 5px;
+    color: var(--gray);
+}
+
+#btnDele:hover {
+    background: var(--yellow-hover);
+    border: 1px solid var(--yellow);
+}
+
+#btnAgre {
+    background: var(--yellow);
+    border: 1px solid var(--light-blue);
+    font-family: var(--quantico-font);
+    text-transform: uppercase;
+    border-radius: 5px;
+    color: var(--gray);
+}
+
+#btnAgre:hover {
+    background: var(--yellow-hover);
+    border: 1px solid var(--yellow);
+}
+
 .btnCambio button{
     background: var(--yellow);
     border: 1px solid var(--light-blue);
@@ -943,7 +1062,6 @@ select{
     transform: scale(1.05); 
 }
 
-/* Efecto cuando se hace clic */
 .btnCambio:active {
     transform: scale(0.98); 
 }
@@ -960,4 +1078,26 @@ select{
     background: var(--yellow-hover);
     border: 1px solid var(--yellow);
     transform: scale(1.05); 
+}
+
+.pagination-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    background-color: var(--white);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.dot.active {
+    background-color: var(--gray);
+    width: 15px;
+    height: 15px;
 }
