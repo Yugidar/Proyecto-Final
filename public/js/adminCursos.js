@@ -1,52 +1,74 @@
-var modalCrear = document.getElementById("modalCrear");
-var modalEdit = document.getElementById("modalEdit");
-var modalUser = document.getElementById("modalUser");
+document.addEventListener("DOMContentLoaded", function () {
+    let currentPage = 1;
 
-var btnCrear = document.getElementById("btnCrear");
-var btnEdit = document.getElementById("btnEdit");
-var btnUser = document.getElementById("btnUser");
+    async function fetchCourses(page) {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Debes iniciar sesión primero.');
+                window.location.href = 'login.html';
+                return;
+            }
 
-var btnCloseCrear = modalCrear.querySelector(".fa-xmark");
-var btnCloseEditar = modalEdit.querySelector(".fa-xmark");
-var btnCloseUser = modalUser.querySelector(".fa-xmark");
+            const response = await fetch(`/courses/paginated?page=${page}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
 
-//Función para abrir
-function openModal(modal) {
-    modal.classList.add("open");
-    document.body.classList.add("jw-modal-open");
-}
+            if (!response.ok) {
+                throw new Error('Error al obtener cursos');
+            }
 
-//Función para cerrar
-function closeModal(modal) {
-    modal.classList.remove("open");
-    document.body.classList.remove("jw-modal-open");
-}
+            const data = await response.json();
+            renderCursos(data.courses);
+            updatePagination(data.currentPage, data.totalPages);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
-//Click para abrir los modales
-btnCrear.onclick = function () {
-    openModal(modalCrear);
-};
+    function renderCursos(cursos) {
+        const container = document.getElementById("cursos-container");
+        container.innerHTML = "";
 
-btnEdit.onclick = function () {
-    console.log("click en boton")
-    openModal(modalEdit); 
-};
+        cursos.forEach(curso => {
+            const cursoDiv = document.createElement("div");
+            cursoDiv.classList.add("curso");
+            cursoDiv.innerHTML = `
+                <div class="cursoConten">
+                    <div class="contenido">
+                        <img src="${curso.image_url}" alt="${curso.title}" style="width:150px; height:150px; border-radius: 5px;">
+                        <div class="textos">
+                            <h3>${curso.title}</h3>
+                            <p id="textoCurso">${curso.category}</p>
+                            <p id="textoCurso">${curso.description}</p>
+                        </div>
+                    </div>
+                    <div class="botones">
+                        <button id="btnEdit" onclick="editarCurso(${curso.id_course})">Editar</button>
+                        <button id="btnElim" onclick="eliminarCurso(${curso.id_course})">Eliminar</button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(cursoDiv);
+        });
+    }
 
-btnUser.onclick = function () {
-    console.log("click en boton")
-    openModal(modalUser);
-};
+    function updatePagination(currentPage, totalPages) {
+        document.getElementById("prev").disabled = currentPage === 1;
+        document.getElementById("next").disabled = currentPage === totalPages;
+    }
 
+    document.getElementById("next").addEventListener("click", () => {
+        currentPage++;
+        fetchCourses(currentPage);
+    });
 
-//Clic para cerrar los modales
-btnCloseCrear.onclick = function () {
-    closeModal(modalCrear);
-};
+    document.getElementById("prev").addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchCourses(currentPage);
+        }
+    });
 
-btnCloseEditar.onclick = function () {
-    closeModal(modalEdit);
-};
-
-btnCloseUser.onclick = function () {
-    closeModal(modalUser);
-};
+    fetchCourses(currentPage);
+});
