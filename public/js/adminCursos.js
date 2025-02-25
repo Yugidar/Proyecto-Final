@@ -109,3 +109,71 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fetchCourses(currentPage);
 });
+
+// MODAL CREAR CURSO
+var modalCrear = document.getElementById("modalCrear");
+var btnCrear = document.getElementById("btnCrear");
+var btnCloseCrear = modalCrear.querySelector(".fa-xmark");
+
+// Abrir modal de creación
+btnCrear.onclick = function () {
+    openModal(modalCrear);
+};
+
+// Cerrar modal de creación
+btnCloseCrear.onclick = function () {
+    closeModal(modalCrear);
+};
+
+// Función para agregar un curso nuevo
+document.getElementById("guardarCurso").addEventListener("click", async function () {
+    const title = document.getElementById("nombreCurso").value;
+    const category = document.getElementById("categoriaCurso").value;
+    const description = document.getElementById("descripcionCurso").value;
+    const image_url = document.getElementById("imagenCurso").value;
+
+    if (!title || !category || !description || !image_url) {
+        alert("Todos los campos son obligatorios");
+        return;
+    }
+
+    try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("Debes iniciar sesión primero.");
+            window.location.href = "login.html";
+            return;
+        }
+
+        const response = await fetch("/courses", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ title, category, description, image_url })
+        });
+
+        if (!response.ok) {
+            throw new Error("Error al crear el curso");
+        }
+
+        alert("Curso creado exitosamente");
+        closeModal(modalCrear);
+        fetchCourses(1); // Recargar lista
+    } catch (error) {
+        console.error(error);
+        alert("Hubo un error al crear el curso");
+    }
+});
+
+// Funciones de modal
+function openModal(modal) {
+    modal.classList.add("open");
+    document.body.classList.add("jw-modal-open");
+}
+
+function closeModal(modal) {
+    modal.classList.remove("open");
+    document.body.classList.remove("jw-modal-open");
+}
