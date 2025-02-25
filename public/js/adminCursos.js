@@ -44,13 +44,50 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                     </div>
                     <div class="botones">
-                        <button id="btnEdit" onclick="editarCurso(${curso.id_course})">Editar</button>
-                        <button id="btnElim" onclick="eliminarCurso(${curso.id_course})">Eliminar</button>
+                        <button id="btnEdit" class="btn btn-secondary botones__btn" onclick="editarCurso(${curso.id_course})">Editar</button>
+                        <button id="btnElim" class="btn btn-danger botones__btn" data-id="${curso.id_course}">Eliminar</button>
                     </div>
                 </div>
             `;
             container.appendChild(cursoDiv);
         });
+
+        // Asignar eventos a los botones de eliminar
+        document.querySelectorAll(".btn-danger").forEach(button => {
+            button.addEventListener("click", function () {
+                const id = this.getAttribute("data-id");
+                eliminarCurso(id);
+            });
+        });
+    }
+
+    async function eliminarCurso(id) {
+        const confirmacion = confirm("¿Estás seguro de que deseas eliminar este curso?");
+        if (!confirmacion) return;
+
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Debes iniciar sesión primero.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const response = await fetch(`/courses/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al eliminar el curso');
+            }
+
+            alert("Curso eliminado correctamente");
+            fetchCourses(currentPage); // Recargar la lista después de eliminar
+        } catch (error) {
+            console.error(error);
+            alert("Hubo un error al eliminar el curso");
+        }
     }
 
     function updatePagination(currentPage, totalPages) {
