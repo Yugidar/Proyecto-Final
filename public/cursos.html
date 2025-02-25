@@ -55,7 +55,23 @@
             </div>
         </div>
     </div>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Debes iniciar sesión primero.');
+                window.location.href = 'login.html'; // Redirige a la página de login
+                return;
+            }
+    
+            const role = localStorage.getItem('role');
+            if (role !== 'normal') {
+                alert('Acceso denegado. No tienes permiso para entrar aquí.');
+                window.location.href = 'index.html'; // Redirige a la página principal
+            }
+        });
+    </script>
+    
     <!--Muestra de como se debe llevar a cabo la muestra de los datos-->     
     <script>
         let cursos = [
