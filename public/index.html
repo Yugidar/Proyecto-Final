@@ -23,10 +23,6 @@
             <!-- Etiqueta de navegacion entre las diferentes secciones de la página -->
             <nav class="menu-navbar">
                 <a class="text-yellow fw-bold menu-navbar__a" href="#cursos">CURSOS</a>
-                <a class="text-yellow fw-bold menu-navbar__a" href="#contacto">CONTÁCTANOS</a>
-                <button id="btnLogin" class="btn btn-secondary menu-navbar__btn" onclick="onBtnLoginClick()">
-                    Ver Cursos
-                </button>
                 <button id="btnLoginPage" class="btn btn-secondary menu-navbar__btn" onclick="redirectToLogin()">
                     Iniciar Sesión
                 </button>
@@ -91,38 +87,7 @@
             </div>
         </section>
 
-        <!-- Contenedor padre de Contacto -->
-        <section id="contacto" class="container py-5 contacto">
-            <div class="contacto-anuncio">
-                <h3 class="fs-2 mb-3">SE PARTE DE NUESTRO EQUIPO!</h3>
-                <img src="assets/team.png" alt="Imágen de equipo">
-            </div>
-            
-            <div class="contacto-form">
-                <h2 class="mb-2 fs-2 text-uppercase">Contacto</h2>
-
-                <form class="w-100" onsubmit="preventDefault(event)">
-                    <!-- Elemento que engloba el input y label -->
-                    <div class="mb-1 w-100">
-                        <label class="form-label" for="name">Nombre:</label>
-                        <input class="form-control fs-1 w-100" type="text" name="name" id="name" placeholder="Ingresa tu nombre">
-                    </div>
-                    <!-- Elemento que engloba el input y label -->
-                    <div class="mb-2 w-100">
-                        <label class="form-label" for="email">Correo electrónico:</label>
-                        <input class="form-control fs-1 w-100" type="email" name="email" id="email" placeholder="example@example.com">
-                    </div>
-                    <!-- Elemento que engloba el input y label -->
-                    <div class="mb-2 w-100">
-                        <label class="form-label" for="textarea">Mensaje:</label>
-                        <textarea id="textarea" name="textarea" class="form-control w-100" rows="3"></textarea>
-                    </div>
         
-                    <button id="btn-submit" class="btn btn-primary w-100 mt-2">Enviar</button>
-                </form>
-            </div>
-
-        </section>
 
         <footer class="w-100">
             <div class="container w-100 py-5 footer-container">
