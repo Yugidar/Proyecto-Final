@@ -7,7 +7,7 @@ var btnEdit = document.getElementById("btnEdit");
 var btnUser = document.getElementById("btnUser");
 
 var btnCloseCrear = modalCrear.querySelector(".fa-xmark");
-var btnCloseEdit = modalEdit.querySelector(".fa-xmark");
+var btnCloseEditar = modalEdit.querySelector(".fa-xmark");
 var btnCloseUser = modalUser.querySelector(".fa-xmark");
 
 //Función para abrir
@@ -28,10 +28,12 @@ btnCrear.onclick = function () {
 };
 
 btnEdit.onclick = function () {
-    openModal(modalEdit);
+    console.log("click en boton")
+    openModal(modalEdit); 
 };
 
 btnUser.onclick = function () {
+    console.log("click en boton")
     openModal(modalUser);
 };
 
@@ -41,16 +43,10 @@ btnCloseCrear.onclick = function () {
     closeModal(modalCrear);
 };
 
-btnCloseEdit.onclick = function () {
+btnCloseEditar.onclick = function () {
     closeModal(modalEdit);
 };
 
 btnCloseUser.onclick = function () {
     closeModal(modalUser);
-};
-
-//Cerrar el modal cuando se hace clic en la "X"
-document.getElementById("closeModalEdit").onclick = function () {
-    document.getElementById("modalEdit").classList.remove("open");
-    document.body.classList.remove("jw-modal-open");
 };
