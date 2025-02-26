@@ -19,4 +19,9 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
     } else {
         alert(data.error);
     }
+   
 });
+
+module.exports = {
+    response
+}
