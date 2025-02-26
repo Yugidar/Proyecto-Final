@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     let currentPage = 1;
+    let totalPages = 1;
     let editingCourseId = null; // Almacenar el ID del curso que se edita
+    const paginationDots = document.getElementById("pagination-dots");
 
     async function fetchCourses(page) {
         try {
@@ -21,7 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const data = await response.json();
             renderCursos(data.courses);
-            updatePagination(data.currentPage, data.totalPages);
+            totalPages = data.totalPages;
+            renderPaginationDots();
         } catch (error) {
             console.error("Error al obtener los cursos:", error);
         }
@@ -36,9 +39,9 @@ document.addEventListener("DOMContentLoaded", function () {
             cursoDiv.classList.add("curso");
             cursoDiv.innerHTML = `
                 <div class="cursoConten">
-                    <div class="contenido">
-                        <img src="${curso.image_url}" alt="${curso.title}" style="width:150px; height:150px; border-radius: 5px;">
-                        <div class="textos">
+                    <div class="contenidoCurNor">
+                        <img src="${curso.image_url}" alt="${curso.title}">
+                        <div class="textNor">
                             <h3>${curso.title}</h3>
                             <p>${curso.category}</p>
                             <p id="textoP">${curso.description}</p>
@@ -109,22 +112,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function updatePagination(currentPage, totalPages) {
-        document.getElementById("prev").disabled = currentPage === 1;
-        document.getElementById("next").disabled = currentPage === totalPages;
-    }
-
-    document.getElementById("next").addEventListener("click", () => {
-        currentPage++;
-        fetchCourses(currentPage);
-    });
-
-    document.getElementById("prev").addEventListener("click", () => {
-        if (currentPage > 1) {
-            currentPage--;
-            fetchCourses(currentPage);
+    function renderPaginationDots() {
+        paginationDots.innerHTML = "";
+        for (let i = 1; i <= totalPages; i++) {
+            let dot = document.createElement("span");
+            dot.classList.add("dot");
+            if (i === currentPage) {
+                dot.classList.add("active");
+            }
+            dot.addEventListener("click", () => {
+                currentPage = i;
+                fetchCourses(currentPage);
+            });
+            paginationDots.appendChild(dot);
         }
-    });
+    }
 
     fetchCourses(currentPage);
 

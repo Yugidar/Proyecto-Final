@@ -233,6 +233,28 @@ footer {
     border: 2px solid var(--red);
 }
 
+@media only screen and (max-width: 778px) and  (min-width: 578px) {
+    .btn-terciary {
+        margin-right: 400px;
+    }
+    .main-section-botonCrear{
+        height: 18vh;
+    }
+}
+
+@media only screen and (max-width: 1046px) and  (min-width: 778px) {
+    .btn-terciary {
+        font-size: 15px;
+        margin-right: 450px;
+    }
+}
+
+@media only screen and (max-width: 1144px) and  (min-width: 1047px) {
+    .btn-terciary {
+        margin-right: 655px;
+    }
+}
+
 /* TEXT */
 .text-white {
     color: var(--white);
@@ -442,7 +464,6 @@ footer {
 }
 
 .main-section-botonCrear {
-    height: 15vh;
     width: 100%;
     background: var(--light-blue);
 }
@@ -542,6 +563,34 @@ footer {
         min-height: 35vw;
         width: auto;
         background: var(--light-blue);
+    }
+}
+
+@media only screen and (max-width: 599px) and (min-width: 407px) {
+    .section-cursosIns{
+        font-size: 30px;
+        padding-left: 40px;
+    }
+}
+
+@media only screen and (max-width: 1230px) and (min-width: 600px) {
+    .section-cursosIns{
+        font-size: 35px;
+        padding-left: 55px;
+    }
+}
+
+@media only screen and (max-width: 1210px) and (min-width: 1231px) {
+    .section-cursosIns{
+        font-size: 35px;
+        padding-left: 55px;
+    }
+}
+
+@media only screen and (min-width: 1232px){
+    .section-cursosIns{
+        font-size: 35px;
+        padding-left: 85px;
     }
 }
 
@@ -1120,7 +1169,7 @@ select{
     display: flex;
     justify-content: center;
     margin-top: 35px;
-    margin-left: 50%
+    margin-left: 45%
 }
 
 .dot {
@@ -1192,22 +1241,23 @@ select{
     }
 }
 
-@media only screen and (max-width: 776px) and (max-width: 768px) {
+@media only screen and (max-width: 776px) and (min-width: 768px) {
     .search-box {
         top: 125px;
         left: 360px;
     }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 767px) and (min-width: 608px) {
     .search-box {
         top: 290px;
+        left: 365px;
     }
 }
 
-@media only screen and (max-width: 607px) {
+@media only screen and (max-width: 607px) and (min-width: 407px) {
     .search-box {
         top: 290px;
-        left: 285px;
+        left: 265px;
     }
 }
