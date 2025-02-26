@@ -16,8 +16,9 @@
             <p class="text-uppercase quantico-font fw-bold fs-2">Hermcode</p>
         </div>
         <nav class="menu-navbar">
-            <a class="text-yellow fw-bold menu-navbar_a" href="normalCursos.html">Mi Aprendizaje</a>
-            <a class="text-yellow fw-bold menu-navbar__a" href="cursos.html">Cursos</a>
+            <img class="me-1 menu-logo__img mini-img" id="toggleSearch" src="assets/Browser.png" alt="Buscador">
+            <a class="text-yellow fw-bold menu-navbar_a" href="normalCursos.html">MI APRENDIZAJE</a>
+            <a class="text-yellow fw-bold menu-navbar__a" href="cursos.html">CURSOS</a>
             <button id="btnUser" class="btn btn-secondary menu-navbar__btn">Mi cuenta</button>
             <button class="btn btn-secondary menu-navbar__btn" id="logoutBtn">Cerrar Sesión</button>
         </nav>
@@ -25,12 +26,14 @@
 
     <section id="cursoNormal" class="main-section-normal">
         <h3 class="section-cursosIns fs-5">Cursos</h3>
+        <div class="search-box" id="searchBox">
+            <label>Busca tu curso aquí:</label>
+            <input type="text" id="searchInput"">
+        </div>
         <div class="container main-section-normal">
             <div class="main-container-cursos">
                 <div class="cursos-flex" id="cursos-container"></div>
-                <div class="botones">
-                    <div class="pagination-dots" id="pagination-dots"></div>
-                </div>
+                <div class="pagination-dots" id="pagination-dots"></div>            
             </div>
         </div>
     </section>
@@ -44,6 +47,10 @@
                 </a>
                 <a href="https://www.youtube.com" class="d-block mb-1 text-white" target="_blank">
                     <i class="fa-brands fa-youtube"></i> YouTube
+                </a>
+                <a href="https://www.linkedin.com/" class="d-block mb-1 text-white" target="_blank">
+                    <i class="fa-brands fa-linkedin"></i> <!-- Icono de Font Awesome -->
+                    <span>LinkedIn</span>
                 </a>
             </div>
         </div>

@@ -68,27 +68,25 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         cursos.forEach(curso => {
             const cursoDiv = document.createElement("div");
-            cursoDiv.classList.add("curso");
+            cursoDiv.classList.add("cursoNormal");
 
             // 🔹 Determinar si el usuario ya está inscrito
             const isEnrolled = userCourses.has(curso.id_course);
-            const actionText = isEnrolled ? "Obtenido" : "Agregar al curso";
+            const actionText = isEnrolled ? "Curso Obtenido" : "Agregar Curso";
 
             cursoDiv.innerHTML = `
                 <div class="cursoConten">
-                    <div class="contenido">
-                        <img src="${curso.image_url}" alt="${curso.title}" style="width:150px; height:150px; border-radius: 5px;">
-                        <div class="textos">
+                    <div class="contenidoCurNor">
+                        <img src="${curso.image_url}" alt="${curso.title}">
+                        <div class="textNor">
+                            <button class="botonAgre btn-course-action" id="btnAgre" data-id="${curso.id_course}" data-enrolled="${isEnrolled}">
+                                ${actionText}
+                            </button>
                             <h3>${curso.title}</h3>
-                            <p><strong>Categoría:</strong> ${curso.category}</p>
-                            <p>${curso.description}</p>
+                            <p class="fw-bold">Categoría: ${curso.category}</p>
+                            <p id="textoP">${curso.description}</p>
                         </div>
-                    </div>
-                    <div class="botones">
-                        <button class="btn btn-primary btn-course-action" data-id="${curso.id_course}" data-enrolled="${isEnrolled}">
-                            ${actionText}
-                        </button>
-                    </div>
+                    </div>      
                 </div>
             `;
 
@@ -173,5 +171,19 @@ document.addEventListener("DOMContentLoaded", async function () {
         fetchCourses(currentPage);
     } else {
         console.error("❌ ERROR: El contenedor de cursos no existe en el DOM.");
+    }
+});
+
+document.getElementById("toggleSearch").addEventListener("click", function () {
+    let searchBox = document.getElementById("searchBox");
+    searchBox.style.display = searchBox.style.display === "block" ? "none" : "block";
+});
+
+document.addEventListener("click", function (event) {
+    let searchBox = document.getElementById("searchBox");
+    let toggleImage = document.getElementById("toggleSearch");
+
+    if (!searchBox.contains(event.target) && event.target !== toggleImage) {
+        searchBox.style.display = "none";
     }
 });

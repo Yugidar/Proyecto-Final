@@ -43,12 +43,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="contenidoCurNor">
                         <img src="${curso.image_url}" alt="${curso.title}">
                         <div class="textNor">
-                            <button class="botonDele" data-id="${curso.id_user_course}"> <!-- Usa id_user_course -->
+                            <button class="botonDele" id="btnDele" data-id="${curso.id_user_course} "> <!-- Usa id_user_course -->
                                 Salir del curso
                             </button>
                             <h3>${curso.title}</h3>
                             <p class="fw-bold">Categoría: ${curso.category}</p>
-                            <p>${curso.description}</p>
+                            <p id="textoP">${curso.description}</p>
                         </div>
                     </div>
                 </div>
@@ -114,4 +114,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }    
 
     fetchUserCourses(currentPage);
+});
+
+document.getElementById("toggleSearch").addEventListener("click", function () {
+    let searchBox = document.getElementById("searchBox");
+    searchBox.style.display = searchBox.style.display === "block" ? "none" : "block";
+});
+
+document.addEventListener("click", function (event) {
+    let searchBox = document.getElementById("searchBox");
+    let toggleImage = document.getElementById("toggleSearch");
+
+    if (!searchBox.contains(event.target) && event.target !== toggleImage) {
+        searchBox.style.display = "none";
+    }
 });

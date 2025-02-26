@@ -41,18 +41,18 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="textos">
                             <h3>${curso.title}</h3>
                             <p>${curso.category}</p>
-                            <p>${curso.description}</p>
+                            <p id="textoP">${curso.description}</p>
                         </div>
                     </div>
                     <div class="botones">
-                        <button class="btn btn-secondary btn-edit" 
+                        <button class="btn btn-secondary btn-edit" id="btnEdit" 
                             data-id="${curso.id_course}" 
                             data-title="${curso.title}" 
                             data-category="${curso.category}" 
                             data-description="${curso.description}" 
                             data-image="${curso.image_url}">Editar</button>
 
-                        <button class="btn btn-danger btn-delete" data-id="${curso.id_course}">Eliminar</button>
+                        <button id="btnElim" class="btn btn-danger btn-delete" data-id="${curso.id_course}">Eliminar</button>
                     </div>
                 </div>
             `;
@@ -227,5 +227,19 @@ document.addEventListener("DOMContentLoaded", function () {
     function closeModal(modal) {
         modal.classList.remove("open");
         document.body.classList.remove("jw-modal-open");
+    }
+});
+
+document.getElementById("toggleSearch").addEventListener("click", function () {
+    let searchBox = document.getElementById("searchBox");
+    searchBox.style.display = searchBox.style.display === "block" ? "none" : "block";
+});
+
+document.addEventListener("click", function (event) {
+    let searchBox = document.getElementById("searchBox");
+    let toggleImage = document.getElementById("toggleSearch");
+
+    if (!searchBox.contains(event.target) && event.target !== toggleImage) {
+        searchBox.style.display = "none";
     }
 });
