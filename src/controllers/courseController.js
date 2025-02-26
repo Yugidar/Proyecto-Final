@@ -94,3 +94,98 @@ exports.deleteCourse = async (req, res) => {
         res.status(500).json({ error: 'Error al eliminar el curso', details: error.message });
     }
 };
+
+exports.getUserCourses = async (req, res) => {
+    try {
+        const userId = req.user.id_user; // Obtenemos el ID del usuario autenticado
+        const page = parseInt(req.query.page) || 1;
+        const limit = 4; // Cursos por página
+        const offset = (page - 1) * limit;
+
+        const [courses] = await db.promise().query(`
+            SELECT uc.id_user_course, c.id_course, c.title, c.description, c.category, c.image_url
+            FROM course c
+            JOIN user_courses uc ON c.id_course = uc.id_course
+            WHERE uc.id_user = ?
+            LIMIT ? OFFSET ?
+        `, [userId, limit, offset]);
+
+        const [total] = await db.promise().query(`
+            SELECT COUNT(*) AS total FROM user_courses WHERE id_user = ?
+        `, [userId]);
+
+        const totalPages = Math.ceil(total[0].total / limit);
+
+        res.status(200).json({
+            courses,  // Devuelve también `id_user_course`
+            totalPages,
+            currentPage: page
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al obtener los cursos del usuario', details: error.message });
+    }
+};
+
+
+// Eliminar la inscripción del usuario en un curso
+exports.leaveCourse = async (req, res) => {
+    try {
+        console.log("Usuario autenticado:", req.user); // <-- Agregar esto para depuración
+        const userId = req.user.id_user;  // Asegúrate de que esto NO sea undefined
+        const courseId = req.params.id_course;
+
+        if (!userId || !courseId) {
+            return res.status(400).json({ error: "Falta el ID del usuario o del curso" });
+        }
+
+        const [result] = await db.promise().query(`
+            DELETE FROM user_courses WHERE id_user = ? AND id_course = ?
+        `, [userId, courseId]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "No estás inscrito en este curso" });
+        }
+
+        res.status(200).json({ message: "Has salido del curso correctamente" });
+
+    } catch (error) {
+        console.error("Error en leaveCourse:", error);  // <-- Agrega esto para depurar errores en la consola del backend
+        res.status(500).json({ error: 'Error al salir del curso', details: error.message });
+    }
+};
+
+
+exports.enrollInCourse = async (req, res) => {
+    try {
+        const userId = req.user.id_user;  // ID del usuario autenticado
+        const courseId = req.params.id;   // ID del curso desde la URL
+
+        if (!userId || !courseId) {
+            return res.status(400).json({ error: "Faltan datos para la inscripción" });
+        }
+
+        // Verificar si el usuario ya está inscrito
+        const [existingEnrollment] = await db.promise().query(
+            'SELECT * FROM user_courses WHERE id_user = ? AND id_course = ?',
+            [userId, courseId]
+        );
+
+        if (existingEnrollment.length > 0) {
+            return res.status(400).json({ error: "Ya estás inscrito en este curso" });
+        }
+
+        // Inscribir al usuario en el curso
+        await db.promise().query(
+            'INSERT INTO user_courses (id_user, id_course) VALUES (?, ?)',
+            [userId, courseId]
+        );
+
+        res.status(201).json({ message: "Inscripción exitosa" });
+
+    } catch (error) {
+        console.error("Error en enrollInCourse:", error);
+        res.status(500).json({ error: "Error al inscribirse en el curso", details: error.message });
+    }
+};
