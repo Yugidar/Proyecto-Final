@@ -4,7 +4,6 @@ const path = require('path');
 const cors = require('cors');
 const db = require('./config/db');
 
-// Asegurar que JWT_SECRET tenga un valor predeterminado si no está definido
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'secreto_super_seguro';
 
 const app = express();
@@ -17,9 +16,11 @@ app.use(express.urlencoded({ extended: true }));
 // Rutas
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
+const courseRoutes = require('./routes/courseRoutes'); // Nueva ruta de cursos
 
 app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
+app.use('/courses', courseRoutes); // Ruta de cursos
 
 app.use(express.static(path.join(__dirname, '../public')));
 
@@ -35,9 +36,29 @@ app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/register.html'));
 });
 
-// Iniciar el servidor
+// 📌 Verificar conexión a MySQL
+db.getConnection((err, connection) => {
+    if (err) {
+        console.error("❌ Error al conectar con la base de datos:", err.message);
+    } else {
+        console.log("✅ Conexión a la base de datos establecida correctamente");
+        connection.release(); // Liberar conexión
+    }
+});
+
+// 📌 Middleware para manejar rutas inexistentes (404)
+app.use((req, res, next) => {
+    res.status(404).json({ error: "Ruta no encontrada" });
+});
+
+// 📌 Middleware para manejo de errores global
+app.use((err, req, res, next) => {
+    console.error("❌ Error en el servidor:", err);
+    res.status(500).json({ error: "Error interno del servidor" });
+});
+
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
 
 module.exports = app;

@@ -15,7 +15,13 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
     if (response.ok) {
         alert('Inicio de sesión exitoso');
         localStorage.setItem('token', data.token);
-        window.location.href = 'productos.html';
+        localStorage.setItem('role', data.role); // Guardamos el rol en el almacenamiento local
+
+        if (data.role === 'admin') {
+            window.location.href = 'adminCursos.html';
+        } else {
+            window.location.href = 'cursos.html';
+        }
     } else {
         alert(data.error);
     }

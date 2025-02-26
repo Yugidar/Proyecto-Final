@@ -46,8 +46,8 @@ class Curso {
 class GestorDeCursos {
     constructor(cursos) {
         this.cursos = cursos.map(curso => (new Curso(
-            curso.id, 
-            curso.autor, 
+            curso.id,
+            curso.autor,
             curso.nombreCurso,
             curso.terminado
         ))) ?? [];
@@ -63,7 +63,7 @@ class GestorDeCursos {
         }));
         localStorage.setItem('cursos', JSON.stringify(cursosLimpios))
     }
-  
+
     agregarCurso(autor, nombreCurso) {
         const id = this.cursos.length
             ? this.cursos[this.cursos.length - 1].id + 1
@@ -73,22 +73,22 @@ class GestorDeCursos {
         this.setCursosToLocalStorage()
         this.renderListaCursos()
     }
-  
+
     eliminarCurso(id) {
         this.cursos = this.cursos.filter(curso => curso.id !== id)
         this.setCursosToLocalStorage()
         this.renderListaCursos()
     }
 
-    actualizarCurso({id, autor, nombreCurso}) {
+    actualizarCurso({ id, autor, nombreCurso }) {
         const curso = this.cursos.find(curso => curso.id === id);
-    
+
         if (!curso) {
             console.error(`Curso con ID ${id} no encontrado`);
             return;
         }
-    
-       
+
+
         if (autor) curso.setAutor(autor);
         if (nombreCurso) curso.setNombreCurso(nombreCurso);
         this.setCursosToLocalStorage();
@@ -106,7 +106,7 @@ class GestorDeCursos {
             console.error(`Curso con ID ${id} no encontrado`);
         }
     }
-  
+
     renderListaCursos() {
         this.clearContainer('listaCursos')
         const listaCursos = document.getElementById('listaCursos')
@@ -154,7 +154,7 @@ class GestorDeCursos {
                     </button>
                 </div>
             `;
-            
+
             listaCursos.appendChild(card);
 
             document.getElementById(`estado-${curso.id}`).addEventListener('change', () => {
@@ -172,13 +172,13 @@ class GestorDeCursos {
             })
         });
     }
-  
+
     clearContainer(id) {
         document.getElementById(id).innerHTML = ''
     }
 }
 function handleEditClick(event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     const id = document.getElementById('curso-id').value;
     const autor = document.getElementById('owner-name').value;
@@ -201,15 +201,15 @@ function handleEditClick(event) {
 
 function setUserDisplayElement() {
     userDisplayElement = document.getElementById('usernameDisplay')
-    if(!userDisplayElement) return
+    if (!userDisplayElement) return
     const { username } = sessionData
     userDisplayElement.innerHTML = username
 }
 
 function onCursosInit() {
     const cursosBody = document.getElementById('cursosBody')
-    if(!cursosBody) return;
-    if(!sessionData) {
+    if (!cursosBody) return;
+    if (!sessionData) {
         redirect(`${window.location.origin}`)
     }
     setUserDisplayElement();
@@ -218,15 +218,15 @@ function onCursosInit() {
 }
 
 function setBtnLoginValue(htmlElement) {
-    if(!sessionData) return
-    if(!htmlElement) return
+    if (!sessionData) return
+    if (!htmlElement) return
     const { username, email } = sessionData
-    if(username && email) htmlElement.innerHTML = 'VER CURSOS';
+    if (username && email) htmlElement.innerHTML = 'VER CURSOS';
 }
 
 // Obtiene la información de la sesión activa del localStorage
 function setSessionData(sessionValues) {
-    if(sessionValues) localStorage.setItem('session', JSON.stringify(sessionValues));
+    if (sessionValues) localStorage.setItem('session', JSON.stringify(sessionValues));
     sessionData = JSON.parse(localStorage.getItem('session'))
 }
 
@@ -244,9 +244,9 @@ function closeModal(event) {
 
 function onLoginSubmit(event) {
     event.preventDefault()
-    const formValues = Object.values(event.target).reduce((obj,field) => { obj[field.name] = field.value; return obj }, {})
+    const formValues = Object.values(event.target).reduce((obj, field) => { obj[field.name] = field.value; return obj }, {})
 
-    if(Object.values(formValues).some(el => !el)) return
+    if (Object.values(formValues).some(el => !el)) return
 
     setSessionData({
         username: formValues["login-username"],
@@ -262,16 +262,16 @@ function onLoginSubmit(event) {
 
 function onAgregarCursoSubmit(event) {
     event.preventDefault();
-    const formValues = Object.values(event.target).reduce((obj,field) => { obj[field.name] = field.value; return obj }, {})
+    const formValues = Object.values(event.target).reduce((obj, field) => { obj[field.name] = field.value; return obj }, {})
 
-    if(Object.values({
+    if (Object.values({
         autor: formValues["owner-name"],
         nombreCurso: formValues["curso-name"],
     }).some(el => !el)) return
 
     event.target.reset()
 
-    if(formValues['curso-id']) {
+    if (formValues['curso-id']) {
         gestorDeCursos.actualizarCurso({
             id: Number(formValues['curso-id']),
             autor: formValues["owner-name"],
@@ -279,14 +279,14 @@ function onAgregarCursoSubmit(event) {
         })
     }
 
-    if(!formValues['curso-id']) {
+    if (!formValues['curso-id']) {
         gestorDeCursos.agregarCurso(formValues["owner-name"], formValues["curso-name"])
     }
     closeModal()
 }
 
 function onBtnLoginClick() {
-    if(sessionData) {
+    if (sessionData) {
         redirect(`${window.location.origin}/pages/cursos.html`)
         return
     }
@@ -294,14 +294,14 @@ function onBtnLoginClick() {
 }
 
 function redirectToLogin() {
-    window.location.href = "login.html"; 
+    window.location.href = "login.html";
 }
 
 function redirectToPrincipal() {
-    window.location.href = "index.html"; 
+    window.location.href = "index.html";
 }
 
-function onClickEditarCurso({ id, autor, nombreCurso}) {
+function onClickEditarCurso({ id, autor, nombreCurso }) {
     openModal('agregarCursoModal');
 
     document.getElementById('agregarCursoModalTitle').innerHTML = 'Actualiza el curso'
@@ -319,7 +319,7 @@ function onClickAgregarCurso() {
     document.getElementById('curso-id').value = null
     document.getElementById('owner-name').value = ''
     document.getElementById('curso-name').value = ''
-    document.getElementById('agregarCursoSubmitBtn').value =  'Agregar curso'
+    document.getElementById('agregarCursoSubmitBtn').value = 'Agregar curso'
 }
 
 function redirect(url) {
@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setBtnLoginValue(btnLoginElement);
     onCursosInit()
 
-    window.addEventListener('load', function() {
+    window.addEventListener('load', function () {
         // close modals on background click
         document.addEventListener('click', event => {
             if (event.target.classList.contains('jw-modal')) {
@@ -349,3 +349,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+document.addEventListener('DOMContentLoaded', () => {
+    const logoutButton = document.getElementById('btnLogout');
+
+    if (logoutButton) {
+        logoutButton.addEventListener('click', () => {
+            localStorage.removeItem('token'); // Eliminar el token
+            localStorage.removeItem('role');  // Eliminar el rol del usuario
+            alert('Sesión cerrada correctamente.');
+            window.location.href = 'login.html'; // Redirigir al login
+        });
+    }
+});

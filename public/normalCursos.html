@@ -7,8 +7,6 @@
     <link rel="website icon" type="png" href="./assets/logo 1.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="styles/styles.css">
-    <script type="text/javascript" src="js/main.js"></script>
-    <script type="text/javascript" src="js/normalCursos.js"></script>
 </head>
 <body>
     <header class="container py-3 w-100 menu">
@@ -55,7 +53,23 @@
             </div>
         </div>
     </div>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Debes iniciar sesión primero.');
+                window.location.href = 'login.html'; // Redirige a la página de login
+                return;
+            }
+    
+            const role = localStorage.getItem('role');
+            if (role !== 'normal') {
+                alert('Acceso denegado. No tienes permiso para entrar aquí.');
+                window.location.href = 'index.html'; // Redirige a la página principal
+            }
+        });
+    </script>
+    
     <!--Muestra de como se debe llevar a cabo la muestra de los datos-->     
     <script>
         let cursos = [
@@ -125,7 +139,8 @@
 
         renderCursos(currentPage);
     </script>   
-
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/normalCursos.js"></script>
     
     <footer class="w-100">
         <div class="container w-100 py-5 footer-container">
@@ -147,6 +162,6 @@
             </div>
         </div>
     </footer>
-
+    
 </body>
 </html>
