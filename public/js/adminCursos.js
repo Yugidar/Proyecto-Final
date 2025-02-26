@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const title = document.getElementById("nombreCurso").value;
         const category = document.getElementById("categoriaCurso").value;
         const description = document.getElementById("descripcionCurso").value;
-        const image_url = document.getElementById("imagenCurso").value || './assets/default.png';
+        const image_url = document.getElementById("imagenCurso").value || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg';
 
         if (!title || !category || !description) {
             alert("Todos los campos son obligatorios, excepto la imagen.");
