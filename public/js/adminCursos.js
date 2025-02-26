@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     let currentPage = 1;
+    let editingCourseId = null; // Almacenar el ID del curso que se edita
 
     async function fetchCourses(page) {
         try {
@@ -22,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
             renderCursos(data.courses);
             updatePagination(data.currentPage, data.totalPages);
         } catch (error) {
-            console.error(error);
+            console.error("Error al obtener los cursos:", error);
         }
     }
 
@@ -44,7 +45,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                     </div>
                     <div class="botones">
-                        <button class="btn btn-secondary btn-edit" data-id="${curso.id_course}">Editar</button>
+                        <button class="btn btn-secondary btn-edit" 
+                            data-id="${curso.id_course}" 
+                            data-title="${curso.title}" 
+                            data-category="${curso.category}" 
+                            data-description="${curso.description}" 
+                            data-image="${curso.image_url}">Editar</button>
+
                         <button class="btn btn-danger btn-delete" data-id="${curso.id_course}">Eliminar</button>
                     </div>
                 </div>
@@ -52,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
             container.appendChild(cursoDiv);
         });
 
-        // Agregar eventos a los botones dinámicos
+        // Eventos dinámicos
         document.querySelectorAll(".btn-delete").forEach(button => {
             button.addEventListener("click", function () {
                 const id = this.getAttribute("data-id");
@@ -63,7 +70,12 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".btn-edit").forEach(button => {
             button.addEventListener("click", function () {
                 const id = this.getAttribute("data-id");
-                editarCurso(id);
+                const title = this.getAttribute("data-title");
+                const category = this.getAttribute("data-category");
+                const description = this.getAttribute("data-description");
+                const image = this.getAttribute("data-image");
+
+                editarCurso(id, title, category, description, image);
             });
         });
     }
@@ -92,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Curso eliminado correctamente");
             fetchCourses(currentPage);
         } catch (error) {
-            console.error(error);
+            console.error("Error al eliminar curso:", error);
             alert("Hubo un error al eliminar el curso");
         }
     }
@@ -119,7 +131,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // MODAL CREAR CURSO
     const modalCrear = document.getElementById("modalCrear");
     const btnCrear = document.getElementById("btnCrear");
-    const btnCloseCrear = modalCrear?.querySelector(".fa-xmark");
 
     if (btnCrear) {
         btnCrear.onclick = function () {
@@ -127,13 +138,6 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
 
-    if (btnCloseCrear) {
-        btnCloseCrear.onclick = function () {
-            closeModal(modalCrear);
-        };
-    }
-
-    // Capturar evento submit del formulario
     document.getElementById("formCrearCurso").addEventListener("submit", async function (event) {
         event.preventDefault();
 
@@ -149,11 +153,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             const token = localStorage.getItem("token");
-            if (!token) {
-                alert("Debes iniciar sesión primero.");
-                window.location.href = "login.html";
-                return;
-            }
 
             const response = await fetch("/courses", {
                 method: "POST",
@@ -172,27 +171,61 @@ document.addEventListener("DOMContentLoaded", function () {
             closeModal(modalCrear);
             fetchCourses(1);
         } catch (error) {
-            console.error(error);
+            console.error("Error al crear curso:", error);
             alert("Hubo un error al crear el curso");
         }
     });
 
-    // Funciones de modal
-    function openModal(modal) {
-        if (modal) {
-            modal.classList.add("open");
-            document.body.classList.add("jw-modal-open");
-        } else {
-            console.error("El modal no existe en el DOM.");
+    // FUNCIÓN PARA EDITAR CURSO
+    function editarCurso(id, title, category, description, image) {
+        editingCourseId = id;
+        document.getElementById("nombreCursoEdit").value = title;
+        document.getElementById("categoriaCursoEdit").value = category;
+        document.getElementById("descripcionCursoEdit").value = description;
+        document.getElementById("imagenCursoEdit").value = image;
+        openModal(document.getElementById("modalEdit"));
+    }
+
+    document.getElementById("formEditCurso").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const title = document.getElementById("nombreCursoEdit").value;
+        const category = document.getElementById("categoriaCursoEdit").value;
+        const description = document.getElementById("descripcionCursoEdit").value;
+        const image_url = document.getElementById("imagenCursoEdit").value;
+
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await fetch(`/courses/${editingCourseId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ title, category, description, image_url })
+            });
+
+            if (!response.ok) {
+                throw new Error("Error al actualizar el curso");
+            }
+
+            alert("Curso actualizado correctamente");
+            closeModal(document.getElementById("modalEdit"));
+            fetchCourses(1);
+        } catch (error) {
+            console.error("Error al actualizar curso:", error);
+            alert("Hubo un error al actualizar el curso");
         }
+    });
+
+    function openModal(modal) {
+        modal.classList.add("open");
+        document.body.classList.add("jw-modal-open");
     }
 
     function closeModal(modal) {
-        if (modal) {
-            modal.classList.remove("open");
-            document.body.classList.remove("jw-modal-open");
-        } else {
-            console.error("No se pudo cerrar el modal, no existe en el DOM.");
-        }
+        modal.classList.remove("open");
+        document.body.classList.remove("jw-modal-open");
     }
 });

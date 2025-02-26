@@ -46,6 +46,35 @@ exports.createCourse = async (req, res) => {
     }
 };
 
+exports.updateCourse = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, category, description, image_url } = req.body;
+
+        if (!title || !category || !description || !image_url) {
+            return res.status(400).json({ error: "Todos los campos son obligatorios" });
+        }
+
+        const query = "UPDATE course SET title = ?, category = ?, description = ?, image_url = ? WHERE id_course = ?";
+        const values = [title, category, description, image_url, id];
+
+        db.query(query, values, (err, result) => {
+            if (err) {
+                console.error("Error en la actualización:", err);
+                return res.status(500).json({ error: "Error al actualizar el curso" });
+            }
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ error: "Curso no encontrado" });
+            }
+            res.json({ message: "Curso actualizado correctamente" });
+        });
+    } catch (error) {
+        console.error("Error en updateCourse:", error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+};
+
+
 exports.deleteCourse = async (req, res) => {
     try {
         const { id } = req.params;
