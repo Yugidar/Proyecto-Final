@@ -1,10 +1,8 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const cursosContainer = document.getElementById("cursos-container");
-    const paginationDots = document.getElementById("pagination-dots");
+document.addEventListener("DOMContentLoaded", async function () {
     let currentPage = 1;
-    let totalPages = 1;
+    const itemsPerPage = 4;
 
-    async function fetchCourses(page = 1) {
+    async function fetchCourses(page) {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -13,71 +11,149 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // 🔹 Corregida la ruta de la API (antes estaba incorrecta)
+            // 🔹 Obtener cursos con paginación
             const response = await fetch(`/courses/paginated?page=${page}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
             if (!response.ok) {
-                throw new Error(`Error en la API: ${response.status} ${response.statusText}`);
+                throw new Error('Error al obtener cursos');
             }
 
             const data = await response.json();
-            console.log("📢 Datos de la API:", data);
 
-            // 🔹 Verifica que `data.courses` es un array antes de usar `.map()`
-            if (!data.courses || !Array.isArray(data.courses)) {
-                throw new Error("La API no devolvió cursos válidos");
+            // 🔹 Verificar si hay cursos en la respuesta
+            if (!data.courses || data.courses.length === 0) {
+                document.getElementById("cursos-container").innerHTML = "<p>No hay cursos disponibles.</p>";
+                return;
             }
 
-            renderCursos(data.courses, data.userCourses || []);
-            totalPages = data.totalPages || 1;
-            renderPaginationDots();
+            // 🔹 Obtener los cursos en los que el usuario está inscrito
+            const userCourses = await fetchUserCourses();
+
+            renderCursos(data.courses, userCourses);
+            renderPaginationDots(data.currentPage, data.totalPages);
         } catch (error) {
-            console.error("❌ Error al obtener los cursos:", error);
-            cursosContainer.innerHTML = "<p>Error al cargar los cursos. Inténtalo más tarde.</p>";
+            console.error("Error al obtener los cursos:", error);
+        }
+    }
+
+    async function fetchUserCourses() {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch('/courses/user-courses', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (!response.ok) {
+                throw new Error("Error al obtener los cursos del usuario");
+            }
+
+            const data = await response.json();
+            return new Set(data.courses.map(course => course.id_course)); // Convertimos a Set para búsqueda rápida
+        } catch (error) {
+            console.error("Error al obtener cursos del usuario:", error);
+            return new Set();
         }
     }
 
     function renderCursos(cursos, userCourses) {
-        cursosContainer.innerHTML = "";
-        const userCoursesMap = new Set(userCourses.map(curso => curso.id_course));
+        const container = document.getElementById("cursos-container");
+        if (!container) {
+            console.error("❌ ERROR: No se encontró el contenedor de cursos.");
+            return;
+        }
+
+        container.innerHTML = "";
 
         cursos.forEach(curso => {
             const cursoDiv = document.createElement("div");
-            cursoDiv.classList.add("cursoNormal");
+            cursoDiv.classList.add("curso");
 
-            const actionButton = userCoursesMap.has(curso.id_course)
-                ? `<button class="botonObtenido" disabled>Obtenido</button>`
-                : `<button class="botonIngresar" data-id="${curso.id_course}">Ingresar curso</button>`;
+            // 🔹 Determinar si el usuario ya está inscrito
+            const isEnrolled = userCourses.has(curso.id_course);
+            const actionText = isEnrolled ? "Obtenido" : "Agregar al curso";
 
             cursoDiv.innerHTML = `
                 <div class="cursoConten">
-                    <div class="contenidoCurNor">
-                        <img src="${curso.image_url || 'default-image.jpg'}" alt="${curso.title}">
-                        <div class="textNor">
-                            ${actionButton}
+                    <div class="contenido">
+                        <img src="${curso.image_url}" alt="${curso.title}" style="width:150px; height:150px; border-radius: 5px;">
+                        <div class="textos">
                             <h3>${curso.title}</h3>
-                            <p class="fw-bold">Categoría: ${curso.category || 'Sin categoría'}</p>
-                            <p>${curso.description || 'Sin descripción'}</p>
+                            <p><strong>Categoría:</strong> ${curso.category}</p>
+                            <p>${curso.description}</p>
                         </div>
+                    </div>
+                    <div class="botones">
+                        <button class="btn btn-primary btn-course-action" data-id="${curso.id_course}" data-enrolled="${isEnrolled}">
+                            ${actionText}
+                        </button>
                     </div>
                 </div>
             `;
-            cursosContainer.appendChild(cursoDiv);
+
+            container.appendChild(cursoDiv);
         });
 
-        // Asignar eventos a los botones de inscripción
-        document.querySelectorAll(".botonIngresar").forEach(button => {
+        // 🔹 Agregar eventos a los botones
+        document.querySelectorAll(".btn-course-action").forEach(button => {
             button.addEventListener("click", function () {
-                const id_course = this.getAttribute("data-id");
-                ingresarCurso(id_course);
+                const courseId = this.getAttribute("data-id");
+                const enrolled = this.getAttribute("data-enrolled") === "true";
+
+                if (enrolled) {
+                    ingresarCurso(courseId);
+                } else {
+                    inscribirseCurso(courseId);
+                }
             });
         });
     }
 
-    function renderPaginationDots() {
-        paginationDots.innerHTML = "";
+    async function inscribirseCurso(courseId) {
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await fetch(`/courses/enroll/${courseId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error("Error al inscribirse en el curso");
+            }
+
+            alert("Te has inscrito correctamente en el curso.");
+            fetchCourses(currentPage); // Recargar la lista de cursos
+        } catch (error) {
+            console.error("Error al inscribirse en el curso:", error);
+            alert("Hubo un error al inscribirse en el curso.");
+        }
+    }
+
+    function ingresarCurso(courseId) {
+        alert(`Ingresando al curso con ID: ${courseId}`);
+        // Aquí podrías redirigir a una página específica del curso
+        // window.location.href = `/curso/${courseId}`;
+    }
+
+    function renderPaginationDots(currentPage, totalPages) {
+        const paginationContainer = document.getElementById("pagination-container");
+
+        // Si no existe, créalo y agrégalo al final de la página
+        if (!paginationContainer) {
+            const newPaginationContainer = document.createElement("div");
+            newPaginationContainer.id = "pagination-container";
+            newPaginationContainer.classList.add("pagination-dots");
+            document.getElementById("cursos-container").after(newPaginationContainer);
+        }
+
+        const paginationDots = document.getElementById("pagination-container");
+        paginationDots.innerHTML = ""; // Limpiar los puntos anteriores
+
         for (let i = 1; i <= totalPages; i++) {
             let dot = document.createElement("span");
             dot.classList.add("dot");
@@ -92,32 +168,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    async function ingresarCurso(id_course) {
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                alert('Debes iniciar sesión primero.');
-                window.location.href = 'login.html';
-                return;
-            }
-
-            const response = await fetch(`/courses/enroll/${id_course}`, {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-
-            if (!response.ok) {
-                throw new Error('Error al inscribirse en el curso');
-            }
-
-            alert('Te has inscrito en el curso correctamente.');
-            fetchCourses(currentPage);
-
-        } catch (error) {
-            console.error("❌ Error al inscribirse en el curso:", error);
-            alert('Hubo un error al intentar inscribirse en el curso.');
-        }
+    // 🔹 Verificar que el contenedor de cursos existe antes de llamar a fetchCourses
+    if (document.getElementById("cursos-container")) {
+        fetchCourses(currentPage);
+    } else {
+        console.error("❌ ERROR: El contenedor de cursos no existe en el DOM.");
     }
-
-    fetchCourses(currentPage);
 });

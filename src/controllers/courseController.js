@@ -156,3 +156,36 @@ exports.leaveCourse = async (req, res) => {
     }
 };
 
+
+exports.enrollInCourse = async (req, res) => {
+    try {
+        const userId = req.user.id_user;  // ID del usuario autenticado
+        const courseId = req.params.id;   // ID del curso desde la URL
+
+        if (!userId || !courseId) {
+            return res.status(400).json({ error: "Faltan datos para la inscripción" });
+        }
+
+        // Verificar si el usuario ya está inscrito
+        const [existingEnrollment] = await db.promise().query(
+            'SELECT * FROM user_courses WHERE id_user = ? AND id_course = ?',
+            [userId, courseId]
+        );
+
+        if (existingEnrollment.length > 0) {
+            return res.status(400).json({ error: "Ya estás inscrito en este curso" });
+        }
+
+        // Inscribir al usuario en el curso
+        await db.promise().query(
+            'INSERT INTO user_courses (id_user, id_course) VALUES (?, ?)',
+            [userId, courseId]
+        );
+
+        res.status(201).json({ message: "Inscripción exitosa" });
+
+    } catch (error) {
+        console.error("Error en enrollInCourse:", error);
+        res.status(500).json({ error: "Error al inscribirse en el curso", details: error.message });
+    }
+};

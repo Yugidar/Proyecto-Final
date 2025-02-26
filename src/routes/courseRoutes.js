@@ -4,7 +4,7 @@ const courseController = require('../controllers/courseController');
 const authenticate = require('../middleware/authenticate');
 const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
 
-router.get('/paginated', authenticate('admin'), courseController.getPaginatedCourses);
+router.get('/paginated', authenticate(''), courseController.getPaginatedCourses);
 router.post('/', authenticate('admin'), courseController.createCourse);
 router.delete('/:id', authenticate('admin'), courseController.deleteCourse);
 router.put('/:id', authenticate('admin'), courseController.updateCourse);
@@ -32,8 +32,8 @@ router.delete('/user-courses/:id_user_course', authenticate(), async (req, res) 
     }
 });
 
-
-
+// 🔹 Nueva ruta para inscribirse en un curso
+router.post('/enroll/:id', authenticate(), courseController.enrollInCourse);
 
 // Verifica que esta ruta está en la consola
 router.get('/test', (req, res) => {
