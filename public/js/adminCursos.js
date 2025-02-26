@@ -39,24 +39,31 @@ document.addEventListener("DOMContentLoaded", function () {
                         <img src="${curso.image_url}" alt="${curso.title}" style="width:150px; height:150px; border-radius: 5px;">
                         <div class="textos">
                             <h3>${curso.title}</h3>
-                            <p id="textoCurso">${curso.category}</p>
-                            <p id="textoCurso">${curso.description}</p>
+                            <p>${curso.category}</p>
+                            <p>${curso.description}</p>
                         </div>
                     </div>
                     <div class="botones">
-                        <button id="btnEdit" class="btn btn-secondary botones__btn" onclick="editarCurso(${curso.id_course})">Editar</button>
-                        <button id="btnElim" class="btn btn-danger botones__btn" data-id="${curso.id_course}">Eliminar</button>
+                        <button class="btn btn-secondary btn-edit" data-id="${curso.id_course}">Editar</button>
+                        <button class="btn btn-danger btn-delete" data-id="${curso.id_course}">Eliminar</button>
                     </div>
                 </div>
             `;
             container.appendChild(cursoDiv);
         });
 
-        // Asignar eventos a los botones de eliminar
-        document.querySelectorAll(".btn-danger").forEach(button => {
+        // Agregar eventos a los botones dinámicos
+        document.querySelectorAll(".btn-delete").forEach(button => {
             button.addEventListener("click", function () {
                 const id = this.getAttribute("data-id");
                 eliminarCurso(id);
+            });
+        });
+
+        document.querySelectorAll(".btn-edit").forEach(button => {
+            button.addEventListener("click", function () {
+                const id = this.getAttribute("data-id");
+                editarCurso(id);
             });
         });
     }
@@ -83,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             alert("Curso eliminado correctamente");
-            fetchCourses(currentPage); // Recargar la lista después de eliminar
+            fetchCourses(currentPage);
         } catch (error) {
             console.error(error);
             alert("Hubo un error al eliminar el curso");
@@ -108,72 +115,84 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     fetchCourses(currentPage);
-});
 
-// MODAL CREAR CURSO
-var modalCrear = document.getElementById("modalCrear");
-var btnCrear = document.getElementById("btnCrear");
-var btnCloseCrear = modalCrear.querySelector(".fa-xmark");
+    // MODAL CREAR CURSO
+    const modalCrear = document.getElementById("modalCrear");
+    const btnCrear = document.getElementById("btnCrear");
+    const btnCloseCrear = modalCrear?.querySelector(".fa-xmark");
 
-// Abrir modal de creación
-btnCrear.onclick = function () {
-    openModal(modalCrear);
-};
-
-// Cerrar modal de creación
-btnCloseCrear.onclick = function () {
-    closeModal(modalCrear);
-};
-
-// Función para agregar un curso nuevo
-document.getElementById("guardarCurso").addEventListener("click", async function () {
-    const title = document.getElementById("nombreCurso").value;
-    const category = document.getElementById("categoriaCurso").value;
-    const description = document.getElementById("descripcionCurso").value;
-    const image_url = document.getElementById("imagenCurso").value;
-
-    if (!title || !category || !description || !image_url) {
-        alert("Todos los campos son obligatorios");
-        return;
+    if (btnCrear) {
+        btnCrear.onclick = function () {
+            openModal(modalCrear);
+        };
     }
 
-    try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-            alert("Debes iniciar sesión primero.");
-            window.location.href = "login.html";
+    if (btnCloseCrear) {
+        btnCloseCrear.onclick = function () {
+            closeModal(modalCrear);
+        };
+    }
+
+    // Capturar evento submit del formulario
+    document.getElementById("formCrearCurso").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const title = document.getElementById("nombreCurso").value;
+        const category = document.getElementById("categoriaCurso").value;
+        const description = document.getElementById("descripcionCurso").value;
+        const image_url = document.getElementById("imagenCurso").value || './assets/default.png';
+
+        if (!title || !category || !description) {
+            alert("Todos los campos son obligatorios, excepto la imagen.");
             return;
         }
 
-        const response = await fetch("/courses", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({ title, category, description, image_url })
-        });
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert("Debes iniciar sesión primero.");
+                window.location.href = "login.html";
+                return;
+            }
 
-        if (!response.ok) {
-            throw new Error("Error al crear el curso");
+            const response = await fetch("/courses", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ title, category, description, image_url })
+            });
+
+            if (!response.ok) {
+                throw new Error("Error al crear el curso");
+            }
+
+            alert("Curso creado exitosamente");
+            closeModal(modalCrear);
+            fetchCourses(1);
+        } catch (error) {
+            console.error(error);
+            alert("Hubo un error al crear el curso");
         }
+    });
 
-        alert("Curso creado exitosamente");
-        closeModal(modalCrear);
-        fetchCourses(1); // Recargar lista
-    } catch (error) {
-        console.error(error);
-        alert("Hubo un error al crear el curso");
+    // Funciones de modal
+    function openModal(modal) {
+        if (modal) {
+            modal.classList.add("open");
+            document.body.classList.add("jw-modal-open");
+        } else {
+            console.error("El modal no existe en el DOM.");
+        }
+    }
+
+    function closeModal(modal) {
+        if (modal) {
+            modal.classList.remove("open");
+            document.body.classList.remove("jw-modal-open");
+        } else {
+            console.error("No se pudo cerrar el modal, no existe en el DOM.");
+        }
     }
 });
-
-// Funciones de modal
-function openModal(modal) {
-    modal.classList.add("open");
-    document.body.classList.add("jw-modal-open");
-}
-
-function closeModal(modal) {
-    modal.classList.remove("open");
-    document.body.classList.remove("jw-modal-open");
-}

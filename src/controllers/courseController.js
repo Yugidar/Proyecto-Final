@@ -25,6 +25,27 @@ exports.getPaginatedCourses = async (req, res) => {
     }
 };
 
+exports.createCourse = async (req, res) => {
+    try {
+        const { title, description, category, image_url } = req.body;
+
+        if (!title || !description || !category) {
+            return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+        }
+
+        const [result] = await db.promise().query(
+            'INSERT INTO course (title, description, category, image_url) VALUES (?, ?, ?, ?)',
+            [title, description, category, image_url]
+        );
+
+        res.status(201).json({ message: 'Curso creado correctamente', courseId: result.insertId });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al crear el curso', details: error.message });
+    }
+};
+
 exports.deleteCourse = async (req, res) => {
     try {
         const { id } = req.params;
