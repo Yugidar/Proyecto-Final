@@ -94,3 +94,58 @@ exports.deleteCourse = async (req, res) => {
         res.status(500).json({ error: 'Error al eliminar el curso', details: error.message });
     }
 };
+
+exports.getUserCourses = async (req, res) => {
+    try {
+        const userId = req.user.id_user;
+        const page = parseInt(req.query.page) || 1;
+        const limit = 4; // Cursos por página
+        const offset = (page - 1) * limit;
+
+        const [courses] = await db.promise().query(`
+            SELECT c.id_course, c.title, c.description, c.category, c.image_url
+            FROM course c
+            JOIN user_courses uc ON c.id_course = uc.id_course
+            WHERE uc.id_user = ?
+            LIMIT ? OFFSET ?
+        `, [userId, limit, offset]);
+
+        const [total] = await db.promise().query(`
+            SELECT COUNT(*) AS total FROM user_courses WHERE id_user = ?
+        `, [userId]);
+
+        const totalPages = Math.ceil(total[0].total / limit);
+
+        res.status(200).json({
+            courses,
+            totalPages,
+            currentPage: page
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al obtener los cursos del usuario', details: error.message });
+    }
+};
+
+// Eliminar la inscripción del usuario en un curso
+exports.leaveCourse = async (req, res) => {
+    try {
+        const userId = req.user.id_user;
+        const courseId = req.params.id_course;
+
+        const [result] = await db.promise().query(`
+            DELETE FROM user_courses WHERE id_user = ? AND id_course = ?
+        `, [userId, courseId]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "No estás inscrito en este curso" });
+        }
+
+        res.status(200).json({ message: "Has salido del curso correctamente" });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al salir del curso', details: error.message });
+    }
+};
