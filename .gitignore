@@ -6,3 +6,5 @@ node_modules
 
 # Ignora el archivo README
 README.txt
+
+coverage
