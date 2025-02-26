@@ -97,13 +97,13 @@ exports.deleteCourse = async (req, res) => {
 
 exports.getUserCourses = async (req, res) => {
     try {
-        const userId = req.user.id_user;
+        const userId = req.user.id_user; // Obtenemos el ID del usuario autenticado
         const page = parseInt(req.query.page) || 1;
         const limit = 4; // Cursos por página
         const offset = (page - 1) * limit;
 
         const [courses] = await db.promise().query(`
-            SELECT c.id_course, c.title, c.description, c.category, c.image_url
+            SELECT uc.id_user_course, c.id_course, c.title, c.description, c.category, c.image_url
             FROM course c
             JOIN user_courses uc ON c.id_course = uc.id_course
             WHERE uc.id_user = ?
@@ -117,7 +117,7 @@ exports.getUserCourses = async (req, res) => {
         const totalPages = Math.ceil(total[0].total / limit);
 
         res.status(200).json({
-            courses,
+            courses,  // Devuelve también `id_user_course`
             totalPages,
             currentPage: page
         });
@@ -128,11 +128,17 @@ exports.getUserCourses = async (req, res) => {
     }
 };
 
+
 // Eliminar la inscripción del usuario en un curso
 exports.leaveCourse = async (req, res) => {
     try {
-        const userId = req.user.id_user;
+        console.log("Usuario autenticado:", req.user); // <-- Agregar esto para depuración
+        const userId = req.user.id_user;  // Asegúrate de que esto NO sea undefined
         const courseId = req.params.id_course;
+
+        if (!userId || !courseId) {
+            return res.status(400).json({ error: "Falta el ID del usuario o del curso" });
+        }
 
         const [result] = await db.promise().query(`
             DELETE FROM user_courses WHERE id_user = ? AND id_course = ?
@@ -145,7 +151,8 @@ exports.leaveCourse = async (req, res) => {
         res.status(200).json({ message: "Has salido del curso correctamente" });
 
     } catch (error) {
-        console.error(error);
+        console.error("Error en leaveCourse:", error);  // <-- Agrega esto para depurar errores en la consola del backend
         res.status(500).json({ error: 'Error al salir del curso', details: error.message });
     }
 };
+

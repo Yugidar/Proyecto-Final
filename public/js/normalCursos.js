@@ -36,12 +36,14 @@ document.addEventListener("DOMContentLoaded", function () {
         cursos.forEach(curso => {
             const cursoDiv = document.createElement("div");
             cursoDiv.classList.add("cursoNormal");
+            cursoDiv.id = `curso-${curso.id_user_course}`; // Se usa id_user_course para el DOM
+
             cursoDiv.innerHTML = `
                 <div class="cursoConten">
                     <div class="contenidoCurNor">
                         <img src="${curso.image_url}" alt="${curso.title}">
                         <div class="textNor">
-                            <button class="botonDele" id="btnDele-${curso.id_course}" onclick="salirDelCurso(${curso.id_course})">
+                            <button class="botonDele" data-id="${curso.id_user_course}"> <!-- Usa id_user_course -->
                                 Salir del curso
                             </button>
                             <h3>${curso.title}</h3>
@@ -52,6 +54,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
             `;
             cursosContainer.appendChild(cursoDiv);
+        });
+
+        // Añadir eventos a los botones después de renderizar
+        document.querySelectorAll(".botonDele").forEach(button => {
+            button.addEventListener("click", function () {
+                const id_user_course = this.getAttribute("data-id"); // Usa id_user_course
+                salirDelCurso(id_user_course);
+            });
         });
     }
 
@@ -71,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    async function salirDelCurso(id_course) {
+    async function salirDelCurso(id_user_course) {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -79,24 +89,29 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.location.href = 'login.html';
                 return;
             }
-
-            const response = await fetch(`/courses/user-courses/${id_course}`, {
+    
+            const confirmar = confirm("¿Estás seguro de que quieres salir del curso?");
+            if (!confirmar) return;
+    
+            const response = await fetch(`/courses/user-courses/${id_user_course}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-
+    
             if (!response.ok) {
                 throw new Error('Error al salir del curso');
             }
-
+    
             alert('Has salido del curso correctamente.');
-            fetchUserCourses(currentPage);
-
+    
+            // Eliminar el curso del DOM sin recargar la página
+            document.getElementById(`curso-${id_user_course}`).remove();
+    
         } catch (error) {
             console.error("Error al salir del curso:", error);
             alert('Hubo un error al intentar salir del curso.');
         }
-    }
+    }    
 
     fetchUserCourses(currentPage);
 });
