@@ -15,11 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Rutas
 const authRoutes = require('./routes/authRoutes');
-const productRoutes = require('./routes/productRoutes');
 const courseRoutes = require('./routes/courseRoutes'); // Nueva ruta de cursos
 
 app.use('/auth', authRoutes);
-app.use('/products', productRoutes);
 app.use('/courses', courseRoutes); // Ruta de cursos
 
 app.use(express.static(path.join(__dirname, '../public')));
