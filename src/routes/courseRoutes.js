@@ -34,6 +34,7 @@ router.delete('/user-courses/:id_user_course', authenticate(), async (req, res) 
 
 // 🔹 Nueva ruta para inscribirse en un curso
 router.post('/enroll/:id', authenticate(), courseController.enrollInCourse);
+router.get("/all", authenticate(), courseController.getAllCourses);
 
 // Verifica que esta ruta está en la consola
 router.get('/test', (req, res) => {

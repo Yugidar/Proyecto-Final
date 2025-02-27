@@ -24,6 +24,18 @@ exports.getPaginatedCourses = async (req, res) => {
         res.status(500).json({ error: 'Error al obtener los cursos', details: error.message });
     }
 };
+exports.getAllCourses = async (req, res) => {
+    try {
+        const [courses] = await db.promise().query(
+            "SELECT id_course, title, description, category, image_url FROM course"
+        );
+
+        res.json({ courses });
+    } catch (error) {
+        console.error("Error al obtener todos los cursos:", error);
+        res.status(500).json({ error: "Error al obtener todos los cursos" });
+    }
+};
 
 exports.createCourse = async (req, res) => {
     try {
