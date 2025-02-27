@@ -61,3 +61,23 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: 'Error en el servidor', details: err.message });
   }
 };
+
+exports.getUserProfile = async (req, res) => {
+  try {
+      const userId = req.user.id_user; // Obtiene el ID del usuario autenticado
+
+      const [user] = await db.promise().query(
+          "SELECT username, role FROM user WHERE id_user = ?", 
+          [userId]
+      );
+
+      if (user.length === 0) {
+          return res.status(404).json({ error: "Usuario no encontrado" });
+      }
+
+      res.status(200).json(user[0]);
+  } catch (error) {
+      console.error("Error al obtener perfil:", error);
+      res.status(500).json({ error: "Error interno del servidor" });
+  }
+};
