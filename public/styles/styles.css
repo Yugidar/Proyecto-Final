@@ -573,7 +573,7 @@ footer {
     }
 }
 
-@media only screen and (max-width: 1230px) and (min-width: 600px) {
+@media only screen and (max-width: 1230px) and (min-width: 608px) {
     .section-cursosIns{
         font-size: 35px;
         padding-left: 55px;
@@ -1265,7 +1265,7 @@ select{
 @media only screen and (max-width: 767px) and (min-width: 608px) {
     .search-box {
         top: 290px;
-        left: 365px;
+        left: 340px;
     }
 }
 
@@ -1373,13 +1373,18 @@ select{
 @media only screen and (max-width: 767px) and (min-width: 608px) {
     .perfil-box {
         top: 290px;
-        left: 255px;
+        left: 364px;
     }
 }
 
 @media only screen and (max-width: 607px) and (min-width: 407px) {
     .perfil-box {
         top: 290px;
-        left: 245px;
+        left: 280px;
+    }
+
+    .section-cursosIns{
+        font-size: 32px;
+        padding-left: 30px;
     }
 }
