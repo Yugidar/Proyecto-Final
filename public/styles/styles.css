@@ -1020,6 +1020,20 @@ select{
     white-space: normal;
 }
 
+.textoH {
+    width: 100%; /* Ajusta el ancho según sea necesario */
+    font-size: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Limita a 2 líneas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    white-space: normal;
+    max-height: 3em; /* Ajusta según la línea de altura */
+    line-height: 1.5em; /* Define el espacio entre líneas */
+}
+
 .textNor {
     flex: 1;
 }
@@ -1259,5 +1273,113 @@ select{
     .search-box {
         top: 290px;
         left: 265px;
+    }
+}
+
+.perfil-box {
+    display: flex;
+    position: absolute;
+    top: 110px;
+    left: 875px;
+    width: auto;
+    max-width: 25%;
+    padding: 10px;
+    border-radius: 10px;
+    background: var(--blue);
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.perfilUser__img {
+    display: flex;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.perfilUser__gen {
+    display: flex;
+    flex-direction: row;
+}
+
+.perfilUser__info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.perfilUser__info h2 {
+    font-size: 16px;
+    margin: -5px;
+    width: 100%;
+}
+
+.perfilUser__info p {
+    color: var(--white);
+    padding: 3px 6px;
+    color: var(--white);
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: center;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+@media only screen and (min-width: 1230px){
+    .perfil-box {
+        left: 785px;
+    }
+}
+
+@media only screen and (min-width: 777px) and (max-width: 1229px){
+    .perfil-box {
+        top: 125px;
+        left: 750px;
+    }
+
+    .perfilUser__info h2 {
+        font-size: 14px;
+    }
+    
+    .perfilUser__info p {
+        font-size: 12px;
+    }
+    
+}
+
+@media only screen and (max-width: 1111px) and (min-width: 945px) {
+    .perfil-box {
+        top: 125px;
+        left: 635px;
+    }
+}
+
+@media only screen and (max-width: 944px) and (min-width: 777px) {
+    .perfil-box {
+        top: 125px;
+        left: 535px;
+    }
+}
+
+@media only screen and (max-width: 776px) and (min-width: 768px) {
+    .perfil-box {
+        top: 125px;
+        left: 360px;
+    }
+}
+
+
+@media only screen and (max-width: 767px) and (min-width: 608px) {
+    .perfil-box {
+        top: 290px;
+        left: 255px;
+    }
+}
+
+@media only screen and (max-width: 607px) and (min-width: 407px) {
+    .perfil-box {
+        top: 290px;
+        left: 245px;
     }
 }

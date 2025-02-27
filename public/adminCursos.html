@@ -29,14 +29,19 @@
         </div>
         <!--Contenedor donde se pueden buscar los cursos--> 
         <div class="search-box" id="searchBox">
-            <label>Busca tu curso aquí:</label>
+            <label>Busca el curso aquí:</label>
             <input type="text" id="searchInput"">
         </div>
         <!--Contenedor donde se muestran los datos del usuario--> 
-        <div id="perfilContainer" style="display: none;">
-            <h2 id="perfilNombre"></h2>
-            <p id="perfilCorreo"></p>
-        </div>
+        <div class="perfil-box" id="perfilContainer" style="display: none;">
+            <div class="perfilUser__gen">
+                <img class="perfilUser__img" src="assets/User.png" alt="Foto usuario">
+                <div class="perfilUser__info">
+                    <h2 class="fw-bold textoH" id="perfilNombre">Nombre</h2>
+                    <p id="perfilTipoUser">Tipo de usuario</p>
+                </div>
+            </div>
+        </div>               
     </section>
 
     <section id="cursoNormal" class="main-section-normal">
