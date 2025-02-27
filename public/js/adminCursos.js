@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     let currentPage = 1;
+    let totalPages = 1;
     let editingCourseId = null; // Almacenar el ID del curso que se edita
+    const paginationDots = document.getElementById("pagination-dots");
 
     async function fetchCourses(page) {
         try {
@@ -21,7 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const data = await response.json();
             renderCursos(data.courses);
-            updatePagination(data.currentPage, data.totalPages);
+            totalPages = data.totalPages;
+            renderPaginationDots();
         } catch (error) {
             console.error("Error al obtener los cursos:", error);
         }
@@ -36,23 +39,23 @@ document.addEventListener("DOMContentLoaded", function () {
             cursoDiv.classList.add("curso");
             cursoDiv.innerHTML = `
                 <div class="cursoConten">
-                    <div class="contenido">
-                        <img src="${curso.image_url}" alt="${curso.title}" style="width:150px; height:150px; border-radius: 5px;">
-                        <div class="textos">
+                    <div class="contenidoCurNor">
+                        <img src="${curso.image_url}" alt="${curso.title}">
+                        <div class="textNor">
                             <h3>${curso.title}</h3>
                             <p>${curso.category}</p>
-                            <p>${curso.description}</p>
+                            <p id="textoP">${curso.description}</p>
                         </div>
                     </div>
                     <div class="botones">
-                        <button class="btn btn-secondary btn-edit" 
+                        <button class="btn btn-secondary btn-edit" id="btnEdit" 
                             data-id="${curso.id_course}" 
                             data-title="${curso.title}" 
                             data-category="${curso.category}" 
                             data-description="${curso.description}" 
                             data-image="${curso.image_url}">Editar</button>
 
-                        <button class="btn btn-danger btn-delete" data-id="${curso.id_course}">Eliminar</button>
+                        <button id="btnElim" class="btn btn-danger btn-delete" data-id="${curso.id_course}">Eliminar</button>
                     </div>
                 </div>
             `;
@@ -109,22 +112,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function updatePagination(currentPage, totalPages) {
-        document.getElementById("prev").disabled = currentPage === 1;
-        document.getElementById("next").disabled = currentPage === totalPages;
-    }
-
-    document.getElementById("next").addEventListener("click", () => {
-        currentPage++;
-        fetchCourses(currentPage);
-    });
-
-    document.getElementById("prev").addEventListener("click", () => {
-        if (currentPage > 1) {
-            currentPage--;
-            fetchCourses(currentPage);
+    function renderPaginationDots() {
+        paginationDots.innerHTML = "";
+        for (let i = 1; i <= totalPages; i++) {
+            let dot = document.createElement("span");
+            dot.classList.add("dot");
+            if (i === currentPage) {
+                dot.classList.add("active");
+            }
+            dot.addEventListener("click", () => {
+                currentPage = i;
+                fetchCourses(currentPage);
+            });
+            paginationDots.appendChild(dot);
         }
-    });
+    }
 
     fetchCourses(currentPage);
 
@@ -228,4 +230,34 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.classList.remove("open");
         document.body.classList.remove("jw-modal-open");
     }
+});
+
+// Mostrar u ocultar el searchBox al hacer clic en toggleSearch
+document.getElementById("toggleSearch").addEventListener("click", function () {
+    let searchBox = document.getElementById("searchBox");
+    let perfilContainer = document.getElementById("perfilContainer");
+
+    // Alternar el estado del searchBox y ocultar el perfil
+    searchBox.style.display = searchBox.style.display === "block" ? "none" : "block";
+    perfilContainer.style.display = "none";
+});
+
+// Cerrar el searchBox si se hace clic fuera de él
+document.addEventListener("click", function (event) {
+    let searchBox = document.getElementById("searchBox");
+    let toggleImage = document.getElementById("toggleSearch");
+    
+    if (!searchBox.contains(event.target) && event.target !== toggleImage) {
+        searchBox.style.display = "none";
+    }
+});
+
+// Mostrar el perfil y ocultar el searchBox cuando se haga clic en btnUser
+document.getElementById("btnUser").addEventListener("click", function (event) {
+    let searchBox = document.getElementById("searchBox");
+    let perfilContainer = document.getElementById("perfilContainer");
+
+    // Alternar el estado del perfil y ocultar el searchBox
+    perfilContainer.style.display = perfilContainer.style.display === "block" ? "none" : "block";
+    searchBox.style.display = "none";
 });

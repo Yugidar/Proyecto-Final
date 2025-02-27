@@ -15,6 +15,7 @@
             <p class="text-uppercase quantico-font fw-bold fs-2">hermcode</p>
         </div>
         <nav class="menu-navbar">
+            <img class="me-1 menu-logo__img mini-img" id="toggleSearch" src="assets/Browser.png" alt="Buscador">
             <a class="text-yellow fw-bold menu-navbar_a" href="normalCursos.html">MI APRENDIZAJE</a>
             <a class="text-yellow fw-bold menu-navbar__a" href="cursos.html">CURSOS</a>
             <!--Falta agregar que se muestren los datos del usuario--> 
@@ -30,6 +31,21 @@
 
     <section id="cursoNormal" class="main-section-normal">
         <h3 class="section-cursosIns fs-5">Mi aprendizaje</h3>
+        <!--Contenedor donde se pueden buscar los cursos--> 
+        <div class="search-box" id="searchBox">
+            <label>Busca tu curso aquí:</label>
+            <input type="text" id="searchInput"">
+        </div>
+        <!--Contenedor donde se muestran los datos del usuario--> 
+        <div class="perfil-box" id="perfilContainer" style="display: none;">
+            <div class="perfilUser__gen">
+                <img class="perfilUser__img" src="assets/User.png" alt="Foto usuario">
+                <div class="perfilUser__info">
+                    <h2 class="fw-bold textoH" id="perfilNombre">Nombre</h2>
+                    <p id="perfilTipoUser">Tipo de usuario</p>
+                </div>
+            </div>
+        </div>               
         <div class="container main-section-normal">
             <div class="main-container-cursos">
                 <div class="cursos-flex" id="cursos-container"></div>
@@ -40,19 +56,6 @@
         </div>
     </section>
 
-    <!-- Modal para ver perfil-->
-    <div class="jw-modal" id="modalUser">
-        <div class="jw-modal-body">
-            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
-                <h2>Perfil</h2>
-                <i class="fa-solid fa-xmark fs-3" onclick="closeModal()"></i>
-            </div>
-            <div id="userProfile">
-                <p><strong>Nombre:</strong> <span id="nombre"></span></p>
-                <p><strong>Tipo de usuario:</strong> <span id="descripcion"></span></p>
-            </div>
-        </div>
-    </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const token = localStorage.getItem('token');
@@ -69,76 +72,7 @@
             }
         });
     </script>
-    
-    <!--Muestra de como se debe llevar a cabo la muestra de los datos-->     
-    <script>
-        let cursos = [
-            { id: 1, nombre: "Prueba 1", descripcion: "Aprende a estructurar páginas web con HTML y darles estilo con CSS.", imagen:"./assets/javaScrip.jpg"},
-            { id: 1, nombre: "Prueba 2", descripcion: "Aprende a estructurar páginas web con HTML y darles estilo con CSS.", imagen:"./assets/logo 1.png"},
-            { id: 1, nombre: "Prueba 3", descripcion: "Aprende a estructurar páginas web con HTML y darles estilo con CSS.", imagen:"./assets/logo 1.png"},
-            { id: 1, nombre: "Prueba 4", descripcion: "Aprende a estructurar páginas web con HTML y darles estilo con CSS.", imagen:"./assets/logo 1.png"},
-            { id: 1, nombre: "Prueba 5", descripcion: "Aprende a estructurar páginas web con HTML y darles estilo con CSS.", imagen:"./assets/logo 1.png"},
-            { id: 1, nombre: "Prueba 6", descripcion: "Aprende a estructurar páginas web con HTML y darles estilo con CSS.", imagen:"./assets/logo 1.png"}
-        ];
-
-        let currentPage = 1;
-        const itemsPerPage = 4;
-        
-        function renderCursos(page) {
-            const container = document.getElementById("cursos-container");
-            container.innerHTML = "";
-
-            let start = (page - 1) * itemsPerPage;
-            let end = start + itemsPerPage;
-            let paginatedCursos = cursos.slice(start, end);
-
-            paginatedCursos.forEach(curso => {
-                const cursoDiv = document.createElement("div");
-                cursoDiv.classList.add("cursoNormal");
-                cursoDiv.innerHTML = `
-                <div class="cursoConten">
-                    <div class="contenidoCurNor">
-                        
-                        <img src="${curso.imagen}" alt="${curso.nombre}">
-                        <div class="textNor">
-                            <button class="botonDele" id="btnDele" onclick="salirDelCurso(${curso.id_user_course})">Salir del curso</button>
-                            <h3>${curso.nombre}</h3>
-                            <p class="fw-bold">Duración: ${curso.categoria}</p>
-                            <p>${curso.descripcion}</p>
-                        </div>
-                    </div>
-                    
-                </div>
-                `;
-                container.appendChild(cursoDiv);
-            });
-
-            renderPaginationDots();
-        }
-
-        // 🔵 Función para generar los puntos de paginación
-        function renderPaginationDots() {
-            const paginationDots = document.getElementById("pagination-dots");
-            paginationDots.innerHTML = "";
-
-            let totalPages = Math.ceil(cursos.length / itemsPerPage);
-
-            for (let i = 1; i <= totalPages; i++) {
-                let dot = document.createElement("span");
-                dot.classList.add("dot");
-                if (i === currentPage) {
-                    dot.classList.add("active");
-                }
-                dot.addEventListener("click", () => {
-                    currentPage = i;
-                    renderCursos(currentPage);
-                });
-                paginationDots.appendChild(dot);
-            }
-        }
-
-        renderCursos(currentPage);
-    </script>   
+      
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/normalCursos.js"></script>
     

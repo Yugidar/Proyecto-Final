@@ -200,7 +200,7 @@ footer {
     background-color: var(--yellow);
     border-radius: 5px;
     text-transform: none;
-    font-size: 14px;
+    font-size: 16px;
     padding: 5px;
     margin-right: 750px;
 }
@@ -233,9 +233,46 @@ footer {
     border: 2px solid var(--red);
 }
 
+@media only screen and (max-width: 607px) and  (min-width: 400px) {
+    .btn-terciary {
+        margin-right: 380px;
+        font-size: 17px;
+    }
+    .main-section-botonCrear{
+        height: 20vh;
+        padding-left: 55px;
+    }
+}
+
+@media only screen and (max-width: 778px) and  (min-width: 608px) {
+    .btn-terciary {
+        margin-right: 380px;
+        font-size: 17px;
+    }
+    .main-section-botonCrear{
+        max-height: 20vh;
+    }
+}
+
+@media only screen and (max-width: 1046px) and  (min-width: 778px) {
+    .btn-terciary {
+        font-size: 15px;
+        margin-right: 450px;
+    }
+}
+
+@media only screen and (max-width: 1144px) and  (min-width: 1047px) {
+    .btn-terciary {
+        margin-right: 655px;
+    }
+}
+
 /* TEXT */
 .text-white {
     color: var(--white);
+}
+.colorWhite{
+    background-color: var(--white);
 }
 .text-yellow {
     color: var(--yellow);
@@ -374,6 +411,7 @@ footer {
         flex-direction: row;
         align-items: center;
         width: 37%;
+        text-align: center;
     }
 
     .menu-navbar__a {
@@ -402,9 +440,18 @@ footer {
     margin: 0 auto;
 }
 
+.containerAdmin {
+    max-width: 100%;
+    margin: auto;
+}
+
 @media only screen and (min-width: 768px) {
     .container {
         max-width: 75%;
+        margin: 0 auto;
+    }
+    .containerAdmin {
+        max-width: 90%;
         margin: 0 auto;
     }
 }
@@ -429,8 +476,8 @@ footer {
 }
 
 .main-section-botonCrear {
-    height: 15vh;
     width: 100%;
+    height: 18vh;
     background: var(--light-blue);
 }
 
@@ -444,6 +491,8 @@ footer {
     background: var(--light-blue);
     background-size: cover;
     overflow: hidden;
+    margin-left: 23px;
+    margin-right: 22px;
 }
 
 .section-cursosIns{
@@ -490,6 +539,7 @@ footer {
 .main-section-message__h1 {
     margin-bottom: 2rem;
 }
+
 @media only screen and (min-width: 768px) {
 
     .main-section-container {
@@ -509,12 +559,6 @@ footer {
         overflow: hidden;
     }
     
-    .main-section-botonCrear {
-        height: 15vh;
-        width: 100%;
-        background: var(--light-blue);
-    }
-    
     .main-container-cursos{
         width: auto;
         background: var(--light-blue);
@@ -526,6 +570,34 @@ footer {
         min-height: 35vw;
         width: auto;
         background: var(--light-blue);
+    }
+}
+
+@media only screen and (max-width: 599px) and (min-width: 407px) {
+    .section-cursosIns{
+        font-size: 30px;
+        padding-left: 40px;
+    }
+}
+
+@media only screen and (max-width: 1230px) and (min-width: 608px) {
+    .section-cursosIns{
+        font-size: 35px;
+        padding-left: 55px;
+    }
+}
+
+@media only screen and (max-width: 1210px) and (min-width: 1231px) {
+    .section-cursosIns{
+        font-size: 35px;
+        padding-left: 55px;
+    }
+}
+
+@media only screen and (min-width: 1232px){
+    .section-cursosIns{
+        font-size: 35px;
+        padding-left: 85px;
     }
 }
 
@@ -630,7 +702,7 @@ footer {
     }
 
     .menu-navbar{
-        width: 50%;
+        width: 60%;
     }
     .menu-logo{
         margin: 0;
@@ -737,10 +809,17 @@ body.Login-page{
     border-radius: 5px;
 }
 
+.container-form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
 form{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 }
 
 button{
@@ -911,6 +990,7 @@ select{
     display: flex; 
     align-items: center;
     gap: 20px;
+    width: 460px;
 }
 
 .curso img {
@@ -933,6 +1013,32 @@ select{
     font-size: 15px;
     margin-top: 5px;
     color: var(--white);
+}
+
+#textoP{
+    width: auto;
+    font-size: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    white-space: normal;
+}
+
+.textoH {
+    width: 100%; /* Ajusta el ancho según sea necesario */
+    font-size: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Limita a 2 líneas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    white-space: normal;
+    max-height: 3em; /* Ajusta según la línea de altura */
+    line-height: 1.5em; /* Define el espacio entre líneas */
 }
 
 .textNor {
@@ -1083,7 +1189,8 @@ select{
 .pagination-dots {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 35px;
+    margin-left: 45%
 }
 
 .dot {
@@ -1100,4 +1207,232 @@ select{
     background-color: var(--gray);
     width: 15px;
     height: 15px;
+}
+
+@media only screen and (max-width: 1250px) {
+    .main-container-cursos{
+        width: auto;
+        margin-left: 23px;
+        margin-right: 22px;
+    }
+}
+
+.search-box {
+    display: none;
+    position: absolute;
+    top: 110px;
+    left: 560px;
+    width: 250px;
+    padding: 10px;
+    border-radius: 20px;
+    background: var(--blue);
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-box label{
+    font-size: 15px;
+    text-align: center;
+}
+
+.search-box input{
+    width: 215px;
+    background-color: var(--strong-blue);
+    border: 1px solid var(--yellow);
+    padding: 1px;
+    color: var(--white);
+    font-size: 15px;
+}
+
+@media only screen and (min-width: 777px) and (max-width: 1232px) {
+    .search-box {
+        top: 125px;
+        left: 360px;
+        width: 250px;
+        padding: 10px;
+    }
+
+    .search-box label{
+        font-size: 12px;
+    }
+
+    .search-box input{
+        width: 215px;
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 776px) and (min-width: 768px) {
+    .search-box {
+        top: 125px;
+        left: 360px;
+    }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 608px) {
+    .search-box {
+        top: 290px;
+        left: 340px;
+    }
+}
+
+@media only screen and (max-width: 607px) and (min-width: 407px) {
+    .search-box {
+        top: 290px;
+        left: 265px;
+    }
+}
+
+.perfil-box {
+    display: flex;
+    position: absolute;
+    top: 110px;
+    left: 875px;
+    width: auto;
+    max-width: 25%;
+    padding: 10px;
+    border-radius: 10px;
+    background: var(--blue);
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.perfilUser__img {
+    display: flex;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.perfilUser__gen {
+    display: flex;
+    flex-direction: row;
+}
+
+.perfilUser__info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.perfilUser__info h2 {
+    font-size: 16px;
+    margin: -5px;
+    width: 100%;
+}
+
+.perfilUser__info p {
+    color: var(--white);
+    padding: 3px 6px;
+    color: var(--white);
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: center;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+@media only screen and (min-width: 1230px){
+    .perfil-box {
+        left: 785px;
+    }
+}
+
+@media only screen and (min-width: 777px) and (max-width: 1229px){
+    .perfil-box {
+        top: 125px;
+        left: 750px;
+    }
+
+    .perfilUser__info h2 {
+        font-size: 14px;
+    }
+    
+    .perfilUser__info p {
+        font-size: 12px;
+    }
+    
+}
+
+@media only screen and (max-width: 1111px) and (min-width: 945px) {
+    .perfil-box {
+        top: 125px;
+        left: 635px;
+    }
+}
+
+@media only screen and (max-width: 944px) and (min-width: 777px) {
+    .perfil-box {
+        top: 125px;
+        left: 535px;
+    }
+}
+
+@media only screen and (max-width: 776px) and (min-width: 768px) {
+    .perfil-box {
+        top: 125px;
+        left: 360px;
+    }
+}
+
+
+@media only screen and (max-width: 767px) and (min-width: 608px) {
+    .perfil-box {
+        top: 290px;
+        left: 364px;
+    }
+}
+
+@media only screen and (max-width: 607px) and (min-width: 407px) {
+    .perfil-box {
+        top: 290px;
+        left: 280px;
+    }
+
+    .section-cursosIns{
+        font-size: 32px;
+        padding-left: 30px;
+    }
+}
+
+@media only screen and (max-width: 828px) and (min-width: 490px) {
+    #btnEdit{
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    #btnElim{
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+@media only screen and (max-width: 489px) and (min-width: 403px) {
+    #btnEdit{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    #btnElim{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+@media only screen and (max-width: 402px){
+    .botones {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    #btnEdit{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    #btnElim{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
 }

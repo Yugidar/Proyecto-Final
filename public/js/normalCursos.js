@@ -43,12 +43,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="contenidoCurNor">
                         <img src="${curso.image_url}" alt="${curso.title}">
                         <div class="textNor">
-                            <button class="botonDele" data-id="${curso.id_user_course}"> <!-- Usa id_user_course -->
+                            <button class="botonDele" id="btnDele" data-id="${curso.id_user_course} "> <!-- Usa id_user_course -->
                                 Salir del curso
                             </button>
                             <h3>${curso.title}</h3>
                             <p class="fw-bold">Categoría: ${curso.category}</p>
-                            <p>${curso.description}</p>
+                            <p id="textoP">${curso.description}</p>
                         </div>
                     </div>
                 </div>
@@ -114,4 +114,34 @@ document.addEventListener("DOMContentLoaded", function () {
     }    
 
     fetchUserCourses(currentPage);
+});
+
+// Mostrar u ocultar el searchBox al hacer clic en toggleSearch
+document.getElementById("toggleSearch").addEventListener("click", function () {
+    let searchBox = document.getElementById("searchBox");
+    let perfilContainer = document.getElementById("perfilContainer");
+
+    // Alternar el estado del searchBox y ocultar el perfil
+    searchBox.style.display = searchBox.style.display === "block" ? "none" : "block";
+    perfilContainer.style.display = "none";
+});
+
+// Cerrar el searchBox si se hace clic fuera de él
+document.addEventListener("click", function (event) {
+    let searchBox = document.getElementById("searchBox");
+    let toggleImage = document.getElementById("toggleSearch");
+    
+    if (!searchBox.contains(event.target) && event.target !== toggleImage) {
+        searchBox.style.display = "none";
+    }
+});
+
+// Mostrar el perfil y ocultar el searchBox cuando se haga clic en btnUser
+document.getElementById("btnUser").addEventListener("click", function (event) {
+    let searchBox = document.getElementById("searchBox");
+    let perfilContainer = document.getElementById("perfilContainer");
+
+    // Alternar el estado del perfil y ocultar el searchBox
+    perfilContainer.style.display = perfilContainer.style.display === "block" ? "none" : "block";
+    searchBox.style.display = "none";
 });

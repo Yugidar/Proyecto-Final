@@ -17,6 +17,7 @@
             <p class="text-uppercase quantico-font fw-bold fs-2">hermcode</p>
         </div>
         <nav class="menu-navbar">
+            <img class="me-1 menu-logo__img mini-img" id="toggleSearch" src="assets/Browser.png" alt="Buscador">
             <button class="btn btn-secondary menu-navbar__btn" onclick="redirectToPrincipal()">Cerrar Sesión</button>
             <button id="btnUser" class="btn btn-secondary menu-navbar__btn">Mi cuenta</button>
         </nav>
@@ -26,15 +27,31 @@
         <div class="container main-section-container">
             <button id="btnCrear" class="btn btn-terciary">+ Crear Curso</button>
         </div>
+        <!--Contenedor donde se pueden buscar los cursos--> 
+        <div class="search-box" id="searchBox">
+            <label>Busca el curso aquí:</label>
+            <input type="text" id="searchInput"">
+        </div>
+        <!--Contenedor donde se muestran los datos del usuario--> 
+        <div class="perfil-box" id="perfilContainer" style="display: none;">
+            <div class="perfilUser__gen">
+                <img class="perfilUser__img" src="assets/User.png" alt="Foto usuario">
+                <div class="perfilUser__info">
+                    <h2 class="fw-bold textoH" id="perfilNombre">Nombre</h2>
+                    <p id="perfilTipoUser">Tipo de usuario</p>
+                </div>
+            </div>
+        </div>               
     </section>
 
-    <section class="main-section-admin">
-        <div class="container main-section-admin">
+    <section id="cursoNormal" class="main-section-normal">
+        <div class="container main-section-normal">
             <div class="main-container-cursos">
-                <div class="cursos-grid" id="cursos-container"></div>
-                <div class="botones">
-                    <button class="btnCambio" id="prev" disabled>Anterior</button>
-                    <button class="btnCambio" id="next">Siguiente</button>
+                <div class="main-container-cursos">
+                    <div class="cursos-flex" id="cursos-container"></div>
+                    <div class="botones">
+                        <div class="pagination-dots" id="pagination-dots"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -42,23 +59,23 @@
 
     <!-- MODAL CREAR CURSO -->
     <div class="jw-modal" id="modalCrear">
-        <div class="jw-modal-body">
+        <div class="jw-modal-body container-form">
             <div class="d-flex justify-content-between align-items-center mb-3 w-100">
                 <h2>Crear curso</h2>
                 <i class="fa-solid fa-xmark fs-3" onclick="closeModal(document.getElementById('modalCrear'))"></i>
             </div>
             <form id="formCrearCurso">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombreCurso" name="nombre" required>
+                <input type="text" class="colorWhite w-100"  id="nombreCurso" name="nombre" placeholder="Ingresa nombre del curso" required>
 
                 <label for="categoria">Categoría:</label>
-                <input type="text" id="categoriaCurso" name="categoria" required>
+                <input type="text" class="colorWhite w-100" id="categoriaCurso" name="categoria" placeholder="Ingresa categoría del curso" required>
 
                 <label for="descripcion">Descripción:</label>
-                <textarea id="descripcionCurso" name="descripcion" required></textarea>
+                <textarea id="descripcionCurso" class="colorWhite w-100" name="descripcion" placeholder="Ingresa descripción del curso" required></textarea>
 
                 <label for="imagen">Imagen (link):</label>
-                <input type="url" id="imagenCurso" name="imagen">
+                <input type="url" class="colorWhite w-100" id="imagenCurso" name="imagen" placeholder="Ingresa un link de imagen">
 
                 <button type="submit" id="guardarCurso" class="btn btnCrear">Guardar</button>
             </form>
@@ -67,29 +84,50 @@
 
     <!-- MODAL EDITAR -->
     <div class="jw-modal" id="modalEdit">
-        <div class="jw-modal-body">
+        <div class="jw-modal-body container-form">
             <div class="d-flex justify-content-between align-items-center mb-3 w-100">
                 <h2>Editar curso</h2>
                 <i class="fa-solid fa-xmark fs-3" onclick="closeModal(document.getElementById('modalEdit'))"></i>
             </div>
             <form id="formEditCurso">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombreCursoEdit" required>
+                <input type="text" class="colorWhite w-100" id="nombreCursoEdit" required>
 
                 <label for="categoria">Categoría:</label>
-                <input type="text" id="categoriaCursoEdit" required>
+                <input type="text" class="colorWhite w-100" id="categoriaCursoEdit" required>
 
                 <label for="descripcion">Descripción:</label>
-                <textarea id="descripcionCursoEdit" required></textarea>
+                <textarea class="colorWhite w-100" id="descripcionCursoEdit" required></textarea>
 
                 <label for="imagen">Imagen (link):</label>
-                <input type="url" id="imagenCursoEdit" required>
+                <input type="url" class="colorWhite w-100" id="imagenCursoEdit" required>
 
                 <button type="submit" id="guardarCursoEdit" class="btn btnCrear">Guardar</button>
             </form>
         </div>
     </div>
 
+    <footer class="w-100">
+        <div class="container w-100 py-5 footer-container">
+            <p class="copyright">&copy 2025 Hermcode. Todos los derechos reservados</p>
+    
+            <div>
+                <a href="https://www.facebook.com/Tecmileniomx/" class="d-block mb-1 text-white" target="_blank">
+                    <i class="fa-brands fa-facebook"></i> <!-- Icono de Font Awesome -->
+                    <span>Facebook</span>
+                </a>
+                <a href="https://www.youtube.com/user/vivetecmilenio" class="d-block mb-1 text-white" target="_blank">
+                    <i class="fa-brands fa-youtube"></i> <!-- Icono de Font Awesome -->
+                    <span>Youtube</span>
+                </a>
+                <a href="https://www.linkedin.com/" class="d-block mb-1 text-white" target="_blank">
+                    <i class="fa-brands fa-linkedin"></i> <!-- Icono de Font Awesome -->
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+    
     <script src="js/adminCursos.js"></script>
 </body>
 </html>
