@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     async function fetchCourses(page) {
-        if (isFiltering) return;
+        if (isFiltering) return; // Si hay un filtro activo, no cargar paginación normal
 
         try {
             const token = localStorage.getItem("token");
@@ -277,6 +277,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     function renderCursos(cursos, userCourses) {
         const container = document.getElementById("cursos-container");
+        if (!container) return;
+
         container.innerHTML = "";
 
         cursos.forEach((curso) => {
@@ -285,7 +287,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             const isEnrolled = userCourses.has(curso.id_course);
             const actionText = isEnrolled ? "Curso Obtenido" : "Agregar Curso";
-            const buttonClass = isEnrolled ? "botonObtenido" : "botonAgre";
 
             cursoDiv.innerHTML = `
                 <div class="cursoConten">
@@ -315,7 +316,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 } else {
                     await inscribirseCurso(courseId);
                     this.textContent = "Curso Obtenido"; // Actualizar texto
-
                     this.setAttribute("data-enrolled", "true");
                 }
             });
@@ -397,7 +397,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             };
         } else {
             isFiltering = false;
-            currentPage = 1;
+            filteredCourses = [];
+            currentPage = 1; // 🔹 Reiniciar a la primera página para evitar el bug
             fetchCourses(currentPage);
             window.onscroll = null;
         }
