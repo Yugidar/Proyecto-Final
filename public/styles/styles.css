@@ -465,6 +465,10 @@ footer {
     background: var(--blue);
     background-size: cover;
     overflow: hidden;
+    display:flex;
+    flex-flow:column;
+    justify-content: center;
+    align-items: center;
 }
 
 .main-container{
@@ -1435,4 +1439,9 @@ select{
         padding-left: 30px;
         padding-right: 30px;
     }
+}
+#loginTextCountry{
+    font-size:4em;
+    text-align: center;
+    padding-top:150px;
 }
