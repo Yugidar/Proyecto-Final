@@ -200,7 +200,7 @@ footer {
     background-color: var(--yellow);
     border-radius: 5px;
     text-transform: none;
-    font-size: 14px;
+    font-size: 16px;
     padding: 5px;
     margin-right: 750px;
 }
@@ -233,12 +233,24 @@ footer {
     border: 2px solid var(--red);
 }
 
-@media only screen and (max-width: 778px) and  (min-width: 578px) {
+@media only screen and (max-width: 607px) and  (min-width: 400px) {
     .btn-terciary {
-        margin-right: 400px;
+        margin-right: 380px;
+        font-size: 17px;
     }
     .main-section-botonCrear{
-        height: 18vh;
+        height: 20vh;
+        padding-left: 55px;
+    }
+}
+
+@media only screen and (max-width: 778px) and  (min-width: 608px) {
+    .btn-terciary {
+        margin-right: 380px;
+        font-size: 17px;
+    }
+    .main-section-botonCrear{
+        max-height: 20vh;
     }
 }
 
@@ -465,6 +477,7 @@ footer {
 
 .main-section-botonCrear {
     width: 100%;
+    height: 18vh;
     background: var(--light-blue);
 }
 
@@ -544,12 +557,6 @@ footer {
         background: var(--blue);
         background-size: cover;
         overflow: hidden;
-    }
-    
-    .main-section-botonCrear {
-        height: 15vh;
-        width: 100%;
-        background: var(--light-blue);
     }
     
     .main-container-cursos{
@@ -1012,7 +1019,7 @@ select{
     width: auto;
     font-size: 12px;
     display: -webkit-box;
-    -webkit-line-clamp: 2; 
+    -webkit-line-clamp: 3; 
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1386,5 +1393,46 @@ select{
     .section-cursosIns{
         font-size: 32px;
         padding-left: 30px;
+    }
+}
+
+@media only screen and (max-width: 828px) and (min-width: 490px) {
+    #btnEdit{
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    #btnElim{
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+@media only screen and (max-width: 489px) and (min-width: 403px) {
+    #btnEdit{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    #btnElim{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+@media only screen and (max-width: 402px){
+    .botones {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    #btnEdit{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    #btnElim{
+        padding-left: 30px;
+        padding-right: 30px;
     }
 }
