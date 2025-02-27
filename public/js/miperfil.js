@@ -6,6 +6,11 @@ document.addEventListener("DOMContentLoaded", function () {
         btnUser.addEventListener("click", async function (event) {
             event.stopPropagation(); // Evita que el clic cierre el tooltip inmediatamente
             await mostrarPerfil(); // Obtiene los datos del usuario y los muestra
+
+            // Calcula la posición del botón y coloca el tooltip debajo
+            const rect = btnUser.getBoundingClientRect();
+            perfilTooltip.style.top = `${rect.bottom + window.scrollY + 5}px`; // Justo debajo del botón
+            perfilTooltip.style.left = `${rect.left + window.scrollX}px`; // Alineado con el botón
             perfilTooltip.style.display = (perfilTooltip.style.display === "none") ? "block" : "none";
         });
     }
