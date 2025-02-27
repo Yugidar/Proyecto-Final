@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="styles/styles.css">
 </head>
+
 <body>
     <header class="container py-3 w-100 menu">
         <div class="menu-logo">
@@ -18,34 +20,31 @@
             <img class="me-1 menu-logo__img mini-img" id="toggleSearch" src="assets/Browser.png" alt="Buscador">
             <a class="text-yellow fw-bold menu-navbar_a" href="normalCursos.html">MI APRENDIZAJE</a>
             <a class="text-yellow fw-bold menu-navbar__a" href="cursos.html">CURSOS</a>
-            <!--Falta agregar que se muestren los datos del usuario--> 
+            <!--Falta agregar que se muestren los datos del usuario-->
             <button id="btnUser" class="btn btn-secondary menu-navbar__btn">
                 Mi cuenta
             </button>
-            <!--Falta agregar una forma de cerrar sesión, por el momento solo maneja que rediriga a pagina principal, sin eliminación de Token--> 
+            <!--Falta agregar una forma de cerrar sesión, por el momento solo maneja que rediriga a pagina principal, sin eliminación de Token-->
             <button class="btn btn-secondary menu-navbar__btn" onclick="redirectToPrincipal()">
                 Cerrar Sesión
-             </button>
+            </button>
         </nav>
     </header>
-
+    <!-- Tooltip de perfil -->
+    <div id="perfilTooltip" class="perfil-tooltip" style="display: none;">
+        <img class="perfilUser__img" src="assets/User.png" alt="Foto usuario">
+        <div class="perfilUser__info">
+            <h2 class="fw-bold textoH" id="perfilNombre">Nombre</h2>
+            <p id="perfilTipoUser">Estudiante</p>
+        </div>
+    </div>
     <section id="cursoNormal" class="main-section-normal">
         <h3 class="section-cursosIns fs-5">Mi aprendizaje</h3>
-        <!--Contenedor donde se pueden buscar los cursos--> 
+        <!--Contenedor donde se pueden buscar los cursos-->
         <div class="search-box" id="searchBox">
             <label>Busca tu curso aquí:</label>
             <input type="text" id="searchInput"">
         </div>
-        <!--Contenedor donde se muestran los datos del usuario--> 
-        <div class="perfil-box" id="perfilContainer" style="display: none;">
-            <div class="perfilUser__gen">
-                <img class="perfilUser__img" src="assets/User.png" alt="Foto usuario">
-                <div class="perfilUser__info">
-                    <h2 class="fw-bold textoH" id="perfilNombre">Nombre</h2>
-                    <p id="perfilTipoUser">Tipo de usuario</p>
-                </div>
-            </div>
-        </div>               
         <div class="container main-section-normal">
             <div class="main-container-cursos">
                 <div class="cursos-flex" id="cursos-container"></div>
@@ -64,7 +63,7 @@
                 window.location.href = 'login.html'; // Redirige a la página de login
                 return;
             }
-    
+
             const role = localStorage.getItem('role');
             if (role !== 'normal') {
                 alert('Acceso denegado. No tienes permiso para entrar aquí.');
@@ -72,14 +71,14 @@
             }
         });
     </script>
-      
+    <script src="js/miperfil.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/normalCursos.js"></script>
-    
+
     <footer class="w-100">
         <div class="container w-100 py-5 footer-container">
             <p class="copyright">&copy 2025 Hermcode. Todos los derechos reservados</p>
-    
+
             <div>
                 <a href="https://www.facebook.com/Tecmileniomx/" class="d-block mb-1 text-white" target="_blank">
                     <i class="fa-brands fa-facebook"></i> <!-- Icono de Font Awesome -->
@@ -96,6 +95,7 @@
             </div>
         </div>
     </footer>
-    
+
 </body>
+
 </html>

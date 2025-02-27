@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,21 +28,12 @@
         <div class="container main-section-container">
             <button id="btnCrear" class="btn btn-terciary">+ Crear Curso</button>
         </div>
-        <!--Contenedor donde se pueden buscar los cursos--> 
+        <!--Contenedor donde se pueden buscar los cursos-->
         <div class="search-box" id="searchBox">
             <label>Busca el curso aquí:</label>
             <input type="text" id="searchInput"">
         </div>
-        <!--Contenedor donde se muestran los datos del usuario--> 
-        <div class="perfil-box" id="perfilContainer" style="display: none;">
-            <div class="perfilUser__gen">
-                <img class="perfilUser__img" src="assets/User.png" alt="Foto usuario">
-                <div class="perfilUser__info">
-                    <h2 class="fw-bold textoH" id="perfilNombre">Nombre</h2>
-                    <p id="perfilTipoUser">Tipo de usuario</p>
-                </div>
-            </div>
-        </div>               
+        
     </section>
 
     <section id="cursoNormal" class="main-section-normal">
@@ -66,16 +58,20 @@
             </div>
             <form id="formCrearCurso">
                 <label for="nombre">Nombre:</label>
-                <input type="text" class="colorWhite w-100"  id="nombreCurso" name="nombre" placeholder="Ingresa nombre del curso" required>
+                <input type="text" class="colorWhite w-100" id="nombreCurso" name="nombre"
+                    placeholder="Ingresa nombre del curso" required>
 
                 <label for="categoria">Categoría:</label>
-                <input type="text" class="colorWhite w-100" id="categoriaCurso" name="categoria" placeholder="Ingresa categoría del curso" required>
+                <input type="text" class="colorWhite w-100" id="categoriaCurso" name="categoria"
+                    placeholder="Ingresa categoría del curso" required>
 
                 <label for="descripcion">Descripción:</label>
-                <textarea id="descripcionCurso" class="colorWhite w-100" name="descripcion" placeholder="Ingresa descripción del curso" required></textarea>
+                <textarea id="descripcionCurso" class="colorWhite w-100" name="descripcion"
+                    placeholder="Ingresa descripción del curso" required></textarea>
 
                 <label for="imagen">Imagen (link):</label>
-                <input type="url" class="colorWhite w-100" id="imagenCurso" name="imagen" placeholder="Ingresa un link de imagen">
+                <input type="url" class="colorWhite w-100" id="imagenCurso" name="imagen"
+                    placeholder="Ingresa un link de imagen">
 
                 <button type="submit" id="guardarCurso" class="btn btnCrear">Guardar</button>
             </form>
@@ -106,11 +102,21 @@
             </form>
         </div>
     </div>
+    <!-- Tooltip de perfil -->
+<div id="perfilTooltip" class="perfil-tooltip" style="display: none;">
+    <img class="perfilUser__img" src="assets/User.png" alt="Foto usuario">
+    <div class="perfilUser__info">
+        <h2 class="fw-bold textoH" id="perfilNombre">Nombre</h2>
+        <p id="perfilTipoUser">Estudiante</p>
+    </div>
+</div>
+    
+    
 
     <footer class="w-100">
         <div class="container w-100 py-5 footer-container">
             <p class="copyright">&copy 2025 Hermcode. Todos los derechos reservados</p>
-    
+
             <div>
                 <a href="https://www.facebook.com/Tecmileniomx/" class="d-block mb-1 text-white" target="_blank">
                     <i class="fa-brands fa-facebook"></i> <!-- Icono de Font Awesome -->
@@ -127,7 +133,8 @@
             </div>
         </div>
     </footer>
-    
+    <script src="js/miperfil.js"></script>
     <script src="js/adminCursos.js"></script>
 </body>
+
 </html>

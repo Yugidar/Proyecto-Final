@@ -235,11 +235,8 @@ document.addEventListener("DOMContentLoaded", function () {
 // Mostrar u ocultar el searchBox al hacer clic en toggleSearch
 document.getElementById("toggleSearch").addEventListener("click", function () {
     let searchBox = document.getElementById("searchBox");
-    let perfilContainer = document.getElementById("perfilContainer");
 
-    // Alternar el estado del searchBox y ocultar el perfil
-    searchBox.style.display = searchBox.style.display === "block" ? "none" : "block";
-    perfilContainer.style.display = "none";
+    // Alternar el estado del searchBox
 });
 
 // Cerrar el searchBox si se hace clic fuera de él
@@ -252,12 +249,10 @@ document.addEventListener("click", function (event) {
     }
 });
 
-// Mostrar el perfil y ocultar el searchBox cuando se haga clic en btnUser
+//ocultar el searchBox cuando se haga clic en btnUser
 document.getElementById("btnUser").addEventListener("click", function (event) {
     let searchBox = document.getElementById("searchBox");
-    let perfilContainer = document.getElementById("perfilContainer");
 
-    // Alternar el estado del perfil y ocultar el searchBox
-    perfilContainer.style.display = perfilContainer.style.display === "block" ? "none" : "block";
+    //ocultar el searchBox
     searchBox.style.display = "none";
 });
