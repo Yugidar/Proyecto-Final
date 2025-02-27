@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="contenidoCurNor">
                         <img src="${curso.image_url}" alt="${curso.title}">
                         <div class="textNor">
-                            <button class="botonDele" id="btnDele" data-id="${curso.id_user_course} "> <!-- Usa id_user_course -->
+                            <button class="botonDele" id="btnDele" data-id="${curso.id_user_course}"> <!-- Usa id_user_course -->
                                 Salir del curso
                             </button>
                             <h3>${curso.title}</h3>
