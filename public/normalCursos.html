@@ -31,9 +31,15 @@
 
     <section id="cursoNormal" class="main-section-normal">
         <h3 class="section-cursosIns fs-5">Mi aprendizaje</h3>
+        <!--Contenedor donde se pueden buscar los cursos--> 
         <div class="search-box" id="searchBox">
             <label>Busca tu curso aquí:</label>
             <input type="text" id="searchInput"">
+        </div>
+        <!--Contenedor donde se muestran los datos del usuario--> 
+        <div id="perfilContainer" style="display: none;">
+            <h2 id="perfilNombre"></h2>
+            <p id="perfilCorreo"></p>
         </div>
         <div class="container main-section-normal">
             <div class="main-container-cursos">
@@ -45,19 +51,6 @@
         </div>
     </section>
 
-    <!-- Modal para ver perfil-->
-    <div class="jw-modal" id="modalUser">
-        <div class="jw-modal-body">
-            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
-                <h2>Perfil</h2>
-                <i class="fa-solid fa-xmark fs-3" onclick="closeModal()"></i>
-            </div>
-            <div id="userProfile">
-                <p><strong>Nombre:</strong> <span id="nombre"></span></p>
-                <p><strong>Tipo de usuario:</strong> <span id="descripcion"></span></p>
-            </div>
-        </div>
-    </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const token = localStorage.getItem('token');
