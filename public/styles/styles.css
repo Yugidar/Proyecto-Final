@@ -235,12 +235,11 @@ footer {
 
 @media only screen and (max-width: 499px) and  (min-width: 300px) {
     .btn-terciary {
-        margin-right: 250px;
+        margin-right: 125px;
         font-size: 17px;
     }
     .main-section-botonCrear{
         height: 20vh;
-        padding-left: 35px;
     }
     .cursoConten{
         max-width: 100%;
@@ -249,16 +248,26 @@ footer {
         flex-direction: column;
         align-items: baseline;
     }
-
-    .curso img{
-        min-width: 100%;
+    .contenidoCurAdm{
+        flex-direction: column;
+        align-items: baseline;
     }
-
+    .cursoNormal img{
+        min-width: 100%;
+        max-width: 100%;
+    }
     .botonAgre {
         margin: auto;
+        justify-content: space-evenly;
+    }
+    #btnAgre{
+        width: 80%;
     }
     .botonDele {
         margin: auto;
+    }
+    .textNor h3{
+        margin-left: 20px;
     }
 }
 
@@ -1002,9 +1011,15 @@ select{
     border-radius: 5px;
 }
 
+.contenidoCurAdm {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
 .contenidoCurNor {
     display: flex;
     gap: 20px;
+    align-items: center;
     width: 100%;
 }
 
@@ -1068,13 +1083,14 @@ select{
 
 .textNor {
     flex: 1;
+    width: 100%;
 }
 
 .textNor h3 {
     margin: 0;
     font-size: 20px;
     color: #C3B0F2;
-    font-weight: bold;
+    font-weight: 400;
     font-family: var(--poppins-font);
 }
 
@@ -1085,6 +1101,7 @@ select{
 
 .textAdm {
     flex: 1;
+    text-transform: capitalize;
 }
 
 .textAdm h3 {
@@ -1093,14 +1110,12 @@ select{
     color: var(--blue);
     font-weight: bold;
     font-family: var(--quantico-font);
-    text-transform: capitalize;
 }
 
 .textAdm p {
     font-size: 15px;
     margin-top: 5px;
     color: var(--white);
-    text-transform: capitalize;
 }
 
 .botones {
@@ -1124,7 +1139,6 @@ select{
     margin-left: auto;
     display: flex;
     gap: 10px;
-    justify-content: flex-start;
 }
 
 .botones button {
@@ -1148,7 +1162,7 @@ select{
 
 #btnEdit {
     background: var(--light-blue);
-    border: 1px solid var(--yellow-hover);
+    border: 1.5px solid var(--yellow-hover);
     padding-left: 90px;
     padding-right: 100px;
 }
@@ -1160,7 +1174,7 @@ select{
 
 #btnElim {
     background: var(--yellow);
-    border: 1px solid var(--light-blue);
+    border: 1.5px solid var(--light-blue);
     padding-left: 90px;
     padding-right: 100px;
 }
@@ -1587,7 +1601,7 @@ select{
 }
 
 @media only screen and (min-width: 500px){
-    .contenidoCurNor{
+    .contenidoCurAdm{
         align-items: center;
     }
 }

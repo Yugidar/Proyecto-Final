@@ -82,8 +82,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                             <button class="botonAgre btn-course-action" id="btnAgre" data-id="${curso.id_course}" data-enrolled="${isEnrolled}">
                                 ${actionText}
                             </button>
-                            <h3>${curso.title}</h3>
-                            <p class="fw-bold">Categoría: ${curso.category}</p>
+                            <h3 id="textoP">${curso.title}</h3>
+                            <p id="textoP" class="fw-bold">Categoría: ${curso.category}</p>
                             <p id="textoP">${curso.description}</p>
                         </div>
                     </div>      

@@ -39,12 +39,12 @@ document.addEventListener("DOMContentLoaded", function () {
             cursoDiv.classList.add("curso");
             cursoDiv.innerHTML = `
                 <div class="cursoConten">
-                    <div class="contenidoCurNor">
+                    <div class="contenidoCurAdm">
                         <img src="${curso.image_url}" alt="${curso.title}">
                         <div class="textAdm">
                             <h3 id="textoP">${curso.title}</h3>
                             <p id="textoP">Categoría: ${curso.category}</p>
-                            <p id="textoP">${curso.description}</p>
+                            <p id="textoH">${curso.description}</p>
                         </div>
                     </div>
                     <div class="botones">
