@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const db = mysql.createPool({
     host: process.env.DB_HOST || 'bbz7w1sdy5yaf7ocvlva-mysql.services.clever-cloud.com',
     user: process.env.DB_USER || 'ufvomre2iqltqutc',
-    password: process.env.DB_PASSWORD || 'JfEy8nMBIVlNIQcuASay',
+    password: process.env.DB_PASSWORD || 'Y9m3AeTqyxFTL2l0ZPZn',
     database: process.env.DB_NAME || 'bbz7w1sdy5yaf7ocvlva',
     port: process.env.DB_PORT || 3306,
     waitForConnections: true,
