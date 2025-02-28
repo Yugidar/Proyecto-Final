@@ -119,12 +119,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             cursoDiv.innerHTML = `
                 <div class="cursoConten">
-                    <div class="contenidoCurNor">
+                    <div class="contenidoCurAdm">
                         <img src="${curso.image_url}" alt="${curso.title}">
-                        <div class="textNor">
-                            <h3>${curso.title}</h3>
-                            <p class="fw-bold">Categoría: ${curso.category}</p>
-                            <p id="textoP">${curso.description}</p>
+                        <div class="textAdm">
+                            <h3 id="textoP">${curso.title}</h3>
+                            <p id="textoP">Categoría: ${curso.category}</p>
+                            <p id="textoH">${curso.description}</p>
                         </div>
                     </div>
 

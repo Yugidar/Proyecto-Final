@@ -235,36 +235,45 @@ footer {
 
 @media only screen and (max-width: 499px) and  (min-width: 300px) {
     .btn-terciary {
-        margin-right: 350px;
+        margin-right: 125px;
         font-size: 17px;
     }
     .main-section-botonCrear{
         height: 20vh;
-        padding-left: 145px;
     }
-
     .cursoConten{
         max-width: 100%;
     }
     .contenidoCurNor{
         flex-direction: column;
+        align-items: baseline;
     }
-
-    .curso img{
+    .contenidoCurAdm{
+        flex-direction: column;
+        align-items: baseline;
+    }
+    .cursoNormal img{
         min-width: 100%;
+        max-width: 100%;
     }
-
     .botonAgre {
         margin: auto;
+        justify-content: space-evenly;
+    }
+    #btnAgre{
+        width: 80%;
     }
     .botonDele {
         margin: auto;
+    }
+    .textNor h3{
+        margin-left: 20px;
     }
 }
 
 @media only screen and (max-width: 607px) and  (min-width: 500px) {
     .btn-terciary {
-        margin-right: 380px;
+        margin-right: 280px;
         font-size: 17px;
     }
     .main-section-botonCrear{
@@ -1002,10 +1011,15 @@ select{
     border-radius: 5px;
 }
 
-.contenidoCurNor {
-    display: flex; 
-    align-items: center;
+.contenidoCurAdm {
+    display: flex;
     gap: 20px;
+    width: 100%;
+}
+.contenidoCurNor {
+    display: flex;
+    gap: 20px;
+    align-items: center;
     width: 100%;
 }
 
@@ -1044,7 +1058,6 @@ select{
 
 #textoP{
     width: auto;
-    font-size: 12px;
     display: -webkit-box;
     -webkit-line-clamp: 3; 
     -webkit-box-orient: vertical;
@@ -1055,34 +1068,54 @@ select{
 }
 
 .textoH {
-    width: 100%; /* Ajusta el ancho según sea necesario */
+    width: 100%;
     font-size: 12px;
     display: -webkit-box;
-    -webkit-line-clamp: 1; /* Limita a 2 líneas */
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
     white-space: normal;
-    max-height: 3em; /* Ajusta según la línea de altura */
-    line-height: 1.5em; /* Define el espacio entre líneas */
+    max-height: 3em;
+    line-height: 1.5em;
 }
 
 .textNor {
     flex: 1;
+    width: 100%;
 }
 
 .textNor h3 {
     margin: 0;
     font-size: 20px;
     color: #C3B0F2;
-    font-weight: bold;
+    font-weight: 400;
     font-family: var(--poppins-font);
 }
 
 .textNor p {
     font-size: 15px;
     margin-top: 5px;
+}
+
+.textAdm {
+    flex: 1;
+    text-transform: capitalize;
+}
+
+.textAdm h3 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--blue);
+    font-weight: bold;
+    font-family: var(--quantico-font);
+}
+
+.textAdm p {
+    font-size: 15px;
+    margin-top: 5px;
+    color: var(--white);
 }
 
 .botones {
@@ -1106,7 +1139,6 @@ select{
     margin-left: auto;
     display: flex;
     gap: 10px;
-    justify-content: flex-start;
 }
 
 .botones button {
@@ -1130,7 +1162,7 @@ select{
 
 #btnEdit {
     background: var(--light-blue);
-    border: 1px solid var(--yellow-hover);
+    border: 1.5px solid var(--yellow-hover);
     padding-left: 90px;
     padding-right: 100px;
 }
@@ -1142,7 +1174,7 @@ select{
 
 #btnElim {
     background: var(--yellow);
-    border: 1px solid var(--light-blue);
+    border: 1.5px solid var(--light-blue);
     padding-left: 90px;
     padding-right: 100px;
 }
@@ -1278,11 +1310,9 @@ select{
         width: 250px;
         padding: 10px;
     }
-
     .search-box label{
         font-size: 12px;
     }
-
     .search-box input{
         width: 215px;
         font-size: 15px;
@@ -1323,7 +1353,7 @@ select{
     }
 }
 
-@media only screen and (max-width: 680px) and (min-width: 321px) {
+@media only screen and (max-width: 610px) and (min-width: 321px) {
     
     form{
         width: 100%;
@@ -1334,7 +1364,7 @@ select{
     }
 
     .main-section-container{
-        min-width: auto;
+        align-items: baseline;
     }
 
     #inputLogin{
@@ -1564,8 +1594,14 @@ select{
 }
 
 #loginTextCountry{
-    font-size:4em;
+    font-size: 30px;
     text-align: center;
-    margin-left:30px;
-    padding-top:150px;
+    margin-left: 30px;
+    padding-top: 100px;
+}
+
+@media only screen and (min-width: 500px){
+    .contenidoCurAdm{
+        align-items: center;
+    }
 }
