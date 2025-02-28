@@ -316,3 +316,83 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.body.classList.remove("jw-modal-open");
     }
 });
+document.addEventListener("DOMContentLoaded", function () {
+    const userRole = localStorage.getItem("role");
+
+    if (userRole !== "admin") {
+        // Crear un div que bloquee toda la pantalla
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100vw";
+        overlay.style.height = "100vh";
+        overlay.style.backgroundColor = "black";
+        overlay.style.color = "white";
+        overlay.style.display = "flex";
+        overlay.style.flexDirection = "column";
+        overlay.style.justifyContent = "center";
+        overlay.style.alignItems = "center";
+        overlay.style.fontSize = "2rem";
+        overlay.style.fontWeight = "bold";
+        overlay.style.zIndex = "9999";
+        overlay.innerHTML = `
+            ❌ NO ERES ADMIN ❌
+            <br>
+            <button id="btnRegresar" style="
+                margin-top: 20px;
+                padding: 15px 30px;
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: white;
+                background-color: red;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+            ">🔙 Regresar a Cursos</button>
+        `;
+
+        // Agregar el overlay al body
+        document.body.appendChild(overlay);
+
+        // Bloquear interacciones (opcional)
+        document.body.style.overflow = "hidden";
+
+        // Agregar evento al botón para regresar a cursos
+        document.getElementById("btnRegresar").addEventListener("click", function () {
+            window.location.href = "cursos.html";
+        });
+
+        // Redirigir automáticamente después de 3 segundos
+        setTimeout(() => {
+            window.location.href = "cursos.html";
+        }, 3000);
+    }
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+        const decoded = JSON.parse(atob(token.split(".")[1])); // Decodifica el token
+        const currentTime = Math.floor(Date.now() / 1000); // Tiempo actual en segundos
+
+        if (decoded.exp < currentTime) {
+            // Token vencido, eliminar y redirigir al index
+            localStorage.removeItem("token");
+            localStorage.removeItem("role");
+            alert("Tu sesión ha expirado. Inicia sesión nuevamente.");
+            window.location.href = "index.html";
+        } else {
+            // Configurar verificación en intervalos de tiempo (cada 30 segundos)
+            setInterval(() => {
+                const now = Math.floor(Date.now() / 1000);
+                if (decoded.exp < now) {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("role");
+                    alert("Tu sesión ha expirado. Inicia sesión nuevamente.");
+                    window.location.href = "index.html";
+                }
+            }, 30000); // Se ejecuta cada 30 segundos
+        }
+    }
+});
