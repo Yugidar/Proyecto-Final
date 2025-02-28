@@ -127,15 +127,16 @@ document.addEventListener("DOMContentLoaded", async function () {
                             <p id="textoP">${curso.description}</p>
                         </div>
                     </div>
+
                     <div class="botones">
-                        <button class="btn btn-secondary btn-edit"
+                        <button class="btn btn-secondary btn-edit" id="btnEdit"
                             data-id="${curso.id_course}" 
                             data-title="${curso.title}" 
                             data-category="${curso.category}" 
                             data-description="${curso.description}" 
                             data-image="${curso.image_url}">Editar</button>
 
-                        <button class="btn btn-danger btn-delete" data-id="${curso.id_course}">Eliminar</button>
+                        <button id="btnElim" class="btn btn-danger btn-delete" data-id="${curso.id_course}">Eliminar</button>
                     </div>
                 </div>
             `;
