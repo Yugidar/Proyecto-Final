@@ -1,24 +1,101 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     let currentPage = 1;
     let totalPages = 1;
-    let editingCourseId = null; // Almacenar el ID del curso que se edita
+    let editingCourseId = null;
+    let allCourses = [];
+    let filteredCourses = [];
+    let isFiltering = false;
+    let displayedCourses = 10;
+    
     const paginationDots = document.getElementById("pagination-dots");
+    const searchBox = document.getElementById("searchBox");
+    const toggleSearch = document.getElementById("toggleSearch");
+
+    /** 🔍 **Abrir y cerrar buscador** */
+    if (toggleSearch && searchBox) {
+        toggleSearch.addEventListener("click", function () {
+            searchBox.style.display = searchBox.style.display === "block" ? "none" : "block";
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!searchBox.contains(event.target) && event.target !== toggleSearch) {
+                searchBox.style.display = "none";
+            }
+        });
+    }
+
+    /** 🔍 **Buscar cursos en tiempo real** */
+    document.getElementById("searchInput").addEventListener("input", async function () {
+        const searchTerm = this.value.toLowerCase();
+        if (searchTerm) {
+            if (allCourses.length === 0) await fetchAllCourses();
+            isFiltering = true;
+            paginationDots.innerHTML = "";
+
+            filteredCourses = allCourses.filter((curso) =>
+                curso.title.toLowerCase().includes(searchTerm) ||
+                curso.category.toLowerCase().includes(searchTerm)
+            );
+
+            displayedCourses = 10;
+            renderCursos(filteredCourses.slice(0, displayedCourses));
+
+            window.onscroll = function () {
+                if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+                    displayedCourses += 5;
+                    renderCursos(filteredCourses.slice(0, displayedCourses));
+                }
+            };
+        } else {
+            isFiltering = false;
+            filteredCourses = [];
+            currentPage = 1;
+            fetchCourses(currentPage);
+            window.onscroll = null;
+        }
+    });
+
+    async function fetchAllCourses() {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert("Debes iniciar sesión primero.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const response = await fetch("/courses/all", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (!response.ok) {
+                throw new Error("Error al obtener todos los cursos");
+            }
+
+            const data = await response.json();
+            allCourses = data.courses;
+        } catch (error) {
+            console.error("Error al obtener todos los cursos:", error);
+        }
+    }
 
     async function fetchCourses(page) {
+        if (isFiltering) return;
+
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem("token");
             if (!token) {
-                alert('Debes iniciar sesión primero.');
-                window.location.href = 'login.html';
+                alert("Debes iniciar sesión primero.");
+                window.location.href = "login.html";
                 return;
             }
 
             const response = await fetch(`/courses/paginated?page=${page}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             if (!response.ok) {
-                throw new Error('Error al obtener cursos');
+                throw new Error("Error al obtener cursos");
             }
 
             const data = await response.json();
@@ -32,11 +109,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function renderCursos(cursos) {
         const container = document.getElementById("cursos-container");
+        if (!container) return;
+
         container.innerHTML = "";
 
-        cursos.forEach(curso => {
+        cursos.forEach((curso) => {
             const cursoDiv = document.createElement("div");
             cursoDiv.classList.add("curso");
+
             cursoDiv.innerHTML = `
                 <div class="cursoConten">
                     <div class="contenidoCurAdm">
@@ -47,8 +127,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             <p id="textoH">${curso.description}</p>
                         </div>
                     </div>
+
                     <div class="botones">
-                        <button class="btn btn-secondary btn-edit" id="btnEdit" 
+                        <button class="btn btn-secondary btn-edit" id="btnEdit"
                             data-id="${curso.id_course}" 
                             data-title="${curso.title}" 
                             data-category="${curso.category}" 
@@ -62,7 +143,10 @@ document.addEventListener("DOMContentLoaded", function () {
             container.appendChild(cursoDiv);
         });
 
-        // Eventos dinámicos
+        asignarEventos();
+    }
+
+    function asignarEventos() {
         document.querySelectorAll(".btn-delete").forEach(button => {
             button.addEventListener("click", function () {
                 const id = this.getAttribute("data-id");
@@ -111,25 +195,6 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Hubo un error al eliminar el curso");
         }
     }
-
-    function renderPaginationDots() {
-        paginationDots.innerHTML = "";
-        for (let i = 1; i <= totalPages; i++) {
-            let dot = document.createElement("span");
-            dot.classList.add("dot");
-            if (i === currentPage) {
-                dot.classList.add("active");
-            }
-            dot.addEventListener("click", () => {
-                currentPage = i;
-                fetchCourses(currentPage);
-            });
-            paginationDots.appendChild(dot);
-        }
-    }
-
-    fetchCourses(currentPage);
-
     // MODAL CREAR CURSO
     const modalCrear = document.getElementById("modalCrear");
     const btnCrear = document.getElementById("btnCrear");
@@ -177,7 +242,6 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Hubo un error al crear el curso");
         }
     });
-
     // FUNCIÓN PARA EDITAR CURSO
     function editarCurso(id, title, category, description, image) {
         editingCourseId = id;
@@ -221,6 +285,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+
+    function renderPaginationDots() {
+        paginationDots.innerHTML = "";
+        if (isFiltering) return;
+
+        for (let i = 1; i <= totalPages; i++) {
+            let dot = document.createElement("span");
+            dot.classList.add("dot");
+            if (i === currentPage) {
+                dot.classList.add("active");
+            }
+            dot.addEventListener("click", () => {
+                currentPage = i;
+                fetchCourses(currentPage);
+            });
+            paginationDots.appendChild(dot);
+        }
+    }
+
+    fetchCourses(currentPage);
+
     function openModal(modal) {
         modal.classList.add("open");
         document.body.classList.add("jw-modal-open");
@@ -231,28 +316,83 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.classList.remove("jw-modal-open");
     }
 });
+document.addEventListener("DOMContentLoaded", function () {
+    const userRole = localStorage.getItem("role");
 
-// Mostrar u ocultar el searchBox al hacer clic en toggleSearch
-document.getElementById("toggleSearch").addEventListener("click", function () {
-    let searchBox = document.getElementById("searchBox");
+    if (userRole !== "admin") {
+        // Crear un div que bloquee toda la pantalla
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100vw";
+        overlay.style.height = "100vh";
+        overlay.style.backgroundColor = "black";
+        overlay.style.color = "white";
+        overlay.style.display = "flex";
+        overlay.style.flexDirection = "column";
+        overlay.style.justifyContent = "center";
+        overlay.style.alignItems = "center";
+        overlay.style.fontSize = "2rem";
+        overlay.style.fontWeight = "bold";
+        overlay.style.zIndex = "9999";
+        overlay.innerHTML = `
+            ❌ NO ERES ADMIN ❌
+            <br>
+            <button id="btnRegresar" style="
+                margin-top: 20px;
+                padding: 15px 30px;
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: white;
+                background-color: red;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+            ">🔙 Regresar a Cursos</button>
+        `;
 
-    // Alternar el estado del searchBox
-});
+        // Agregar el overlay al body
+        document.body.appendChild(overlay);
 
-// Cerrar el searchBox si se hace clic fuera de él
-document.addEventListener("click", function (event) {
-    let searchBox = document.getElementById("searchBox");
-    let toggleImage = document.getElementById("toggleSearch");
-    
-    if (!searchBox.contains(event.target) && event.target !== toggleImage) {
-        searchBox.style.display = "none";
+        // Bloquear interacciones (opcional)
+        document.body.style.overflow = "hidden";
+
+        // Agregar evento al botón para regresar a cursos
+        document.getElementById("btnRegresar").addEventListener("click", function () {
+            window.location.href = "cursos.html";
+        });
+
+        // Redirigir automáticamente después de 3 segundos
+        setTimeout(() => {
+            window.location.href = "cursos.html";
+        }, 3000);
     }
 });
+document.addEventListener("DOMContentLoaded", function () {
+    const token = localStorage.getItem("token");
 
-//ocultar el searchBox cuando se haga clic en btnUser
-document.getElementById("btnUser").addEventListener("click", function (event) {
-    let searchBox = document.getElementById("searchBox");
+    if (token) {
+        const decoded = JSON.parse(atob(token.split(".")[1])); // Decodifica el token
+        const currentTime = Math.floor(Date.now() / 1000); // Tiempo actual en segundos
 
-    //ocultar el searchBox
-    searchBox.style.display = "none";
+        if (decoded.exp < currentTime) {
+            // Token vencido, eliminar y redirigir al index
+            localStorage.removeItem("token");
+            localStorage.removeItem("role");
+            alert("Tu sesión ha expirado. Inicia sesión nuevamente.");
+            window.location.href = "index.html";
+        } else {
+            // Configurar verificación en intervalos de tiempo (cada 30 segundos)
+            setInterval(() => {
+                const now = Math.floor(Date.now() / 1000);
+                if (decoded.exp < now) {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("role");
+                    alert("Tu sesión ha expirado. Inicia sesión nuevamente.");
+                    window.location.href = "index.html";
+                }
+            }, 30000); // Se ejecuta cada 30 segundos
+        }
+    }
 });

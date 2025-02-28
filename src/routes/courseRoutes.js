@@ -9,6 +9,8 @@ router.post('/', authenticate('admin'), courseController.createCourse);
 router.delete('/:id', authenticate('admin'), courseController.deleteCourse);
 router.put('/:id', authenticate('admin'), courseController.updateCourse);
 
+router.get('/load-more', authenticate(), courseController.loadMoreCourses);
+
 router.get('/user-courses', authenticate(), courseController.getUserCourses); // Obtener cursos del usuario autenticado
 router.delete('/user-courses/:id_user_course', authenticate(), async (req, res) => {
     try {
@@ -31,6 +33,19 @@ router.delete('/user-courses/:id_user_course', authenticate(), async (req, res) 
         res.status(500).json({ error: "Error al salir del curso", details: error.message });
     }
 });
+
+router.get('/all', authenticate(), async (req, res) => {
+    try {
+        const [courses] = await db.promise().query(
+            'SELECT id_course, title, description, category, image_url FROM course'
+        );
+        res.status(200).json({ courses });
+    } catch (error) {
+        console.error("Error al obtener todos los cursos:", error);
+        res.status(500).json({ error: "Error al obtener los cursos", details: error.message });
+    }
+});
+
 
 // 🔹 Nueva ruta para inscribirse en un curso
 router.post('/enroll/:id', authenticate(), courseController.enrollInCourse);

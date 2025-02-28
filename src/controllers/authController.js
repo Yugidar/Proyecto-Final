@@ -49,11 +49,18 @@ exports.login = async (req, res) => {
       return res.status(500).json({ error: 'Clave JWT no configurada' });
     }
 
-    const token = jwt.sign(
-      { id_user: user[0].id_user, role: user[0].role },
-      process.env.JWT_SECRET || 'default_secret',
-      { expiresIn: '1h' }
-    );
+    const issuedAt = Math.floor(Date.now() / 1000); // Hora de emisión (en segundos)
+    const expiresAt = issuedAt + 3600; // Expira en 1 hora
+
+    const tokenPayload = {
+      id_user: user[0].id_user,
+      role: user[0].role,
+      iat: issuedAt,
+      exp: expiresAt,
+      token_id: `${user[0].id_user}-${issuedAt}` // Identificador único del token
+    };
+
+    const token = jwt.sign(tokenPayload, process.env.JWT_SECRET);
 
     res.status(200).json({ token, role: user[0].role });
 
@@ -61,6 +68,7 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: 'Error en el servidor', details: err.message });
   }
 };
+
 
 exports.getUserProfile = async (req, res) => {
   try {
