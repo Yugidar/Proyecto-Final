@@ -25,6 +25,39 @@ exports.getPaginatedCourses = async (req, res) => {
     }
 };
 
+exports.loadMoreCourses = async (req, res) => {
+    try {
+        const lastCourseId = parseInt(req.query.lastCourseId) || 0;
+        const limit = parseInt(req.query.limit) || 4;
+
+        let query = `
+            SELECT id_course, title, description, category, image_url 
+            FROM course 
+        `;
+
+        let params = [];
+
+        if (lastCourseId > 0) {
+            query += ` WHERE id_course > ? `;
+            params.push(lastCourseId);
+        }
+
+        query += ` ORDER BY id_course ASC LIMIT ? `;
+        params.push(limit);
+
+        const [courses] = await db.promise().query(query, params);
+
+        res.status(200).json({
+            courses
+        });
+
+    } catch (error) {
+        console.error("Error en loadMoreCourses:", error);
+        res.status(500).json({ error: "Error al obtener los cursos", details: error.message });
+    }
+};
+
+
 exports.createCourse = async (req, res) => {
     try {
         const { title, description, category, image_url } = req.body;
@@ -97,36 +130,26 @@ exports.deleteCourse = async (req, res) => {
 
 exports.getUserCourses = async (req, res) => {
     try {
-        const userId = req.user.id_user; // Obtenemos el ID del usuario autenticado
-        const page = parseInt(req.query.page) || 1;
-        const limit = 4; // Cursos por página
-        const offset = (page - 1) * limit;
+        const userId = req.user.id_user; 
 
+        // 🔹 Obtener todos los cursos inscritos sin paginación
         const [courses] = await db.promise().query(`
-            SELECT uc.id_user_course, c.id_course, c.title, c.description, c.category, c.image_url
-            FROM course c
-            JOIN user_courses uc ON c.id_course = uc.id_course
+            SELECT c.id_course, c.title, c.description, c.category, c.image_url
+            FROM user_courses uc
+            JOIN course c ON uc.id_course = c.id_course
             WHERE uc.id_user = ?
-            LIMIT ? OFFSET ?
-        `, [userId, limit, offset]);
-
-        const [total] = await db.promise().query(`
-            SELECT COUNT(*) AS total FROM user_courses WHERE id_user = ?
         `, [userId]);
 
-        const totalPages = Math.ceil(total[0].total / limit);
+        console.log("🔍 Cursos inscritos en el backend:", courses);
 
-        res.status(200).json({
-            courses,  // Devuelve también `id_user_course`
-            totalPages,
-            currentPage: page
-        });
+        res.status(200).json({ courses });
 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al obtener los cursos del usuario', details: error.message });
+        console.error("❌ Error en getUserCourses:", error);
+        res.status(500).json({ error: "Error al obtener los cursos del usuario", details: error.message });
     }
 };
+
 
 
 // Eliminar la inscripción del usuario en un curso
@@ -159,14 +182,14 @@ exports.leaveCourse = async (req, res) => {
 
 exports.enrollInCourse = async (req, res) => {
     try {
-        const userId = req.user.id_user;  // ID del usuario autenticado
-        const courseId = req.params.id;   // ID del curso desde la URL
+        const userId = req.user?.id_user; // ✅ Verifica que no sea undefined
+        const courseId = req.params.id;
 
         if (!userId || !courseId) {
             return res.status(400).json({ error: "Faltan datos para la inscripción" });
         }
 
-        // Verificar si el usuario ya está inscrito
+        // 🔹 Verificar si el usuario ya está inscrito en el curso
         const [existingEnrollment] = await db.promise().query(
             'SELECT * FROM user_courses WHERE id_user = ? AND id_course = ?',
             [userId, courseId]
@@ -176,16 +199,16 @@ exports.enrollInCourse = async (req, res) => {
             return res.status(400).json({ error: "Ya estás inscrito en este curso" });
         }
 
-        // Inscribir al usuario en el curso
+        // 🔹 Inscribir al usuario en el curso
         await db.promise().query(
             'INSERT INTO user_courses (id_user, id_course) VALUES (?, ?)',
             [userId, courseId]
         );
 
-        res.status(201).json({ message: "Inscripción exitosa" });
+        res.status(201).json({ message: "✅ Inscripción exitosa" });
 
     } catch (error) {
-        console.error("Error en enrollInCourse:", error);
+        console.error("❌ Error en enrollInCourse:", error);
         res.status(500).json({ error: "Error al inscribirse en el curso", details: error.message });
     }
 };
