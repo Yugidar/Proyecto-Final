@@ -269,6 +269,9 @@ footer {
     .textNor h3{
         margin-left: 20px;
     }
+    .curso img{
+        min-width: 100%;
+    }
 }
 
 @media only screen and (max-width: 607px) and  (min-width: 500px) {
@@ -1035,7 +1038,7 @@ select{
 }
 
 .curso img {
-    width: 100%;
+    width: 30%;
     border-radius: 5px;
 }
 
