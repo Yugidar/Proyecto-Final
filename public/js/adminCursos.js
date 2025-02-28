@@ -41,9 +41,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="cursoConten">
                     <div class="contenidoCurNor">
                         <img src="${curso.image_url}" alt="${curso.title}">
-                        <div class="textNor">
-                            <h3>${curso.title}</h3>
-                            <p>${curso.category}</p>
+                        <div class="textAdm">
+                            <h3 id="textoP">${curso.title}</h3>
+                            <p id="textoP">Categoría: ${curso.category}</p>
                             <p id="textoP">${curso.description}</p>
                         </div>
                     </div>

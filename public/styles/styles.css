@@ -235,19 +235,19 @@ footer {
 
 @media only screen and (max-width: 499px) and  (min-width: 300px) {
     .btn-terciary {
-        margin-right: 350px;
+        margin-right: 250px;
         font-size: 17px;
     }
     .main-section-botonCrear{
         height: 20vh;
-        padding-left: 145px;
+        padding-left: 35px;
     }
-
     .cursoConten{
         max-width: 100%;
     }
     .contenidoCurNor{
         flex-direction: column;
+        align-items: baseline;
     }
 
     .curso img{
@@ -264,7 +264,7 @@ footer {
 
 @media only screen and (max-width: 607px) and  (min-width: 500px) {
     .btn-terciary {
-        margin-right: 380px;
+        margin-right: 280px;
         font-size: 17px;
     }
     .main-section-botonCrear{
@@ -1003,8 +1003,7 @@ select{
 }
 
 .contenidoCurNor {
-    display: flex; 
-    align-items: center;
+    display: flex;
     gap: 20px;
     width: 100%;
 }
@@ -1044,7 +1043,6 @@ select{
 
 #textoP{
     width: auto;
-    font-size: 12px;
     display: -webkit-box;
     -webkit-line-clamp: 3; 
     -webkit-box-orient: vertical;
@@ -1055,17 +1053,17 @@ select{
 }
 
 .textoH {
-    width: 100%; /* Ajusta el ancho según sea necesario */
+    width: 100%;
     font-size: 12px;
     display: -webkit-box;
-    -webkit-line-clamp: 1; /* Limita a 2 líneas */
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
     white-space: normal;
-    max-height: 3em; /* Ajusta según la línea de altura */
-    line-height: 1.5em; /* Define el espacio entre líneas */
+    max-height: 3em;
+    line-height: 1.5em;
 }
 
 .textNor {
@@ -1083,6 +1081,26 @@ select{
 .textNor p {
     font-size: 15px;
     margin-top: 5px;
+}
+
+.textAdm {
+    flex: 1;
+}
+
+.textAdm h3 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--blue);
+    font-weight: bold;
+    font-family: var(--quantico-font);
+    text-transform: capitalize;
+}
+
+.textAdm p {
+    font-size: 15px;
+    margin-top: 5px;
+    color: var(--white);
+    text-transform: capitalize;
 }
 
 .botones {
@@ -1278,11 +1296,9 @@ select{
         width: 250px;
         padding: 10px;
     }
-
     .search-box label{
         font-size: 12px;
     }
-
     .search-box input{
         width: 215px;
         font-size: 15px;
@@ -1323,7 +1339,7 @@ select{
     }
 }
 
-@media only screen and (max-width: 680px) and (min-width: 321px) {
+@media only screen and (max-width: 610px) and (min-width: 321px) {
     
     form{
         width: 100%;
@@ -1334,7 +1350,7 @@ select{
     }
 
     .main-section-container{
-        min-width: auto;
+        align-items: baseline;
     }
 
     #inputLogin{
@@ -1568,4 +1584,10 @@ select{
     text-align: center;
     margin-left:30px;
     padding-top:150px;
+}
+
+@media only screen and (min-width: 500px){
+    .contenidoCurNor{
+        align-items: center;
+    }
 }
