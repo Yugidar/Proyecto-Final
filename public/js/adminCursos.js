@@ -194,16 +194,96 @@ document.addEventListener("DOMContentLoaded", async function () {
             alert("Hubo un error al eliminar el curso");
         }
     }
+    // MODAL CREAR CURSO
+    const modalCrear = document.getElementById("modalCrear");
+    const btnCrear = document.getElementById("btnCrear");
 
+    if (btnCrear) {
+        btnCrear.onclick = function () {
+            openModal(modalCrear);
+        };
+    }
+
+    document.getElementById("formCrearCurso").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const title = document.getElementById("nombreCurso").value;
+        const category = document.getElementById("categoriaCurso").value;
+        const description = document.getElementById("descripcionCurso").value;
+        const image_url = document.getElementById("imagenCurso").value || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg';
+
+        if (!title || !category || !description) {
+            alert("Todos los campos son obligatorios, excepto la imagen.");
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await fetch("/courses", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ title, category, description, image_url })
+            });
+
+            if (!response.ok) {
+                throw new Error("Error al crear el curso");
+            }
+
+            alert("Curso creado exitosamente");
+            closeModal(modalCrear);
+            fetchCourses(1);
+        } catch (error) {
+            console.error("Error al crear curso:", error);
+            alert("Hubo un error al crear el curso");
+        }
+    });
+    // FUNCIÓN PARA EDITAR CURSO
     function editarCurso(id, title, category, description, image) {
         editingCourseId = id;
         document.getElementById("nombreCursoEdit").value = title;
         document.getElementById("categoriaCursoEdit").value = category;
         document.getElementById("descripcionCursoEdit").value = description;
         document.getElementById("imagenCursoEdit").value = image;
-
         openModal(document.getElementById("modalEdit"));
     }
+
+    document.getElementById("formEditCurso").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const title = document.getElementById("nombreCursoEdit").value;
+        const category = document.getElementById("categoriaCursoEdit").value;
+        const description = document.getElementById("descripcionCursoEdit").value;
+        const image_url = document.getElementById("imagenCursoEdit").value;
+
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await fetch(`/courses/${editingCourseId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ title, category, description, image_url })
+            });
+
+            if (!response.ok) {
+                throw new Error("Error al actualizar el curso");
+            }
+
+            alert("Curso actualizado correctamente");
+            closeModal(document.getElementById("modalEdit"));
+            fetchCourses(1);
+        } catch (error) {
+            console.error("Error al actualizar curso:", error);
+            alert("Hubo un error al actualizar el curso");
+        }
+    });
+
 
     function renderPaginationDots() {
         paginationDots.innerHTML = "";
