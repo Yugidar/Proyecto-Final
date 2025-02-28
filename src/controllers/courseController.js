@@ -21,6 +21,7 @@ exports.getPaginatedCourses = async (req, res) => {
         });
 
     } catch (error) {
+        console.error("❌ Error en getPaginatedCourses:", error);
         res.status(500).json({ error: 'Error al obtener los cursos', details: error.message });
     }
 };
@@ -52,95 +53,24 @@ exports.loadMoreCourses = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error en loadMoreCourses:", error);
+        console.error("❌ Error en loadMoreCourses:", error);
         res.status(500).json({ error: "Error al obtener los cursos", details: error.message });
-    }
-};
-
-
-exports.createCourse = async (req, res) => {
-    try {
-        const { title, description, category, image_url } = req.body;
-
-        if (!title || !description || !category) {
-            return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-        }
-
-        const [result] = await db.promise().query(
-            'INSERT INTO course (title, description, category, image_url) VALUES (?, ?, ?, ?)',
-            [title, description, category, image_url]
-        );
-
-        res.status(201).json({ message: 'Curso creado correctamente', courseId: result.insertId });
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al crear el curso', details: error.message });
-    }
-};
-
-exports.updateCourse = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { title, category, description, image_url } = req.body;
-
-        if (!title || !category || !description || !image_url) {
-            return res.status(400).json({ error: "Todos los campos son obligatorios" });
-        }
-
-        const query = "UPDATE course SET title = ?, category = ?, description = ?, image_url = ? WHERE id_course = ?";
-        const values = [title, category, description, image_url, id];
-
-        db.query(query, values, (err, result) => {
-            if (err) {
-                console.error("Error en la actualización:", err);
-                return res.status(500).json({ error: "Error al actualizar el curso" });
-            }
-            if (result.affectedRows === 0) {
-                return res.status(404).json({ error: "Curso no encontrado" });
-            }
-            res.json({ message: "Curso actualizado correctamente" });
-        });
-    } catch (error) {
-        console.error("Error en updateCourse:", error);
-        res.status(500).json({ error: "Error interno del servidor" });
-    }
-};
-
-
-exports.deleteCourse = async (req, res) => {
-    try {
-        const { id } = req.params;
-
-        // Verificar si el curso existe
-        const [course] = await db.promise().query('SELECT * FROM course WHERE id_course = ?', [id]);
-        if (course.length === 0) {
-            return res.status(404).json({ error: 'Curso no encontrado' });
-        }
-
-        // Eliminar el curso
-        await db.promise().query('DELETE FROM course WHERE id_course = ?', [id]);
-
-        res.status(200).json({ message: 'Curso eliminado correctamente' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al eliminar el curso', details: error.message });
     }
 };
 
 exports.getUserCourses = async (req, res) => {
     try {
-        const userId = req.user.id_user; 
+        const userId = req.user.id_user;
 
-        // 🔹 Obtener todos los cursos inscritos sin paginación
+        // 🔹 Obtener todos los cursos inscritos SIN paginación
         const [courses] = await db.promise().query(`
-            SELECT c.id_course, c.title, c.description, c.category, c.image_url
+            SELECT uc.id_user_course, c.id_course, c.title, c.description, c.category, c.image_url
             FROM user_courses uc
             JOIN course c ON uc.id_course = c.id_course
             WHERE uc.id_user = ?
         `, [userId]);
 
-        console.log("🔍 Cursos inscritos en el backend:", courses);
+        console.log("✅ Cursos inscritos en el backend:", courses);
 
         res.status(200).json({ courses });
 
@@ -150,39 +80,9 @@ exports.getUserCourses = async (req, res) => {
     }
 };
 
-
-
-// Eliminar la inscripción del usuario en un curso
-exports.leaveCourse = async (req, res) => {
-    try {
-        console.log("Usuario autenticado:", req.user); // <-- Agregar esto para depuración
-        const userId = req.user.id_user;  // Asegúrate de que esto NO sea undefined
-        const courseId = req.params.id_course;
-
-        if (!userId || !courseId) {
-            return res.status(400).json({ error: "Falta el ID del usuario o del curso" });
-        }
-
-        const [result] = await db.promise().query(`
-            DELETE FROM user_courses WHERE id_user = ? AND id_course = ?
-        `, [userId, courseId]);
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: "No estás inscrito en este curso" });
-        }
-
-        res.status(200).json({ message: "Has salido del curso correctamente" });
-
-    } catch (error) {
-        console.error("Error en leaveCourse:", error);  // <-- Agrega esto para depurar errores en la consola del backend
-        res.status(500).json({ error: 'Error al salir del curso', details: error.message });
-    }
-};
-
-
 exports.enrollInCourse = async (req, res) => {
     try {
-        const userId = req.user?.id_user; // ✅ Verifica que no sea undefined
+        const userId = req.user?.id_user;
         const courseId = req.params.id;
 
         if (!userId || !courseId) {
@@ -196,7 +96,7 @@ exports.enrollInCourse = async (req, res) => {
         );
 
         if (existingEnrollment.length > 0) {
-            return res.status(400).json({ error: "Ya estás inscrito en este curso" });
+            return res.status(400).json({ error: "⚠️ Ya estás inscrito en este curso" });
         }
 
         // 🔹 Inscribir al usuario en el curso
@@ -210,5 +110,107 @@ exports.enrollInCourse = async (req, res) => {
     } catch (error) {
         console.error("❌ Error en enrollInCourse:", error);
         res.status(500).json({ error: "Error al inscribirse en el curso", details: error.message });
+    }
+};
+
+// 🔹 Eliminar la inscripción del usuario en un curso
+exports.leaveCourse = async (req, res) => {
+    try {
+        console.log("👤 Usuario autenticado:", req.user); 
+        const userId = req.user?.id_user;
+        const courseId = req.params.id_course;
+
+        if (!userId || !courseId) {
+            return res.status(400).json({ error: "⚠️ Falta el ID del usuario o del curso" });
+        }
+
+        const [result] = await db.promise().query(`
+            DELETE FROM user_courses WHERE id_user = ? AND id_course = ?
+        `, [userId, courseId]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "⚠️ No estás inscrito en este curso" });
+        }
+
+        res.status(200).json({ message: "✅ Has salido del curso correctamente" });
+
+    } catch (error) {
+        console.error("❌ Error en leaveCourse:", error);
+        res.status(500).json({ error: "Error al salir del curso", details: error.message });
+    }
+};
+
+// 🔹 Crear curso (solo admin)
+exports.createCourse = async (req, res) => {
+    try {
+        const { title, description, category, image_url } = req.body;
+
+        if (!title || !description || !category) {
+            return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+        }
+
+        const [result] = await db.promise().query(
+            'INSERT INTO course (title, description, category, image_url) VALUES (?, ?, ?, ?)',
+            [title, description, category, image_url]
+        );
+
+        res.status(201).json({ message: '✅ Curso creado correctamente', courseId: result.insertId });
+
+    } catch (error) {
+        console.error("❌ Error en createCourse:", error);
+        res.status(500).json({ error: 'Error al crear el curso', details: error.message });
+    }
+};
+
+// 🔹 Actualizar curso (solo admin)
+exports.updateCourse = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, category, description, image_url } = req.body;
+
+        if (!title || !category || !description || !image_url) {
+            return res.status(400).json({ error: "⚠️ Todos los campos son obligatorios" });
+        }
+
+        const query = `
+            UPDATE course 
+            SET title = ?, category = ?, description = ?, image_url = ? 
+            WHERE id_course = ?
+        `;
+        const values = [title, category, description, image_url, id];
+
+        const [result] = await db.promise().query(query, values);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "⚠️ Curso no encontrado" });
+        }
+
+        res.json({ message: "✅ Curso actualizado correctamente" });
+
+    } catch (error) {
+        console.error("❌ Error en updateCourse:", error);
+        res.status(500).json({ error: "Error interno del servidor", details: error.message });
+    }
+};
+
+// 🔹 Eliminar curso (solo admin)
+exports.deleteCourse = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Verificar si el curso existe
+        const [course] = await db.promise().query('SELECT * FROM course WHERE id_course = ?', [id]);
+        if (course.length === 0) {
+            return res.status(404).json({ error: '⚠️ Curso no encontrado' });
+        }
+
+        // Eliminar el curso
+        await db.promise().query('DELETE FROM course WHERE id_course = ?', [id]);
+
+        res.status(200).json({ message: '✅ Curso eliminado correctamente' });
+
+    } catch (error) {
+        console.error("❌ Error en deleteCourse:", error);
+        res.status(500).json({ error: 'Error al eliminar el curso', details: error.message });
     }
 };

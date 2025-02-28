@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="contenidoCurNor">
                         <img src="${curso.image_url}" alt="${curso.title}">
                         <div class="textNor">
-                            <button class="botonAgre btn-course-action" data-id="${curso.id_course}" data-enrolled="${isEnrolled}" ${disabledAttr}>
+                            <button class="botonAgre btn-course-action" id="btnAgre" data-id="${curso.id_course}" data-enrolled="${isEnrolled}" ${disabledAttr}>
                                 ${actionText}
                             </button>
                             <h3>${curso.title}</h3>

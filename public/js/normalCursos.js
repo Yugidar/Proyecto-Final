@@ -1,10 +1,17 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const cursosContainer = document.getElementById("cursos-container");
-    const paginationDots = document.getElementById("pagination-dots");
-    let currentPage = 1;
-    let totalPages = 1;
+document.addEventListener("DOMContentLoaded", async function () {
+    let lastCourseIndex = 0;
+    const itemsPerPage = 4;
+    let allUserCourses = [];
+    let isFiltering = false;
+    let isLoading = false;
 
-    async function fetchUserCourses(page = 1) {
+    const cursosContainer = document.getElementById("cursos-container");
+    const searchInput = document.getElementById("searchInput");
+
+    async function fetchUserCourses() {
+        if (isLoading || isFiltering) return;
+        isLoading = true;
+
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -13,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            const response = await fetch(`/courses/user-courses?page=${page}`, {
+            const response = await fetch(`/courses/user-courses`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
@@ -22,28 +29,37 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const data = await response.json();
-            renderCursos(data.courses);
-            totalPages = data.totalPages;
-            renderPaginationDots();
+            console.log("✅ Cursos obtenidos:", data.courses);
+
+            allUserCourses = data.courses;
+            renderNextCourses(); // Cargar los primeros 4 cursos
         } catch (error) {
             console.error("Error al obtener los cursos:", error);
+        } finally {
+            isLoading = false;
         }
     }
 
-    function renderCursos(cursos) {
-        cursosContainer.innerHTML = "";
+    function renderNextCourses() {
+        if (lastCourseIndex >= allUserCourses.length) return;
 
+        const nextCourses = allUserCourses.slice(lastCourseIndex, lastCourseIndex + itemsPerPage);
+        lastCourseIndex += itemsPerPage;
+        appendCursos(nextCourses);
+    }
+
+    function appendCursos(cursos) {
         cursos.forEach(curso => {
             const cursoDiv = document.createElement("div");
             cursoDiv.classList.add("cursoNormal");
-            cursoDiv.id = `curso-${curso.id_user_course}`; // Se usa id_user_course para el DOM
+            cursoDiv.id = `curso-${curso.id_user_course}`;
 
             cursoDiv.innerHTML = `
                 <div class="cursoConten">
                     <div class="contenidoCurNor">
                         <img src="${curso.image_url}" alt="${curso.title}">
                         <div class="textNor">
-                            <button class="botonDele" id="btnDele" data-id="${curso.id_user_course}"> <!-- Usa id_user_course -->
+                            <button class="botonDele btn-course-action" id="btnDele" data-id="${curso.id_user_course}">
                                 Salir del curso
                             </button>
                             <h3>${curso.title}</h3>
@@ -56,29 +72,12 @@ document.addEventListener("DOMContentLoaded", function () {
             cursosContainer.appendChild(cursoDiv);
         });
 
-        // Añadir eventos a los botones después de renderizar
         document.querySelectorAll(".botonDele").forEach(button => {
             button.addEventListener("click", function () {
-                const id_user_course = this.getAttribute("data-id"); // Usa id_user_course
+                const id_user_course = this.getAttribute("data-id");
                 salirDelCurso(id_user_course);
             });
         });
-    }
-
-    function renderPaginationDots() {
-        paginationDots.innerHTML = "";
-        for (let i = 1; i <= totalPages; i++) {
-            let dot = document.createElement("span");
-            dot.classList.add("dot");
-            if (i === currentPage) {
-                dot.classList.add("active");
-            }
-            dot.addEventListener("click", () => {
-                currentPage = i;
-                fetchUserCourses(currentPage);
-            });
-            paginationDots.appendChild(dot);
-        }
     }
 
     async function salirDelCurso(id_user_course) {
@@ -89,55 +88,75 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.location.href = 'login.html';
                 return;
             }
-    
+
             const confirmar = confirm("¿Estás seguro de que quieres salir del curso?");
             if (!confirmar) return;
-    
+
             const response = await fetch(`/courses/user-courses/${id_user_course}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-    
+
             if (!response.ok) {
                 throw new Error('Error al salir del curso');
             }
-    
+
             alert('Has salido del curso correctamente.');
-    
-            // Eliminar el curso del DOM sin recargar la página
             document.getElementById(`curso-${id_user_course}`).remove();
-    
         } catch (error) {
             console.error("Error al salir del curso:", error);
             alert('Hubo un error al intentar salir del curso.');
         }
-    }    
-
-    fetchUserCourses(currentPage);
-});
-
-// Mostrar u ocultar el searchBox al hacer clic en toggleSearch
-document.getElementById("toggleSearch").addEventListener("click", function () {
-    let searchBox = document.getElementById("searchBox");
-
-    // Alternar el estado del searchBox 
-    searchBox.style.display = searchBox.style.display === "block" ? "none" : "block";
-});
-
-// Cerrar el searchBox si se hace clic fuera de él
-document.addEventListener("click", function (event) {
-    let searchBox = document.getElementById("searchBox");
-    let toggleImage = document.getElementById("toggleSearch");
-    
-    if (!searchBox.contains(event.target) && event.target !== toggleImage) {
-        searchBox.style.display = "none";
     }
-});
 
-// ocultar el searchBox cuando se haga clic en btnUser
-document.getElementById("btnUser").addEventListener("click", function (event) {
-    let searchBox = document.getElementById("searchBox");
+    searchInput.addEventListener("input", function () {
+        const searchTerm = this.value.toLowerCase().trim();
 
-    // ocultar el searchBox
-    searchBox.style.display = "none";
+        if (searchTerm) {
+            isFiltering = true;
+            cursosContainer.innerHTML = "";
+
+            const filteredCourses = allUserCourses.filter(curso =>
+                curso.title.toLowerCase().includes(searchTerm) ||
+                curso.category.toLowerCase().includes(searchTerm)
+            );
+
+            appendCursos(filteredCourses);
+        } else {
+            isFiltering = false;
+            cursosContainer.innerHTML = "";
+            lastCourseIndex = 0;
+            renderNextCourses();
+        }
+    });
+
+    window.addEventListener("scroll", function () {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+            if (!isFiltering && !isLoading) {
+                renderNextCourses();
+            }
+        }
+    });
+
+    document.getElementById("toggleSearch").addEventListener("click", function () {
+        let searchBox = document.getElementById("searchBox");
+
+        if (searchBox.style.display === "none" || searchBox.style.display === "") {
+            searchBox.style.display = "block";
+            document.getElementById("searchInput").focus();
+        } else {
+            searchBox.style.display = "none";
+        }
+    });
+
+    document.addEventListener("click", function (event) {
+        let searchBox = document.getElementById("searchBox");
+        let toggleImage = document.getElementById("toggleSearch");
+
+        if (!searchBox.contains(event.target) && event.target !== toggleImage) {
+            searchBox.style.display = "none";
+        }
+    });
+
+    fetchUserCourses();
 });
