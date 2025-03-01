@@ -1,0 +1,35 @@
+name: Pruebas y Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Chekout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar pruebas
+        run: npm test
+
+      - name: Deploy a Vercel
+        run: |
+          npm install vercel --save-dev
+          npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+
+      - name: Deploy a Render
+        run: |
+          npm install render-cli --save-dev
+          npx render-cli deploy --api-key ${{ secrets.RENDER_API_KEY }} --service-id ${{ secrets.RENDER_SERVICE_ID }} --branch main --region us
