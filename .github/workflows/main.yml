@@ -22,7 +22,8 @@ jobs:
         run: npm install
 
       - name: Ejecutar pruebas
-        run: npm test
+        run: |
+          npx jest --detectOpenHandles
 
       - name: Deploy a Vercel
         run: |

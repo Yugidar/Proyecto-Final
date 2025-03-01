@@ -197,3 +197,12 @@ afterAll(async () => {
     await db.promise().query('DELETE FROM course WHERE title IN (?, ?)', ['Curso de Node.js', 'Curso de Vue.js']);
     db.end();
 });
+
+beforeAll(() => {
+    // En tests no iniciamos el servidor, pero lo podemos simular
+    server = app.listen();  // Aquí solo escuchamos para poder hacer las pruebas
+});
+
+afterAll((done) => {
+    server.close(done);  // Cierra el servidor después de las pruebas
+});
