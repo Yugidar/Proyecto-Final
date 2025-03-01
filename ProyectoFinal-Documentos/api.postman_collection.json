@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "97ac5875-8e10-4e60-bb78-98e25a6e6cd6",
+		"name": "api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41948720"
+	},
+	"item": [
+		{
+			"name": "POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDA4NTI3MzYsImV4cCI6MTc0MDg1NDUzNiwidG9rZW5faWQiOiI1LTE3NDA4NTI3MzYifQ.oRSL-qm8RBjojyKLMUPG4-4IV23DeYQso8k91UxKmjw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"title\": \"Curso de JS\",\r\n            \"description\": \"Curso de JS junior a senior \",\r\n            \"category\": \"Programacion\",\r\n            \"image_url\": \"https://www.cursoemvideo.com/wp-content/uploads/bb-plugin/cache/javascript-circle-dc92b56e539139ec2bf42ebf8393803c-5d48cb37edbef.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://proyecto-final-07c2.onrender.com/courses/",
+					"protocol": "https",
+					"host": [
+						"proyecto-final-07c2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"courses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDA4NTI3MzYsImV4cCI6MTc0MDg1NDUzNiwidG9rZW5faWQiOiI1LTE3NDA4NTI3MzYifQ.oRSL-qm8RBjojyKLMUPG4-4IV23DeYQso8k91UxKmjw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{          \r\n            \"title\": \"Prueba Endpoint 2\",\r\n            \"category\": \"Programacion\",\r\n            \"description\": \"Curso de JS junior a senior \",\r\n            \"image_url\": \"https://www.cursoemvideo.com/wp-content/uploads/bb-plugin/cache/javascript-circle-dc92b56e539139ec2bf42ebf8393803c-5d48cb37edbef.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://proyecto-final-07c2.onrender.com/courses/53",
+					"protocol": "https",
+					"host": [
+						"proyecto-final-07c2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"courses",
+						"53"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDA4NTI3MzYsImV4cCI6MTc0MDg1NDUzNiwidG9rZW5faWQiOiI1LTE3NDA4NTI3MzYifQ.oRSL-qm8RBjojyKLMUPG4-4IV23DeYQso8k91UxKmjw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://proyecto-final-07c2.onrender.com/courses/all",
+					"protocol": "https",
+					"host": [
+						"proyecto-final-07c2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"courses",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDA4NTI3MzYsImV4cCI6MTc0MDg1NDUzNiwidG9rZW5faWQiOiI1LTE3NDA4NTI3MzYifQ.oRSL-qm8RBjojyKLMUPG4-4IV23DeYQso8k91UxKmjw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://proyecto-final-07c2.onrender.com/courses/53",
+					"protocol": "https",
+					"host": [
+						"proyecto-final-07c2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"courses",
+						"53"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin2\",\r\n    \"password\":\"na\",\r\n    \"role\": \"normal\"\r\n    //\"admin\" o \"normal\" como rol\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://proyecto-final-07c2.onrender.com/auth/register",
+					"protocol": "https",
+					"host": [
+						"proyecto-final-07c2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin4444\",\r\n    \"password\":\"na\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://proyecto-final-07c2.onrender.com/auth/login",
+					"protocol": "https",
+					"host": [
+						"proyecto-final-07c2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
