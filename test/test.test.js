@@ -148,7 +148,7 @@ describe('🔑 Pruebas de seguridad en tokens JWT', () => {
         const res = await request(app)
             .get('/courses/paginated')
             .set('Authorization', 'Bearer invalidtoken');
-        expect(res.status).toBe(400);
+        expect(res.status).toBe(498);
     });
 
     test('Debe aceptar un token válido', async () => {
@@ -168,8 +168,8 @@ describe('🔑 Pruebas de seguridad en tokens JWT', () => {
             .get('/courses/paginated')
             .set('Authorization', `Bearer ${expiredToken}`);
 
-        expect(res.status).toBe(401);
-        expect(res.body.error).toBe('Token expirado');
+        expect(res.status).toBe(440);
+        expect(res.body.error).toBe('Sesión expirada, inicia sesión nuevamente');
     });
 });
 
