@@ -21,7 +21,7 @@ exports.getPaginatedCourses = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("❌ Error en getPaginatedCourses:", error);
+        console.error("Error en getPaginatedCourses:", error);
         res.status(500).json({ error: 'Error al obtener los cursos', details: error.message });
     }
 };
@@ -70,12 +70,12 @@ exports.getUserCourses = async (req, res) => {
             WHERE uc.id_user = ?
         `, [userId]);
 
-        console.log("✅ Cursos inscritos en el backend:", courses);
+        console.log("Cursos inscritos en el backend:", courses);
 
         res.status(200).json({ courses });
 
     } catch (error) {
-        console.error("❌ Error en getUserCourses:", error);
+        console.error("Error en getUserCourses:", error);
         res.status(500).json({ error: "Error al obtener los cursos del usuario", details: error.message });
     }
 };
@@ -89,7 +89,6 @@ exports.enrollInCourse = async (req, res) => {
             return res.status(400).json({ error: "Faltan datos para la inscripción" });
         }
 
-        // 🔹 Verificar si el usuario ya está inscrito en el curso
         const [existingEnrollment] = await db.promise().query(
             'SELECT * FROM user_courses WHERE id_user = ? AND id_course = ?',
             [userId, courseId]
@@ -99,29 +98,27 @@ exports.enrollInCourse = async (req, res) => {
             return res.status(400).json({ error: "⚠️ Ya estás inscrito en este curso" });
         }
 
-        // 🔹 Inscribir al usuario en el curso
         await db.promise().query(
             'INSERT INTO user_courses (id_user, id_course) VALUES (?, ?)',
             [userId, courseId]
         );
 
-        res.status(201).json({ message: "✅ Inscripción exitosa" });
+        res.status(201).json({ message: "Inscripción exitosa" });
 
     } catch (error) {
-        console.error("❌ Error en enrollInCourse:", error);
+        console.error("Error en enrollInCourse:", error);
         res.status(500).json({ error: "Error al inscribirse en el curso", details: error.message });
     }
 };
 
-// 🔹 Eliminar la inscripción del usuario en un curso
 exports.leaveCourse = async (req, res) => {
     try {
-        console.log("👤 Usuario autenticado:", req.user); 
+        console.log("Usuario autenticado:", req.user); 
         const userId = req.user?.id_user;
         const courseId = req.params.id_course;
 
         if (!userId || !courseId) {
-            return res.status(400).json({ error: "⚠️ Falta el ID del usuario o del curso" });
+            return res.status(400).json({ error: "Falta el ID del usuario o del curso" });
         }
 
         const [result] = await db.promise().query(`
@@ -132,15 +129,14 @@ exports.leaveCourse = async (req, res) => {
             return res.status(404).json({ error: "⚠️ No estás inscrito en este curso" });
         }
 
-        res.status(200).json({ message: "✅ Has salido del curso correctamente" });
+        res.status(200).json({ message: "Has salido del curso correctamente" });
 
     } catch (error) {
-        console.error("❌ Error en leaveCourse:", error);
+        console.error("Error en leaveCourse:", error);
         res.status(500).json({ error: "Error al salir del curso", details: error.message });
     }
 };
 
-// 🔹 Crear curso (solo admin)
 exports.createCourse = async (req, res) => {
     try {
         const { title, description, category, image_url } = req.body;
@@ -154,15 +150,14 @@ exports.createCourse = async (req, res) => {
             [title, description, category, image_url]
         );
 
-        res.status(201).json({ message: '✅ Curso creado correctamente', courseId: result.insertId });
+        res.status(201).json({ message: 'Curso creado correctamente', courseId: result.insertId });
 
     } catch (error) {
-        console.error("❌ Error en createCourse:", error);
+        console.error("Error en createCourse:", error);
         res.status(500).json({ error: 'Error al crear el curso', details: error.message });
     }
 };
 
-// 🔹 Actualizar curso (solo admin)
 exports.updateCourse = async (req, res) => {
     try {
         const { id } = req.params;
@@ -185,32 +180,29 @@ exports.updateCourse = async (req, res) => {
             return res.status(404).json({ error: "⚠️ Curso no encontrado" });
         }
 
-        res.json({ message: "✅ Curso actualizado correctamente" });
+        res.json({ message: "Curso actualizado correctamente" });
 
     } catch (error) {
-        console.error("❌ Error en updateCourse:", error);
+        console.error("Error en updateCourse:", error);
         res.status(500).json({ error: "Error interno del servidor", details: error.message });
     }
 };
 
-// 🔹 Eliminar curso (solo admin)
 exports.deleteCourse = async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Verificar si el curso existe
         const [course] = await db.promise().query('SELECT * FROM course WHERE id_course = ?', [id]);
         if (course.length === 0) {
             return res.status(404).json({ error: '⚠️ Curso no encontrado' });
         }
 
-        // Eliminar el curso
         await db.promise().query('DELETE FROM course WHERE id_course = ?', [id]);
 
-        res.status(200).json({ message: '✅ Curso eliminado correctamente' });
+        res.status(200).json({ message: 'Curso eliminado correctamente' });
 
     } catch (error) {
-        console.error("❌ Error en deleteCourse:", error);
+        console.error("Error en deleteCourse:", error);
         res.status(500).json({ error: 'Error al eliminar el curso', details: error.message });
     }
 };
