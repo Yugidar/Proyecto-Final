@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
     }
 
     const issuedAt = Math.floor(Date.now() / 1000); // Hora de emisión (en segundos)
-    const expiresAt = issuedAt + 3600; // Expira en 1 hora
+    const expiresAt = issuedAt + 1800; // Expira en media hora
 
     const tokenPayload = {
       id_user: user[0].id_user,
@@ -72,7 +72,7 @@ exports.login = async (req, res) => {
 
 exports.getUserProfile = async (req, res) => {
   try {
-      const userId = req.user.id_user; // Obtiene el ID del usuario autenticado
+      const userId = req.user.id_user;
 
       const [user] = await db.promise().query(
           "SELECT username, role FROM user WHERE id_user = ?", 

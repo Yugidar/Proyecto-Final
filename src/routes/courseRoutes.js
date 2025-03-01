@@ -2,24 +2,25 @@ const express = require('express');
 const router = express.Router();
 const courseController = require('../controllers/courseController');
 const authenticate = require('../middleware/authenticate');
-const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
+const db = require('../config/db');
 
-router.get('/paginated', authenticate(''), courseController.getPaginatedCourses);
+router.get('/paginated', authenticate(), courseController.getPaginatedCourses);
 router.post('/', authenticate('admin'), courseController.createCourse);
 router.delete('/:id', authenticate('admin'), courseController.deleteCourse);
 router.put('/:id', authenticate('admin'), courseController.updateCourse);
-
 router.get('/load-more', authenticate(), courseController.loadMoreCourses);
+router.get('/user-courses', authenticate(), courseController.getUserCourses);
+router.post('/enroll/:id', authenticate(), courseController.enrollInCourse);
 
-router.get('/user-courses', authenticate(), courseController.getUserCourses); // Obtener cursos del usuario autenticado
+// 🔹 **Corrección en la eliminación de inscripción**
 router.delete('/user-courses/:id_user_course', authenticate(), async (req, res) => {
     try {
         const userId = req.user.id_user;
-        const { id_user_course } = req.params; // ✅ Corregido para usar id_user_course
+        const { id_user_course } = req.params;
 
         const [result] = await db.promise().query(
             'DELETE FROM user_courses WHERE id_user_course = ? AND id_user = ?',
-            [id_user_course, userId] // ✅ Asegurar que los valores sean correctos
+            [id_user_course, userId]
         );
 
         if (result.affectedRows === 0) {
@@ -45,15 +46,5 @@ router.get('/all', authenticate(), async (req, res) => {
         res.status(500).json({ error: "Error al obtener los cursos", details: error.message });
     }
 });
-
-
-// 🔹 Nueva ruta para inscribirse en un curso
-router.post('/enroll/:id', authenticate(), courseController.enrollInCourse);
-
-// Verifica que esta ruta está en la consola
-router.get('/test', (req, res) => {
-    res.send("Ruta /courses/test funciona correctamente");
-});
-
 
 module.exports = router;
