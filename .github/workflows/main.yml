@@ -29,8 +29,3 @@ jobs:
         run: |
           npm install vercel --save-dev
           npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
-
-      - name: Deploy a Render
-        run: |
-          npm install render-cli --save-dev
-          npx render-cli deploy --api-key ${{ secrets.RENDER_API_KEY }} --service-id ${{ secrets.RENDER_SERVICE_ID }} --branch main --region us
