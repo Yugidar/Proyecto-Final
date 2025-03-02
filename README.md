@@ -20,6 +20,10 @@ https://www.figma.com/design/ShzlS5VpCLGj7c4Zpm2WGK/Dise%C3%B1o-Proyecto-Final?n
 ## ENLACE AL DIAGRAMA DE ACTIVIDADES
 https://lucid.app/lucidspark/90776c70-e226-49b2-9ac5-f1205697dd37/edit?viewport_loc=7072%2C-2172%2C4816%2C2615%2C0_0&invitationId=inv_072d41db-e85d-4ada-b41b-88bd7a779306
 
+## ENLACE A PRUEBAS DE QA
+https://utmedu-my.sharepoint.com/:x:/g/personal/al03108850_tecmilenio_mx/ESeNyyatmGhPhg-iBZrTTVUBTLVJ12W4ykikwjqEtL6plA?e=xcI7c4 <br />
+[Se debe iniciar sesion para acceder al archivo, y si aparece sin acceso despues de hacer log in, cerrar el link y volver a abrirlo. Tambien descargar el archivo o abrirlo con office, ya que la vista web suele tener fallas al momento de mostrar la informacion]
+
 ### Integrantes del equipo
 Frida Garza <br />
 Paola Urdiales <br />
