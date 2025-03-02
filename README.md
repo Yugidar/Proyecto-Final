@@ -30,6 +30,9 @@ https://utmedu-my.sharepoint.com/:v:/g/personal/al03108850_tecmilenio_mx/EcKa1Z1
 ## ENLACE A LOS REQUERIMIENTOS EN EXCEL
 https://utmedu-my.sharepoint.com/:x:/g/personal/al07002961_tecmilenio_mx/Ef9lXxAqhIVJqA3NfSqOcxsBLF08hHNnSBL7_tfPvi8K2w?e=dKWCPJ
 
+## ENLACE A LA PRESENTACION DEL PROYECTO FINAL
+https://www.canva.com/design/DAGggHMPKcM/NbCqnrPMxSLXnJ57rOS4yQ/edit?utm_content=DAGggHMPKcM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 ### Integrantes del equipo
 Frida Garza <br />
 Paola Urdiales <br />
