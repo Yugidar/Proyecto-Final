@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Hermcode</title>
+        <title>Adopta un amigo</title>
         <link rel="website icon" type="png" href="./assets/logo 1.png">
         <!-- Importación de iconos de Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -17,12 +17,12 @@
         <header class="container py-3 w-100 menu">
             <div class="menu-logo" onclick="redirect(`${window.location.origin}`)">
                 <img class="me-1 menu-logo__img" src="assets\logo.png" alt="Logo de hermcode">
-                <p class="text-uppercase quantico-font fw-bold fs-2">hermcode</p>
+                <p class="text-uppercase quantico-font fw-bold fs-2">Adopta un amigo peludo</p>
             </div>
 
             <!-- Etiqueta de navegacion entre las diferentes secciones de la página -->
             <nav class="menu-navbar">
-                <a class="text-yellow fw-bold menu-navbar__a" href="#cursos">CURSOS</a>
+                <a class="text-yellow fw-bold menu-navbar__a" href="#cursos">PRODUCTOS</a>
                 <a class="text-yellow fw-bold menu-navbar__a" href="#contacto">CONTÁCTANOS</a>
                 <button id="btnLoginPage" class="btn btn-secondary menu-navbar__btn" onclick="redirectToLogin()">
                     Iniciar Sesión
@@ -34,52 +34,52 @@
         <section class="main-section">
             <div class="container main-section-container">
                 <div class="main-section-message">
-                    <h1 class="text-uppercase lh-1 main-section-message__h1">Empieza a <span class="text-red">aprender</span></h1>
+                    <h1 class="text-uppercase lh-1 main-section-message__h1">Adopta, <span class="text-red">no compres</span></h1>
                     <p>
+                        Creemos que cada perrito y gatito merece un hogar lleno de amor. 
+                        Muchos de ellos han pasado por el abandono, el maltrato o la indiferencia, pero hoy tienen la oportunidad de encontrar a su familia ideal: puedes ser tú.
                         Somos una plataforma diseñada para programadores que quieran mejorar sus habilidades.
-                        Donde te ofrecemos cursos especializados adaptados a todos los niveles de experiencia.
-                        Tambien puedes formar parte de nuestro equipo ofreciendo tus propios cursos para los demas.
                     </p>
                 </div>
         
                 <figure class="w-100">
                     <!-- la propiedad alt ayuda en la accesibilidad para las herramientas de voz descriptivas para personas con discapacidad visul -->
-                    <img src="assets/undraw_coding_joxb.png" alt="Imágen de persona en computadora">
+                    <img src="assets/Imagen.jpeg" alt="Imágen de persona en computadora">
                 </figure>
             </div>
         </section>
 
         <!-- CURSOS -->
         <section id="cursos" class="container py-5">
-            <h2 class="mb-3 fs-3 text-uppercase">Cursos en línea</h2>
+            <h2 class="mb-3 fs-3 text-uppercase">Amigos que buscan hogar</h2>
 
             <!-- Contendor padre de todos los cards -->
             <div class="cards">
                 <!-- Card individual -->
                 <div class="card">
-                    <img class="mb-2" src="assets/html+css.png" alt="Imágen del curso HTML y CSS">
+                    <img class="mb-2" src="assets/Img1.jpeg" alt="Imágen del curso HTML y CSS">
 
                     <div class="d-flex flex-column align-items-center " style="justify-content: space-between;">
                         <div class="mb-2">
-                            <h3 class="fs-2 mb-1 text-yellow">Introducción a HTML y CSS</h3>
-                            <p>En este curso, descubrirás cómo estructurar páginas web con HTML y darles estilo con CSS...</p>
+                            <h3 class="fs-2 mb-1 text-yellow">Rocky</h3>
+                            <p>Fue rescatado de la calle, donde buscaba comida. Hoy está sano, vacunado y listo para encontrar una familia que disfrute de paseos y juegos.</p>
                         </div>
                     </div>
                 </div>
                 <!-- Card individual -->
                 <div class="card">
-                    <img class="mb-2" src="assets/javaScrip.jpg" alt="Imágen del curso introducción a Javascript">
+                    <img class="mb-2" src="assets/Img3.jpeg" alt="Imágen del curso introducción a Javascript">
                     <div class="mb-2">
-                        <h3 class="fs-2 mb-1 text-yellow">Introducción a JavaScript</h3>
-                        <p>El mundo de la programación con JavaScript, el lenguaje clave para el desarrollo web...</p>
+                        <h3 class="fs-2 mb-1 text-yellow">Luna</h3>
+                        <p>Fue encontrada junto con sus hermanitos. Es esterilizada y muy sociable, ideal para departamentos o familias que buscan una gatita de compañía.</p>
                     </div>
                 </div>
                 <!-- Card individual -->
                 <div class="card">
-                    <img class="mb-2" src="assets/python.jpg" alt="Imágen del curso de Fundamentos de Python">
+                    <img class="mb-2" src="assets/Img2.jpeg" alt="Imágen del curso de Fundamentos de Python">
                     <div class="mb-2">
-                        <h3 class="fs-2 mb-1 text-yellow">Fundamentos de Python</h3>
-                        <p>En este curso aprenderás sobre variables, estructuras de control, funciones y manejo de datos...</p>
+                        <h3 class="fs-2 mb-1 text-yellow">Max</h3>
+                        <p>Su familia anterior ya no pudo cuidarlo. Max busca un hogar donde pueda recibir cariño y espacio para correr. Está entrenado y convive bien con niños.</p>
                     </div>
                 </div>
             </div>
@@ -119,7 +119,7 @@
 
         <footer class="w-100">
             <div class="container w-100 py-5 footer-container">
-                <p class="copyright">&copy 2025 Hermcode. Todos los derechos reservados</p>
+                <p class="copyright">&copy 2025 Adopta un amigo peludo. Todos los derechos reservados</p>
         
                 <div>
                     <a href="https://www.facebook.com/Tecmileniomx/" class="d-block mb-1 text-white" target="_blank">
