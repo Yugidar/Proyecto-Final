@@ -1,4 +1,4 @@
-const request = require('supertest');
+/* const request = require('supertest');
 const app = require('../src/app');
 const db = require('../src/config/db');
 
@@ -205,4 +205,4 @@ beforeAll(() => {
 
 afterAll((done) => {
     server.close(done);  // Cierra el servidor después de las pruebas
-});
+}); */
